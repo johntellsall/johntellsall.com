@@ -1,0 +1,5 @@
+$ python ./guessa.py 
+Guess? >b
+nope
+Guess? >beer
+you win!

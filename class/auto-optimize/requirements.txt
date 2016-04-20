@@ -1,0 +1,5 @@
+numpy
+hyperopt
+pymongo # for bson.objectid
+networkx
+scipy

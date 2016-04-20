@@ -1,0 +1,5 @@
+*.dat
+*.png
+fit.log
+orig
+_build

@@ -1,0 +1,443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tricking out Linux Networking 2014.08.20 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.08.20',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="None" href="index.html#document-index" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="index.html#document-index">Tricking out Linux Networking 2014.08.20 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tricking-out-linux-networking">
+<h1>Tricking out Linux Networking<a class="headerlink" href="#tricking-out-linux-networking" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="me">
+<h1>ME<a class="headerlink" href="#me" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ul class="simple">
+<li>Senior dev/server consultant; DevOps</li>
+<li>20 years experience with Python</li>
+<li><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="theme">
+<h1>THEME<a class="headerlink" href="#theme" title="Permalink to this headline">¶</a></h1>
+<p>Linux networking is cool, by understanding details you can do useful
+tricks</p>
+<ul class="simple">
+<li>survey</li>
+<li>wrong</li>
+<li>tricks</li>
+<li>awesome</li>
+</ul>
+<p>SECTION: future (Docker, Cgroups) and past (mmap IPC; last month)</p>
+<ul class="simple">
+<li>audience: sr engineer, CTO, DevOps</li>
+</ul>
+<p>Won&#8217;t cover: (kernel) queues, RT signals, ipfilter subsystem; also
+TIPC, inotify</p>
+</div>
+<div class="section" id="survey">
+<h1>SURVEY<a class="headerlink" href="#survey" title="Permalink to this headline">¶</a></h1>
+<p>what types of IPC are there?</p>
+<div class="section" id="internet-socket-survey">
+<h2>Internet socket survey<a class="headerlink" href="#internet-socket-survey" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>TCP sockets</dt>
+<dd><blockquote class="first">
+<div>reliable stream of bytes</div></blockquote>
+<p class="last">bidirectional</p>
+</dd>
+<dt>UDP sockets</dt>
+<dd><p class="first">small packets (0.5KB - 63KB)</p>
+<blockquote>
+<div>fast, low latency</div></blockquote>
+<p>unreliable</p>
+<p class="last">super powers!</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">drops, dups, reordering</p>
+</div>
+<p>generally a mistake to use IP-Size &gt; PMTU (commonly ~1500)</p>
+</div>
+<div class="section" id="tcp-sockets">
+<h2>TCP sockets<a class="headerlink" href="#tcp-sockets" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="udp-socket">
+<h2>UDP socket<a class="headerlink" href="#udp-socket" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>address: Internet, IP+port</li>
+<li>small packets (0.5KB - 63KB)</li>
+<li>fast, low latency</li>
+<li>unreliable: drops, dups, reordering</li>
+<li>feature: multicast!</li>
+</ul>
+</div>
+<div class="section" id="udp-multicast">
+<h2>UDP Multicast<a class="headerlink" href="#udp-multicast" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>any number producers and consumers</li>
+<li>unreliable: reorder, dropped, duplicate</li>
+</ul>
+<p>TODO</p>
+</div>
+<div class="section" id="unix-sockets">
+<h2>Unix sockets<a class="headerlink" href="#unix-sockets" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>address: unnamed, path, or &#8220;abstract namespace&#8221;</li>
+<li>same machine, bidirectional</li>
+<li>byte streams, packets, and seq packets</li>
+</ul>
+<ul class="simple">
+<li>fast!</li>
+<li>low latency!</li>
+</ul>
+<p>Pipes
+named pipes
+shared memory
+queues
+signals</p>
+<p>LATER: ICMP &#8211; Redirect!</p>
+</div>
+</div>
+<div class="section" id="everything-you-know-is-wrong">
+<h1>everything you know is wrong<a class="headerlink" href="#everything-you-know-is-wrong" title="Permalink to this headline">¶</a></h1>
+<div class="figure">
+<img alt="_images/KKKFerrisWheel.JPG" class="fill" src="_images/KKKFerrisWheel.JPG" />
+</div>
+<p>TCP Sockets:
+Q: what happens if your process exits w/o closing the socket?</p>
+<p>does socket still exist?</p>
+<p>A: yes, as a kernel structure</p>
+<p>Kernel gives &#8220;socket.error: [Errno 98] Address already in use&#8221;
+if you try to create it again.</p>
+<div class="section" id="waiting-for-delinquent-packets">
+<h2>waiting for delinquent packets<a class="headerlink" href="#waiting-for-delinquent-packets" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/delinquent.jpg" src="_images/delinquent.jpg" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It&#8217;s waiting for delinquent packets to flow into
+previously-existing TCP socket.</p>
+</div>
+<ul class="simple">
+<li>concept doesn&#8217;t always match implementation</li>
+</ul>
+<dl class="docutils">
+<dt>what is a file?</dt>
+<dd>seekable collection of persistent bytes</dd>
+<dt>how do you get one?</dt>
+<dd>ask kernel, get handle</dd>
+<dt>what can you do with it?</dt>
+<dd>close, read/write, fctrl</dd>
+<dt>&#8220;disk file&#8221;: really?</dt>
+<dd>/dev/null, /proc/fd, named pipes!</dd>
+</dl>
+<p>=&gt; concept doesn&#8217;t match</p>
+<dl class="docutils">
+<dt>what is a socket?</dt>
+<dd>stream of bytes, bidirectional, multi-machine</dd>
+<dt>how do you get one?</dt>
+<dd>ask kernel, get handle</dd>
+<dt>what can you do with it?</dt>
+<dd>close, ioctl?, send/recv</dd>
+<dt>&#8220;stream of bytes&#8221;: really?</dt>
+<dd>mostly; what about UDP;</dd>
+</dl>
+<p>=&gt; concept doesn&#8217;t match</p>
+<p>(default TCP settings are for file transfer, want to change settings for HTTP-ish traffic, matters if you&#8217;re internet-facing vs LAN; bufferbloat)</p>
+<p>namespaces
+- socket: IP? multiple IPs? IPv6? TIPC address?
+- filesystem
+- in-kernel socket space!
+( - cool ipfilter tricks, out of scope )</p>
+<p>POINT:</p>
+<p>kernel provides (file like) abstractions over <em>lots</em> of different
+services, in different namespaces.</p>
+<p>POINT:</p>
+<p>actual implementation differs!
+Ex: &#8220;stream of bytes&#8221; vs send fd to unrelated proc over X socket
+Ex: tell kernel to send signal over fd(?)</p>
+<p><em>theme: everything you know is wrong</em></p>
+<ul class="simple">
+<li>socket is stream, once bytes are read they&#8217;re gone</li>
+</ul>
+<p>LPI book: ioctl(fd, FIONREAD, &amp;count) to get number of unread bytes in stream, or # bytes next read on datagram socket &#8211; Linux only.</p>
+</div>
+</div>
+<div class="section" id="udp-reliability">
+<h1>UDP reliability<a class="headerlink" href="#udp-reliability" title="Permalink to this headline">¶</a></h1>
+<p>How reliable is sending occasional small packets acrost the
+earth: 50%? 80%?</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">NJ, LA, Amsterdam, Tokyo</p>
+</div>
+</div>
+<div class="section" id="well">
+<h1>well...<a class="headerlink" href="#well" title="Permalink to this headline">¶</a></h1>
+<img alt="_images/udp-reliability.png" src="_images/udp-reliability.png" />
+<p><a class="reference external" href="http://openmymind.net/How-Unreliable-Is-UDP/">http://openmymind.net/How-Unreliable-Is-UDP/</a></p>
+<div class="section" id="cheating-with-unix-sockets">
+<h2>Cheating with Unix sockets<a class="headerlink" href="#cheating-with-unix-sockets" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>packets are nice: can&#8217;t get partial JSON message</li>
+<li>can use &#8220;abstract namespace&#8221; ensure server only runs once</li>
+<li>send/receive credentials via the kernel</li>
+<li>send file descriptors: rebind TCP sockets!</li>
+</ul>
+</div>
+<div class="section" id="unix-socket-vs-named-pipe">
+<h2>Unix socket vs Named Pipe<a class="headerlink" href="#unix-socket-vs-named-pipe" title="Permalink to this headline">¶</a></h2>
+<p>UNIX-domain sockets are generally more flexible than named pipes. Some
+of their advantages are:</p>
+<p>You can use them for more than two processes communicating (eg. a server process with potentially multiple client processes connecting);
+They are bidirectional;
+They support passing kernel-verified UID / GID credentials between processes;
+They support passing file descriptors between processes;
+They support packet and sequenced packet modes.</p>
+<p><a class="reference external" href="http://stackoverflow.com/questions/9475442/unix-domain-socket-vs-named-pipes">source</a></p>
+<p>TODO: dgram packet size</p>
+<p>TODO: socketpair?</p>
+<p>This is used by real code &#8211; like Kismet</p>
+<p>AF_UNIX SOCK_DGRAM in Kismet</p>
+<div class="code highlight-python"><div class="highlight"><pre>int IPCRemote::SpawnIPC() {
+      // Don&#39;t build the socket pair if we&#39;re in exec child mode
+      if (child_exec_mode == 0) {
+              // Generate the socket pair before the split
+              if (socketpair(AF_UNIX, SOCK_DGRAM, 0, sockpair) &lt; 0) {
+                      _MSG(&quot;Unable to great socket pair for IPC communication: &quot; +
+                               string(strerror(errno)), MSGFLAG_FATAL);
+                      globalreg-&gt;fatal_condition = 1;
+                      return -1;
+              }
+
+              unsigned int socksize = 32768;
+              setsockopt(sockpair[0], SOL_SOCKET, SO_SNDBUF, &amp;socksize, sizeof(socksize));
+              setsockopt(sockpair[1], SOL_SOCKET, SO_SNDBUF, &amp;socksize, sizeof(socksize));
+</pre></div>
+</div>
+<p><a class="reference external" href="http://stackoverflow.com/questions/3324619/unix-domain-socket-using-datagram-communication-between-one-server-process-and">http://stackoverflow.com/questions/3324619/unix-domain-socket-using-datagram-communication-between-one-server-process-and</a></p>
+<p>&#8220;However, unix domain datagram sockets are different. In fact, the write() will actually block if the client&#8217;s receive buffer is full rather than drop the packet. . This makes unix domain datagram sockets much superior to UDP for IPC because UDP will most certainly drop packets when under load, even on localhost. &#8220;</p>
+<ul class="simple">
+<li>sendmsg()</li>
+</ul>
+<ul class="simple">
+<li>Redis: no</li>
+<li>Apache: ?</li>
+<li>Nginx: yes</li>
+<li>Unicorn/Gunicorn:</li>
+<li>Uwsgi: yes</li>
+<li>Varnish: no?</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference external" href="http://httpd.apache.org/docs/current/mod/mod_proxy_fdpass.html">http://httpd.apache.org/docs/current/mod/mod_proxy_fdpass.html</a></p>
+<p>ngx_channel.c:ngx_write_channel</p>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/slideinc/sendmsg">https://github.com/slideinc/sendmsg</a> &#8211; for Python</p>
+</div></blockquote>
+<p class="last">Apache doesn&#8217;t use sendfd() trick!  I haven&#8217;t braved the code base yet
+it likely uses something even more awesome than the parent process
+copying bytes back and forth. Uwsgi and Nginx use sendmsg(), but
+Apache, Gunicorn, Redis, Unicorn, and Varnish don&#8217;t.</p>
+</div>
+<ul class="simple">
+<li>server can skip bind(), call listen() directly
+it&#8217;ll get an _ephemeral_ port</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">. Server must register for clients to find it (cf &#8220;well known&#8221;)</p>
+</div>
+<p>TODO - multiple fds on same socket</p>
+<p>TODO - _connected_ datagram sockets (Linux only?)</p>
+<ul class="simple">
+<li>bind Unix domain in an accessible, writable directory -&gt; security</li>
+<li>Unix domain datagram: reliable, in-order, no duplicates</li>
+<li>dgram size: SO_SNDBUF, 2KB = safe</li>
+<li>possible silent truncation on receiver XXXX?</li>
+</ul>
+<p>Linux Abstract Socket Namespace</p>
+<ul>
+<li><p class="first">automatically removed! no unlink required</p>
+</li>
+<li><p class="first">can be used in chroot w/o filesystem -&gt; security</p>
+</li>
+<li><p class="first">sendfile w/ FD mmap&#8217;able, ~ regular file</p>
+<blockquote>
+<div><ul class="simple">
+<li>specify offset + count _per_call_ &#8211; array of messages! TRICK</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>MAYBE: - send/recv: socket additional options: nonblock, OOB, PEEK,
+WAITALL, MORE/CORK)</p>
+<ul class="simple">
+<li>CORK ex: HTTP headers + data</li>
+</ul>
+<p>TODO: splice, vmsplice, tee</p>
+<ul>
+<li><p class="first">sendmsg/recvmsg most flexible
+including scatter/gather, _ancillary_data_</p>
+<blockquote>
+<div><ul class="simple">
+<li>(recv in msg() - get multiple messages)</li>
+<li>ancillary: send FD, send rights</li>
+</ul>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Sequenced Packet Sockets (Unixdom)</dt>
+<dd><ul class="first last simple">
+<li>conn, _msg_boundaries_, reliable, no dups, in order</li>
+<li>SCTP: seq packet over internet; DCCP(?)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">multi stream: logical over one connection</p>
+</div>
+<p>AF_DBUS &#8211; multicast Unix domain sockets, aka multicast pipes!</p>
+<p><a class="reference external" href="https://lkml.org/lkml/2012/2/20/208">https://lkml.org/lkml/2012/2/20/208</a></p>
+<p>TODO: shmem recent</p>
+</div>
+<div class="section" id="other-goodies">
+<h2>other goodies<a class="headerlink" href="#other-goodies" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Netlink</strong>: talk to/from kernel<ul>
+<li>subscribe to kernel events</li>
+<li>sort of like <em>inotify</em></li>
+<li>ROUTE, FIREWALL, NFLOG, ARPD</li>
+<li>also user-user!</li>
+</ul>
+</li>
+<li><strong>TIPC</strong>: multiple clusters</li>
+<li>Bypass the kernel =&gt; profit<ul>
+<li>special-purpose web server</li>
+<li>achieves 2-10x performance of Nginx</li>
+<li>low CPU, scales, saturates 6 10g cards!</li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li>_connected_ datagram sockets (Linux only?)</li>
+</ul>
+</div>
+<div class="section" id="socket-address-families-af">
+<h2>socket address families (AF)<a class="headerlink" href="#socket-address-families-af" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="63%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>AF_INET</strong></td>
+<td>IPv4 Internet protocols</td>
+</tr>
+<tr class="row-even"><td>AF_INET6</td>
+<td>IPv6 Internet protocols</td>
+</tr>
+<tr class="row-odd"><td><strong>AF_NETLINK</strong></td>
+<td>Kernel user interface device</td>
+</tr>
+<tr class="row-even"><td>AF_PACKET</td>
+<td>Low level packet interface</td>
+</tr>
+<tr class="row-odd"><td><strong>AF_UNIX</strong></td>
+<td>Local communication</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">AF_APPLETALK        AppleTalk
+AF_ATMPVC           Access to raw ATM PVCs
+AF_AX25             Amateur radio AX
+AF_IPX              IPX - Novell protocols
+AF_X25              ITU-T X.25</p>
+</div>
+<p>&#8220;socket&#8221; creates a record in the kernel, which talks to a driver</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h1>☃<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="enumerate">
+<tt class="descname">enumerate</tt><big>(</big><em>sequence</em><span class="optional">[</span>, <em>start=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#enumerate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator that yields tuples of an index and an item of the
+<em>sequence</em>. (And so on.)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id2">
+<h1>☃<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="questions">
+<h1>Questions?<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h1>
+<div class="figure">
+<img alt="_images/john-bold.jpg" class="fill" src="_images/john-bold.jpg" />
+<p class="caption"><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="index.html#document-index">Tricking out Linux Networking 2014.08.20 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, John Mitchell.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

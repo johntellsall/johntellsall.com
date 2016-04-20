@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tricking out Linux Networking &mdash; Tricking out Linux Networking 2014.08.20 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.08.20',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    <link rel="top" title="Tricking out Linux Networking 2014.08.20 documentation" href="#" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="slide level-1" id="tricking-out-linux-networking">
+<h1>Tricking out Linux Networking</h1>
+
+</article>
+<article class="slide level-1" id="me">
+<h1>ME</h1>
+<blockquote>
+<div><ul class="simple">
+<li>Senior dev/server consultant; DevOps</li>
+<li>15 years experience with Python</li>
+<li><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></li>
+</ul>
+</div></blockquote>
+
+</article>
+<article class="slide level-1" id="theme">
+<h1>THEME</h1>
+<p>Linux networking is cool, by understanding details you can do useful
+tricks</p>
+<ul class="simple">
+<li>brief survey of sockets</li>
+<li>a few tricks</li>
+<li>other awesome networking</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="socket-address-families-af">
+<h2>socket address families (AF)</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="63%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>AF_INET</strong></td>
+<td>IPv4 Internet protocols</td>
+</tr>
+<tr class="row-even"><td>AF_INET6</td>
+<td>IPv6 Internet protocols</td>
+</tr>
+<tr class="row-odd"><td><strong>AF_NETLINK</strong></td>
+<td>Kernel user interface device</td>
+</tr>
+<tr class="row-even"><td>AF_PACKET</td>
+<td>Low level packet interface</td>
+</tr>
+<tr class="row-odd"><td><strong>AF_UNIX</strong></td>
+<td>Local communication</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">AF_APPLETALK        AppleTalk
+AF_ATMPVC           Access to raw ATM PVCs
+AF_AX25             Amateur radio AX
+AF_IPX              IPX - Novell protocols
+AF_X25              ITU-T X.25</p>
+</div>
+
+</article>
+<article class="slide level-2" id="tcp-sockets">
+<h2>TCP sockets</h2>
+<ul class="simple">
+<li>address: Internet, IP+port</li>
+<li>reliable stream of bytes</li>
+</ul>
+<p>Q: what happens if your process exits w/o closing the socket?</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">socket.error: [Errno 98] Address already in use</p>
+</div>
+
+</article>
+<article class="slide level-2" id="tcp-server">
+<h2>TCP server</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="n">addr</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+   <span class="n">client</span><span class="p">,</span> <span class="n">_address</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+   <span class="n">data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+   <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+      <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;got: {}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()))</span>
+   <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="udp-socket">
+<h2>UDP socket</h2>
+<ul class="simple">
+<li>address: Internet, IP+port</li>
+<li>small packets (0.5KB - 63KB)</li>
+<li>fast, low latency</li>
+<li>unreliable: drops, dups, reordering</li>
+<li>feature: multicast!</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="udp-send-multicast">
+<h2>UDP send multicast</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">MYPORT</span> <span class="o">=</span> <span class="mi">8123</span>
+<span class="n">MYGROUP_4</span> <span class="o">=</span> <span class="s">&#39;225.0.0.250&#39;</span>
+<span class="n">MYTTL</span> <span class="o">=</span> <span class="mi">1</span> <span class="c"># Increase to reach other networks</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span>
+    <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_UDP</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_IP</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">IP_MULTICAST_TTL</span><span class="p">,</span> <span class="n">MYTTL</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="s">&quot;robot&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">MYGROUP_4</span><span class="p">,</span> <span class="n">MYPORT</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Any number of clients and servers!</p>
+
+</article>
+<article class="slide level-2" id="udp-multicast-example">
+<h2>UDP multicast example</h2>
+<div class="highlight-python"><div class="highlight"><pre>$ ./mcast2.py
+(&#39;192.168.7.120&#39;, 52933)  &#39;robot&#39;
+$ ./mcast2.py
+(&#39;192.168.7.120&#39;, 50801)  &#39;robot&#39;
+</pre></div>
+</div>
+<p>&quot;socket&quot; creates a record in the kernel, which talks to a driver</p>
+
+</article>
+<article class="slide level-2" id="unix-sockets">
+<h2>Unix sockets</h2>
+<ul class="simple">
+<li>address: unnamed, path, or &quot;abstract namespace&quot;</li>
+<li>same machine, bidirectional</li>
+<li>byte streams, packets, and seq packets</li>
+</ul>
+<ul class="simple">
+<li>fast!</li>
+<li>low latency!</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="cheating-with-unix-sockets">
+<h2>Cheating with Unix sockets</h2>
+<ul class="simple">
+<li>packets are nice: can't get partial JSON message</li>
+<li>can use &quot;abstract namespace&quot; ensure server only runs once</li>
+<li>send/receive credentials via the kernel</li>
+<li>send file descriptors: rebind TCP sockets!</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="unix-socket-server">
+<h2>Unix socket server</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SOCK_NAME</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\0</span><span class="s">beer&#39;</span>           <span class="c"># note null byte</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_UNIX</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">SOCK_NAME</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">conn</span><span class="p">,</span><span class="n">addr</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&#39;Hello World</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;from {}: {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">addr</span><span class="p">,</span> <span class="n">conn</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                    <span class="c"># unblock other peer</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="unix-socket-client">
+<h2>Unix socket client</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SOCK_NAME</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\0</span><span class="s">beer&#39;</span>           <span class="c"># note null byte</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_UNIX</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">SOCK_NAME</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="p">)</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;other side is gone&#39;</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="listing-unix-sockets">
+<h2>listing Unix sockets</h2>
+<div class="highlight-python"><div class="highlight"><pre>$ netstat -plx | egrep beer
+unix  2      [ ACC ]     STREAM     LISTENING     22418333
+22882/python        @beer
+
+$ lsof -U | egrep beer
+python    22882 johnm    3u  unix 0x0000000000000000
+0t0 22418333 @beer
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>&#64;</strong> = abstract, otherwise file path</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="other-goodies">
+<h2>other goodies</h2>
+<ul class="simple">
+<li><strong>Netlink</strong>: talk to/from kernel<ul>
+<li>subscribe to kernel events</li>
+<li>sort of like <em>inotify</em></li>
+<li>ROUTE, FIREWALL, NFLOG, ARPD</li>
+<li>also user-user!</li>
+</ul>
+</li>
+<li><strong>TIPC</strong>: multiple clusters</li>
+<li>Bypass the kernel =&gt; profit<ul>
+<li>special-purpose web server</li>
+<li>achieves 2-10x performance of Nginx</li>
+<li>low CPU, scales, saturates 6 10g cards!</li>
+</ul>
+</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="id1">
+<h1>☃</h1>
+
+</article>
+<article class="slide level-2" id="reference">
+<h2>Reference</h2>
+<ul class="simple">
+<li><a class="reference external" href="http://blog.eduardofleury.com/archives/2007/09/13">AF_UNIX sockets and the abstract namespace, inter-process communication</a> by Eduardo Fleury</li>
+<li><a class="reference external" href="http://highscalability.com/blog/2014/2/12/paper-network-stack-specialization-for-performance.html">http://highscalability.com/blog/2014/2/12/paper-network-stack-specialization-for-performance.html</a></li>
+</ul>
+
+</article>
+<article class="slide level-1" id="johntellsall-com">
+<h1>johntellsall.com</h1>
+
+</article>
+<article class="slide level-2" id="unix-socket-vs-named-pipe">
+<h2>Unix socket vs Named Pipe</h2>
+<p>UNIX-domain sockets are generally more flexible than named pipes. Some of their advantages are:</p>
+<p>You can use them for more than two processes communicating (eg. a server process with potentially multiple client processes connecting);
+They are bidirectional;
+They support passing kernel-verified UID / GID credentials between processes;
+They support passing file descriptors between processes;
+They support packet and sequenced packet modes.</p>
+<p><a class="reference external" href="http://stackoverflow.com/questions/9475442/unix-domain-socket-vs-named-pipes">source</a></p>
+
+</article>
+<article class="slide level-2" id="udp-server">
+<h2>UDP server</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="n">addr</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;from: {}</span><span class="se">\t</span><span class="s">got: {}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">addr</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+    <span class="p">))</span>
+</pre></div>
+</div>
+<p>LATER: Inotify</p>
+<p>AF_UNIX SOCK_DGRAM in Kismet</p>
+<dl class="docutils">
+<dt>int IPCRemote::SpawnIPC() {</dt>
+<dd><p class="first">// Don't build the socket pair if we're in exec child mode
+if (child_exec_mode == 0) {</p>
+<blockquote class="last">
+<div><p>// Generate the socket pair before the split
+if (socketpair(AF_UNIX, SOCK_DGRAM, 0, sockpair) &lt; 0) {</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>_MSG(&quot;Unable to great socket pair for IPC communication: &quot; +</dt>
+<dd>string(strerror(errno)), MSGFLAG_FATAL);</dd>
+</dl>
+<p>globalreg-&gt;fatal_condition = 1;
+return -1;</p>
+</div></blockquote>
+<p>}</p>
+<p>unsigned int socksize = 32768;
+setsockopt(sockpair[0], SOL_SOCKET, SO_SNDBUF, &amp;socksize, sizeof(socksize));
+setsockopt(sockpair[1], SOL_SOCKET, SO_SNDBUF, &amp;socksize, sizeof(socksize));</p>
+</div></blockquote>
+</dd>
+</dl>
+
+</article>
+
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
