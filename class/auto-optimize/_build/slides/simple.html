@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>simple.py &mdash; Automatic Parameter Optimization 2014.07.29 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.07.29',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    <link rel="top" title="Automatic Parameter Optimization 2014.07.29 documentation" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="slide level-1" id="simple-py">
+<h1>simple.py</h1>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">hyperopt</span> <span class="kn">import</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">tpe</span><span class="p">,</span> <span class="n">hp</span>
+<span class="k">print</span> <span class="n">fmin</span><span class="p">(</span>
+    <span class="n">fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">space</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">algo</span><span class="o">=</span><span class="n">tpe</span><span class="o">.</span><span class="n">suggest</span><span class="p">,</span>
+    <span class="n">max_evals</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;x&#39;</span><span class="p">:</span> <span class="mf">0.028499577187215047</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">eval=1       {'x': 3.9293837119572324}</p>
+</div>
+
+</article>
+
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

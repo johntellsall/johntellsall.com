@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Django QuerySets &mdash; Django QuerySets and Functional Programming 2014.05.12 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.05.12',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    <link rel="top" title="Django QuerySets and Functional Programming 2014.05.12 documentation" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="slide level-1" id="django-querysets">
+<h1>Django QuerySets</h1>
+<p>QuerySets are Django's way of getting and updating data</p>
+
+</article>
+<article class="slide level-2" id="models-py">
+<h2>models.py</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>class Meeting(models.Model):</dt>
+<dd>name = models.CharField(max_length=100)
+meet_date = models.DateTimeField()</dd>
+</dl>
+
+</article>
+<article class="slide level-2" id="like-iterator">
+<h2>Like Iterator</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[&lt;Meeting: Meeting object&gt;]</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="because-it-is-an-iterator">
+<h2>Because it <em>is</em> an iterator</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[&lt;Meeting: Meeting object&gt;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">&lt;class &#39;django.db.models.query.QuerySet&#39;&gt;</span>
+</pre></div>
+</div>
+<p>A query describes what kind of data you want -- one or more Models</p>
+<p>Commonly in Django we just specify the query then hand the results -- the QuerySet -- directly to a template for rendering</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>similar to iter: dynamic/lazy; list(qs)</p>
+<p>diff: stream of objs, same class
+qs[:3] &lt;=&gt; islice(it, 3)
+bool(iter) vs qs.empty()</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="nb">iter</span><span class="p">([])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="p">[]</span> <span class="p">;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>qs.count()</p>
+<p>laziness is explicit: prefetch_related</p>
+<p class="last">qs.values(); qs.values_list(); qs.values-list(flat=True)</p>
+</div>
+
+</article>
+<article class="slide level-1" id="historical">
+<h1>historical</h1>
+<p>QuerySets are Django's way of getting data.</p>
+<p>Example: you are interested in making drinks.  As a data object, this is:</p>
+<p>class Ingredient(Model):</p>
+<p>class Drink(Model):</p>
+
+</article>
+<article class="slide level-1" id="a">
+<h1>a</h1>
+<p>A query is a list of filters and modifiers. It's lazy -- converted to SQL when needed. Sometimes a single result is all that's needed</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">&lt;Meeting: Meeting object&gt;</span>
+</pre></div>
+</div>
+<p>More commonly, you're looking for a list of objects matching some criteria.  A QuerySet is the result. Like the query, a QuerySet is also lazy -- it gets executed when needed, and results stream from the database.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__contains</span><span class="o">=</span><span class="s">&#39;go&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">[&lt;Meeting: Meeting object&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="p">)</span>
+<span class="go">&lt;class &#39;django.db.models.query.QuerySet&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Note that the QuerySet doesn't hit the database unless it needs to.  Even if there are no matches, it'll return an object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;java&#39;</span><span class="p">))</span>
+<span class="go">&lt;class &#39;django.db.models.query.QuerySet&#39;&gt;</span>
+</pre></div>
+</div>
+<p>To see if there are any matches, convert the results into a list</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">qs</span><span class="p">)</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>This isn't efficient -- Python has to hit the database, do a search, parse each row into a separate Model object, and allocate the space for everything.  And then you just check if it's empty or not!</p>
+<p>More efficient: ask the database if there are any matches</p>
+<p>A <em>generator</em> is a stream of data.  QuerySets are similar -- a stream of Model objects</p>
+<p>Since it's a stream, one you consume it, it's gone.  Printing is consuming -- thus debugging things with streams can be... interesting.</p>
+<p>TODO: fileinput example
+TODO: map/reduce
+TODO: Twitter stream example?</p>
+<p>generators
+QuerySet (+ query)</p>
+<p>State
+- none*: random()
+- init: open()
+- other: trans = db().requestmany()</p>
+<p>enumerate(iter)</p>
+<p>Iterators can be tricky to work with</p>
+<ul class="simple">
+<li>first three elements of a list:</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>first three elements of iterator -- can't use slice operator!</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">sequence index must be integer, not &#39;slice&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>first three elements of iterator -- use islice</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p># ... to get another iterator!</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">&lt;itertools.islice object at 0x7f9bc54a5d08&gt;</span>
+</pre></div>
+</div>
+<p># turn it into a concrete list</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[10, 11, 12]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span>
+<span class="go">&lt;open file &#39;ing.txt&#39;, mode &#39;r&#39; at 0x7f9bc54fe4b0&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">&#39;file&#39; object has no attribute &#39;__getitem__&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;itertools.islice object at 0x7f9bc54a5d60&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">[&#39;whiskey\n&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">[&#39;syrup\n&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">&#39;bitters\n&#39;</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-1" id="page">
+<h1>page</h1>
+<p>Internally, queries are compiled into SQL, but aren't executed until needed</p>
+<p>TODO: clarify; queries are dynamic too</p>
+<p>qs = Event.objects.filter(pk=3) ; print qs.query</p>
+<p>SELECT <cite>event_event</cite>.`id` ...
+FROM <cite>event_event</cite>
+WHERE <cite>event_event</cite>.`id` = 3</p>
+
+</article>
+<article class="slide level-1" id="id1">
+<h1>page</h1>
+<p>q = Event.objects.filter(pk=3).values_list('id') ; print x.query
+SELECT <cite>event_event</cite>.`id` FROM <cite>event_event</cite> WHERE <cite>event_event</cite>.`id` = 3</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">q</span>
+<span class="go">[(3L,)]</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-1" id="id2">
+<h1>page</h1>
+<p>Set operations on QuerySets</p>
+<div class="figure">
+<img alt="_static/venn.png" class="fill" src="_static/venn.png" />
+</div>
+
+</article>
+<article class="slide level-1" id="id3">
+<h1>page</h1>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Event</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__contains</span><span class="o">=</span><span class="s">&#39;beer&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">q</span><span class="o">.</span><span class="n">query</span>
+<span class="go">SELECT `event_event`.`id`, ...</span>
+<span class="go">FROM `event_event`</span>
+<span class="go">WHERE (`event_event`.`id` = 3  AND `event_event`.`name` LIKE BINARY %beer% )</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-1" id="id4">
+<h1>page</h1>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">Event</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="s">&#39;beer&#39;</span><span class="p">)</span> <span class="p">;</span> <span class="k">print</span> <span class="n">q</span><span class="o">.</span><span class="n">query</span>
+<span class="go">SELECT `event_event`.`id`, ...</span>
+<span class="go">FROM `event_event`</span>
+<span class="go">WHERE (`event_event`.`id` = 3  OR `event_event`.`name` LIKE %beer% )</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-1" id="id5">
+<h1>page</h1>
+<p>An 'if' will evaluate the query, retrieving all the rows, all the fields</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">city_set</span> <span class="o">=</span> <span class="n">City</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Cambridge&quot;</span><span class="p">)</span>
+<span class="go"># The `if` statement evaluates the queryset.</span>
+<span class="go">if city_set:</span>
+<span class="go">    # We don&#39;t need the results of the queryset here, but the</span>
+<span class="go">    # ORM still fetched all the rows!</span>
+<span class="go">    print(&quot;At least one city called Cambridge still stands!&quot;)</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-1" id="id6">
+<h1>page</h1>
+<p>If you only want to see if there are <em>any</em>, then use exists().  This hits the database, but it's efficient.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tree_set</span> <span class="o">=</span> <span class="n">Tree</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">&quot;deciduous&quot;</span><span class="p">)</span>
+<span class="go"># The `exists()` check avoids populating the queryset cache.</span>
+<span class="go">if tree_set.exists():</span>
+<span class="go">    # No rows were fetched from the database, so we save on</span>
+<span class="go">    # bandwidth and memory.</span>
+<span class="go">    print(&quot;There are still hardwood trees in the world!&quot;)</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-1" id="id7">
+<h1>page</h1>
+<p>Here's the equivalent to qs.exists()</p>
+<p>qs = Event.objects.filter(pk=3); qs.query.set_limits(high=1); print qs.query</p>
+<p>SELECT <cite>event_event</cite>.`id`
+FROM <cite>event_event</cite>
+WHERE <cite>event_event</cite>.`id` = 3
+LIMIT 1</p>
+
+</article>
+<article class="slide level-1" id="id8">
+<h1>page</h1>
+<p>You can add modifiers</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qs</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">qs</span><span class="o">.</span><span class="n">query</span>
+<span class="go">SELECT `event_event`.`id` FROM `event_event` WHERE `event_event`.`id` = 3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qs</span> <span class="o">=</span> <span class="n">qs</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">qs</span><span class="o">.</span><span class="n">query</span>
+<span class="go">SELECT `event_event`.`id` FROM `event_event` WHERE (`event_event`.`id` = 3  AND `event_event`.`id` = 2 )</span>
+</pre></div>
+</div>
+<p>TBD: other databases -- Mongo? flat file?</p>
+
+</article>
+
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

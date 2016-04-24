@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Automatic Parameter Optimization &mdash; Automatic Parameter Optimization 2014.07.29 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.07.29',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    <link rel="top" title="Automatic Parameter Optimization 2014.07.29 documentation" href="#" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="slide level-1" id="automatic-parameter-optimization">
+<h1>Automatic Parameter Optimization</h1>
+<p>for Professional Python group at TrueCar</p>
+<p>August 19, 2014</p>
+
+</article>
+<article class="slide level-1" id="me">
+<h1>ME</h1>
+<blockquote>
+<div><ul class="simple">
+<li>Senior dev/server guy; DevOps</li>
+<li>15 years experience with Python</li>
+<li><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></li>
+</ul>
+</div></blockquote>
+
+</article>
+<article class="slide level-1" id="theme">
+<h1>THEME</h1>
+<p>Programs have configuration where the &quot;best&quot; values are not
+obvious.</p>
+<p>This talk shows how to automatically and efficiently find
+optimal settings under <em>static</em> and <em>dynamic</em> constraints.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul>
+<li><p class="first">motivation</p>
+</li>
+<li><dl class="first docutils">
+<dt>constraints</dt>
+<dd><p class="first">static: hardware memory, CPU</p>
+<p>dynamic: avail memory, CPU, other procs</p>
+<p class="last">data: send email to one addr or 1M mailing list</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>multiple goals</dt>
+<dd><p class="first">min latency</p>
+<p>max throughput</p>
+<p>jitter</p>
+<p class="last">min CPU/memory used</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>hyperopt</dt>
+<dd><p class="first last">example: min(x^2) over x in (-10, 10)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>example: check Python files for errors in parallel</dt>
+<dd><p class="first">run &quot;pyflakes&quot; on batch of files, N concurrently</p>
+<p class="last">trick: use Fibonacci series to minimize convergance</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">example: Facebook</p>
+</li>
+</ul>
+<p><a class="reference external" href="https://code.facebook.com/posts/816473015039157/making-facebook-s-software-infrastructure-more-energy-efficient-with-autoscale/">https://code.facebook.com/posts/816473015039157/making-facebook-s-software-infrastructure-more-energy-efficient-with-autoscale/</a></p>
+<ul class="last">
+<li><dl class="first docutils">
+<dt>future directions</dt>
+<dd><blockquote class="first">
+<div><p>capture production info to optimize settings</p>
+<p>be careful: how do you debug a changing system?</p>
+</div></blockquote>
+<p class="last"><a class="reference external" href="https://pypi.python.org/pypi/sphinxcontrib-blockdiag/">https://pypi.python.org/pypi/sphinxcontrib-blockdiag/</a></p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+
+</article>
+<article class="slide level-1" id="motivation-mailing-list-server">
+<h1>motivation: mailing list server</h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Let's say you have a bunch of servers doing stuff.  Input servers take requests and do some validation and lookup. Processing servers do the requests, like doing a mail merge of a template with 1000 names and emails.  Output processors take each email and send it to a server.</p>
+</div>
+
+</article>
+<article class="slide level-2" id="constraints">
+<h2>constraints</h2>
+<blockquote>
+<div><p>static: hardware memory, CPU</p>
+<p>dynamic: avail memory, CPU, other procs</p>
+<p>data: send email to one addr or 1M mailing list</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>A workflow isn't a static system.</p>
+<blockquote class="last">
+<div><p>A specific server has a set amount of CPU and RAM available via
+hardware.</p>
+<p>If there are other services running on the same server, it'll affect
+your service.</p>
+<p>Some requests might be higher CPU or memory than others -- so output
+wil depend on input.</p>
+<p>If a upstream or downstream service is running slower than normal, it
+will affect the workload.</p>
+</div></blockquote>
+</div>
+
+</article>
+<article class="slide level-2" id="optimize-end-to-end-performance">
+<h2>optimize end-to-end performance</h2>
+<blockquote>
+<div><p>min latency</p>
+<p>max throughput</p>
+<p>jitter</p>
+<p>min CPU/memory used</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">optional preprocessing</p>
+</div>
+
+</article>
+<article class="slide level-2" id="high-jitter">
+<h2>high jitter</h2>
+<img alt="_images/uneven-oreo.jpg" src="_images/uneven-oreo.jpg" />
+
+</article>
+<article class="slide level-2" id="low-jitter">
+<h2>low jitter</h2>
+<img alt="_images/even-cookies.jpg" src="_images/even-cookies.jpg" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<img alt="_images/chickenfridaynight.jpg" src="_images/chickenfridaynight.jpg" />
+<img alt="_images/Chutes-Ladders.jpg" src="_images/Chutes-Ladders.jpg" />
+<img alt="_images/kentucky-roads.jpg" src="_images/kentucky-roads.jpg" />
+<img alt="_static/lag-tshirt.jpg" src="_static/lag-tshirt.jpg" />
+<img alt="_images/mix-cookie.jpg" class="last" src="_images/mix-cookie.jpg" />
+</div>
+
+</article>
+<article class="slide level-2" id="how-do-we-satisfy-constraints-and-get-nice-output">
+<h2>how do we satisfy constraints and get nice output?</h2>
+<blockquote>
+<div><img alt="_images/audi-cockpit.jpg" src="_images/audi-cockpit.jpg" />
+</div></blockquote>
+
+</article>
+<article class="slide level-2" id="uhoh">
+<h2>uhoh</h2>
+<blockquote>
+<div><img alt="_images/homer-buttons-dials.png" src="_images/homer-buttons-dials.png" />
+</div></blockquote>
+
+</article>
+<article class="slide level-1" id="hyperopt">
+<h1>Hyperopt</h1>
+<p>&quot;hyperopt is a Python library for optimizing over awkward search spaces with real-valued, discrete, and conditional dimensions.&quot;</p>
+
+</article>
+<article class="slide level-2" id="image-classification-pipeline">
+<h2>image classification pipeline</h2>
+<img alt="_images/image-opt.png" src="_images/image-opt.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Our experiments search a class of image classification</p>
+</div>
+<p>pipelines (c) that include 0, 1, or 2 inter-layers (a), an
+outer-layer (b) that extracts features, and a support vector machine
+(SVM) classifier. Inter-layers perform filter-bank normalized
+cross-correlation (fbncc) and local spatial pooling
+(lpool). Outer-layers are similar, but may additionally perform
+quadrant pooling and local normalization (lnorm). Hyperparameters
+govern the number of inter-layers, the type of outer-layer, and a host
+of configuration options within each layer. Although many of the
+hyperparameters are mutually exclusive (e.g. only one outer-layer is
+active per pipeline) there are 238 hyperparameters in the full search
+space.</p>
+
+</article>
+<article class="slide level-2" id="min-x-2">
+<h2>min(x^2)</h2>
+<iframe width="800" height="600" frameborder="0" seamless="seamless" scrolling="no" src="https://plot.ly/~johnlmitchell/1/800/600"></iframe><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">_static/<a href="#id2"><span class="problematic" id="id3">minx5e2_in_</span></a>-102c_2b10.svg</p>
+</div>
+<img alt="_images/minx5e2_in_-102c_2b10.png" src="_images/minx5e2_in_-102c_2b10.png" />
+
+</article>
+<article class="slide level-2" id="simple-py">
+<h2>simple.py</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">hyperopt</span> <span class="kn">import</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">tpe</span><span class="p">,</span> <span class="n">hp</span>
+<span class="k">print</span> <span class="n">fmin</span><span class="p">(</span>
+    <span class="n">fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">space</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">algo</span><span class="o">=</span><span class="n">tpe</span><span class="o">.</span><span class="n">suggest</span><span class="p">,</span>
+    <span class="n">max_evals</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;x&#39;</span><span class="p">:</span> <span class="mf">0.028499577187215047</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">eval=1       {'x': 3.9293837119572324}</p>
+</div>
+
+</article>
+<article class="slide level-2" id="simple2-py">
+<h2>simple2.py</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">hyperopt</span> <span class="kn">import</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">tpe</span><span class="p">,</span> <span class="n">hp</span>
+<span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="k">print</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="k">print</span> <span class="n">fmin</span><span class="p">(</span>
+    <span class="n">fn</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
+    <span class="n">space</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">algo</span><span class="o">=</span><span class="n">tpe</span><span class="o">.</span><span class="n">suggest</span><span class="p">,</span>
+    <span class="n">max_evals</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">3.92938371196</span>
+<span class="o">-</span><span class="mf">7.87870188091</span>
+<span class="mf">0.134520229991</span>
+<span class="p">{</span><span class="s">&#39;x&#39;</span><span class="p">:</span> <span class="mf">0.13452022999139857</span><span class="p">}</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-1" id="basic-check-python-files-for-errors-in-parallel">
+<h1>basic: check Python files for errors in parallel</h1>
+
+</article>
+<article class="slide level-2" id="pyflakes">
+<h2>pyflakes</h2>
+<div class="highlight-python"><div class="highlight"><pre>    pyflakes optimize.py
+
+optimize.py:143: local variable &#39;_status&#39; is assigned to but never used
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="c"># ignore Pyflakes warnings</span>
+<span class="n">_status</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+    <span class="n">format_command</span><span class="p">(</span><span class="n">cmd_type</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">concurrency</span><span class="p">),</span>
+    <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">stderr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">),</span>
+    <span class="n">stdout</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="minimize-objective-function">
+<h2>minimize objective function</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">concurrency</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="n">cmd_type</span><span class="p">,</span> <span class="n">outf</span><span class="p">):</span>
+    <span class="s">&quot;run several jobs in parallel, return info&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+        <span class="n">sample</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">],</span> <span class="n">sample</span><span class="p">[</span><span class="s">&#39;batch_size&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="c"># ignore Pyflakes warnings</span>
+    <span class="n">_status</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="n">format_command</span><span class="p">(</span><span class="n">cmd_type</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">concurrency</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+    <span class="c"># optimize for fastest *per-proc* time</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">status</span><span class="o">=</span><span class="n">hyperopt</span><span class="o">.</span><span class="n">STATUS_OK</span><span class="p">,</span>
+        <span class="n">loss</span><span class="o">=</span><span class="n">elapsed</span><span class="o">/</span><span class="n">concurrency</span><span class="p">,</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>from <a class="reference external" href="http://johntellsall.com/class/auto-optimize/optimize.html">optimize.py</a></p>
+
+</article>
+<article class="slide level-1" id="run-in-parallel">
+<h1>run in parallel?</h1>
+
+</article>
+<article class="slide level-2" id="cheat">
+<h2>cheat!</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">format_command</span><span class="p">(</span><span class="n">cmd_type</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">concurrency</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">cmd_type</span> <span class="o">==</span> <span class="s">&#39;pyflakes&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;echo {} | xargs -n1 -P{} pyflakes 2&gt; /dev/null&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="p">),</span>
+            <span class="n">concurrency</span><span class="p">,</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://man.cx/?page=xargs&amp;do%5Bgo%5D=go">xargs</a> works wonders!</p>
+
+</article>
+<article class="slide level-2" id="pyflakes-dataset">
+<h2>Pyflakes dataset</h2>
+<div class="highlight-python"><div class="highlight"><pre>./optimize.py --batch=20 -o proc20.dat
+
+1003 source files, sampled 20 at a time
+processes: [1, 2, 3, 5, 8, 13, 20]
+CONC ELAPSED        TIME PER PROC
+  20        0.78    0.039
+  20         0.8    0.04
+  13        0.85    0.065
+   5        0.86    0.17
+   2         1.4    0.72
+   2         1.4    0.68
+   5         1.1    0.22
+   5         1.1    0.22
+   2         1.4    0.68
+  20         1.2    0.06
+ANSWER: for files 20 at a time, do 20 jobs in parallel
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-1" id="wait-what">
+<h1>wait, what?</h1>
+
+</article>
+<article class="slide level-2" id="pyflakes-plot">
+<h2>Pyflakes plot</h2>
+<iframe width="800" height="600" frameborder="0" seamless="seamless" scrolling="no" src="https://plot.ly/~johnlmitchell/4/800/600"></iframe>
+</article>
+<article class="slide level-2" id="pylint">
+<h2>Pylint</h2>
+<div class="highlight-python"><div class="highlight"><pre>$ pylint --reports=no ./optimize.py
+
+No config file found, using default configuration
+************* Module optimize
+F: 32,0: Unable to import &#39;hyperopt&#39;
+C: 33,0: Invalid name &quot;hp&quot; for type constant (should match (([A-Z_][A-Z0-9_]*)|(__.*__))$)
+C: 53,0:p_title: Missing docstring
+C: 57,0:p_sample: Missing docstring
+C: 63,0:write_header: Missing docstring
+C: 64,4:write_header: Operator not followed by a space
+    print &gt;&gt;outf, &#39;# {}&#39;.format( json.dumps(info) )
+</pre></div>
+</div>
+<p>43 lines vs 2!</p>
+<p>Pylint more smart, and slower</p>
+
+</article>
+<article class="slide level-2" id="pylint-dataset">
+<h2>Pylint dataset</h2>
+<div class="highlight-python"><div class="highlight"><pre>./optimize.py --batch=20  -v --cmd=pylint
+
+1003 source files, sampled 20 at a time
+processes: [1, 2, 3, 5, 8, 13, 20]
+CONC ELAPSED        TIME PER PROC
+INFO:hyperopt.tpe:tpe_transform took 0.000967 seconds
+INFO:hyperopt.tpe:TPE using 0 trials
+INFO:hyperopt.rand:generating trials for new_ids: [0]
+  20         3.1    0.15
+INFO:hyperopt.fmin:job returned status: ok
+INFO:hyperopt.fmin:job returned loss: 0.154589855671
+INFO:hyperopt.tpe:tpe_transform took 0.001614 seconds
+INFO:hyperopt.tpe:TPE using 1/1 trials with best loss 0.154590
+INFO:hyperopt.rand:generating trials for new_ids: [1]
+  20         2.6    0.13
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="pylint-plot">
+<h2>Pylint plot</h2>
+<iframe width="800" height="600" frameborder="0" seamless="seamless" scrolling="no" src="https://plot.ly/~johnlmitchell/5/800/600"></iframe>
+</article>
+<article class="slide level-2" id="future-directions">
+<h2>future directions</h2>
+<ul class="simple">
+<li>production varies parameters &quot;randomly&quot;</li>
+<li>use feedback to converge</li>
+<li>be careful!</li>
+<li>use cloud for capacity planning + tradeoffs</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="facebook">
+<h1>Facebook</h1>
+
+</article>
+<article class="slide level-2" id="model-power-vs-requests-sec">
+<h2>model power vs requests/sec</h2>
+<img alt="_images/fb-cpu-plot.png" src="_images/fb-cpu-plot.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">60 watts of power when it’s idle (0 RPS, or requests-per-second). The power consumption jumps to 130 watts when it runs at low-level CPU utilization (small RPS). But when it runs at medium-level CPU utilization, power consumption increases only slightly to 150 watts. Therefore, from a power-efficiency perspective, we should try to avoid running a server at low RPS and instead try to run at medium RPS.</p>
+</div>
+
+</article>
+<article class="slide level-2" id="power-saved">
+<h2>power saved</h2>
+<img alt="_images/fb-powersave-plot.png" src="_images/fb-powersave-plot.png" />
+
+</article>
+<article class="slide level-1" id="id1">
+<h1>☃</h1>
+
+</article>
+<article class="slide level-2" id="references">
+<h2>References</h2>
+<p><a class="reference external" href="http://hyperopt.github.io/hyperopt">Distributed Asynchronous Hyperparameter Optimization in Python</a></p>
+<blockquote>
+<div><ul class="simple">
+<li>includes 268 hyperparameters and GPU-days!</li>
+</ul>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/jaberg/hyperopt/wiki/Scipy2013">SciPy2013 talk</a></p>
+<p><a class="reference external" href="https://code.facebook.com/posts/816473015039157/making-facebook-s-software-infrastructure-more-energy-efficient-with-autoscale/">Making Facebook’s software infrastructure more energy efficient with Autoscale</a></p>
+
+</article>
+<article class="slide level-1" id="upcoming">
+<h1>upcoming!</h1>
+<ul class="simple">
+<li>Zero to Webapp in Two Hours</li>
+<li>Upping your Programming Game</li>
+<li>Tricking out Linux Kernel Networking</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="questions">
+<h1>Questions?</h1>
+
+</article>
+
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

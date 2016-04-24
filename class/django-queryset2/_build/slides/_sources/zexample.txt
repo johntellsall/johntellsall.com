@@ -1,0 +1,20 @@
+parse1.py
+---------
+
+.. code-block:: python
+
+   # 1. stream of lines
+   import fileinput
+   line
+   print ''.join( fileinput.input() )
+
+*python parse1.py recipe.ini*
+::
+
+    # very tasty
+    [Old Fashioned]
+    1:1.5 oz whiskey
+    2:1 tsp water
+    3:0.5 tsp sugar
+    4:2 dash bitters
+

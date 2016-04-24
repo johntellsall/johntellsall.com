@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>django-twoscoops-project &mdash; Django QuerySets and Functional Programming 2014.05.12 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.05.12',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    <link rel="top" title="Django QuerySets and Functional Programming 2014.05.12 documentation" href="../index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="slide level-1" id="django-twoscoops-project">
+<h1>django-twoscoops-project</h1>
+<p>A project template for Django 1.6 (with a tag for Django 1.5).</p>
+<p>To use this project follow these steps:</p>
+<ol class="arabic simple">
+<li>Create your working environment</li>
+<li>Install Django</li>
+<li>Create the new project using the django-two-scoops template</li>
+<li>Install additional dependencies</li>
+<li>Use the Django admin to create the project</li>
+</ol>
+<p><em>note: these instructions show creation of a project called &quot;icecream&quot;.  You
+should replace this name with the actual name of your project.</em></p>
+
+</article>
+<article class="slide level-2" id="working-environment">
+<h2>Working Environment</h2>
+<p>You have several options in setting up your working environment.  We recommend
+using virtualenv to separate the dependencies of your project from your system's
+python environment.  If on Linux or Mac OS X, you can also use virtualenvwrapper to help manage multiple virtualenvs across different projects.</p>
+
+</article>
+<article class="slide level-3" id="virtualenv-only">
+<h3>Virtualenv Only</h3>
+<p>First, make sure you are using virtualenv (<a class="reference external" href="http://www.virtualenv.org">http://www.virtualenv.org</a>). Once
+that's installed, create your virtualenv:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ virtualenv --distribute icecream
+</pre></div>
+</div>
+<p>You will also need to ensure that the virtualenv has the project directory
+added to the path. Adding the project directory will allow <cite>django-admin.py</cite> to
+be able to change settings using the <cite>--settings</cite> flag.</p>
+
+</article>
+<article class="slide level-3" id="virtualenv-with-virtualenvwrapper">
+<h3>Virtualenv with virtualenvwrapper</h3>
+<p>In Linux and Mac OSX, you can install virtualenvwrapper (<a class="reference external" href="http://virtualenvwrapper.readthedocs.org/en/latest/">http://virtualenvwrapper.readthedocs.org/en/latest/</a>),
+which will take care of managing your virtual environments and adding the
+project path to the <cite>site-directory</cite> for you:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir icecream
+$ mkvirtualenv -a icecream icecream-dev
+$ cd icecream &amp;&amp; add2virtualenv `pwd`
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-3" id="using-virtualenvwrapper-with-windows">
+<h3>Using virtualenvwrapper with Windows</h3>
+<p>TBD</p>
+
+</article>
+<article class="slide level-2" id="installing-django">
+<h2>Installing Django</h2>
+<p>To install Django in the new virtual environment, run the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install django
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="creating-your-project">
+<h2>Creating your project</h2>
+<p>To create a new Django project called '<strong>icecream</strong>' using
+django-twoscoops-project, run the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ django-admin.py startproject --template=https://github.com/twoscoops/django-twoscoops-project/archive/master.zip --extension=py,rst,html icecream_project
+</pre></div>
+</div>
+<p>For Django 1.5 users, we recommend:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ django-admin.py startproject --template=https://github.com/twoscoops/django-twoscoops-project/archive/1.5.zip --extension=py,rst,html icecream_project
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="installation-of-dependencies">
+<h2>Installation of Dependencies</h2>
+<p>Depending on where you are installing dependencies:</p>
+<p>In development:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install -r requirements/local.txt
+</pre></div>
+</div>
+<p>For production:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install -r requirements.txt
+</pre></div>
+</div>
+<p><em>note: We install production requirements this way because many Platforms as a
+Services expect a requirements.txt file in the root of projects.</em></p>
+
+</article>
+<article class="slide level-2" id="acknowledgements">
+<h2>Acknowledgements</h2>
+<ul class="simple">
+<li>Many thanks to Randall Degges for the inspiration to write the book and django-skel.</li>
+<li>All of the <a class="reference external" href="https://github.com/twoscoops/django-twoscoops-project/blob/master/CONTRIBUTORS.txt">contributors</a> to this project.</li>
+</ul>
+
+</article>
+
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

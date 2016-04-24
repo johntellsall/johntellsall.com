@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Functional Programming in Python &mdash; Django QuerySets and Functional Programming 2014.05.12 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.05.12',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    <link rel="top" title="Django QuerySets and Functional Programming 2014.05.12 documentation" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="slide level-1" id="functional-programming-in-python">
+<h1>Functional Programming in Python</h1>
+
+</article>
+<article class="slide level-2" id="old-primary-functions">
+<h2>Old Primary Functions</h2>
+<dl class="function">
+<dt id="filter">
+<tt class="descname">filter</tt><big>(</big><em>function</em>, <em>iterable</em><big>)</big></dt>
+<dd><p>Construct a <strong>list</strong> from those elements of iterable for which function returns true.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="map">
+<tt class="descname">map</tt><big>(</big><em>function</em>, <em>iterable</em>, <em>...</em><big>)</big></dt>
+<dd><p>Apply function to every item of iterable and return a <strong>list</strong> of the results.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="go">[1, 2]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If additional iterable arguments are passed, function must
+take that many arguments and is applied to the items from
+all iterables in parallel. If one iterable is shorter than
+another it is assumed to be extended with None items. If
+function is None, the identity function is assumed; if there
+are multiple arguments, map() returns a list consisting of
+tuples containing the corresponding items from all iterables
+(a kind of transpose operation). The iterable arguments may
+be a sequence or any iterable object; the result is always a
+list.</p>
+</div>
+<dl class="function">
+<dt id="reduce">
+<tt class="descname">reduce</tt><big>(</big><em>function</em>, <em>iterable</em><span class="optional">[</span>, <em>initializer</em><span class="optional">]</span><big>)</big></dt>
+<dd><p>Apply function of two arguments cumulatively to the items of iterable, from left to right, so as to reduce the iterable to a single value.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="function">
+<dt id="enumerate">
+<tt class="descname">enumerate</tt><big>(</big><em>sequence</em><span class="optional">[</span>, <em>start=0</em><span class="optional">]</span><big>)</big></dt>
+<dd></dd></dl>
+
+<p class="last">Return an iterator that yields tuples of an index and an item of the
+<em>sequence</em>. (And so on.)</p>
+</div>
+
+</article>
+<article class="slide level-2" id="fp-important-dataset">
+<h2>FP: important dataset</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
+<span class="go"># Old Fashioned</span>
+<span class="go">1.5 oz whiskey</span>
+<span class="go">1 tsp water</span>
+<span class="go">0.5 tsp sugar</span>
+<span class="go">2 dash bitters</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="functional-prog-for-better-booze">
+<h2>Functional Prog for Better Booze!</h2>
+<div class="figure">
+<img alt="_static/bourbon-old-fashioned.jpg" src="_static/bourbon-old-fashioned.jpg" />
+</div>
+
+</article>
+<article class="slide level-2" id="fp-filter">
+<h2>FP: filter</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return not line.startswith(&#39;#&#39;)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">))</span> <span class="p">)</span>
+<span class="go">1.5 oz whiskey</span>
+<span class="go">1 tsp water</span>
+<span class="go">0.5 tsp sugar</span>
+<span class="go">2 dash bitters</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt>
+<tt class="descname">filter</tt><big>(</big><em>function</em>, <em>iterable</em><big>)</big></dt>
+<dd><p>Construct a <strong>list</strong> from those elements of iterable for which function returns true.</p>
+</dd></dl>
+
+
+</article>
+<article class="slide level-2" id="fp-map-filter">
+<h2>FP: map, filter</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return str(line.split()[:2])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return not line.startswith(&#39;#&#39;)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)))</span> <span class="p">)</span>
+<span class="go">[&#39;1.5&#39;, &#39;oz&#39;]</span>
+<span class="go">[&#39;1&#39;, &#39;tsp&#39;]</span>
+<span class="go">[&#39;0.5&#39;, &#39;tsp&#39;]</span>
+<span class="go">[&#39;2&#39;, &#39;dash&#39;]</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt>
+<tt class="descname">map</tt><big>(</big><em>function</em>, <em>iterable</em>, <em>...</em><big>)</big></dt>
+<dd><p>Apply function to every item of iterable and return a <strong>list</strong> of the results.</p>
+</dd></dl>
+
+
+</article>
+<article class="slide level-2" id="recommended-generator-expressions">
+<h2>Recommended: generator expressions</h2>
+<p><strong>filter replacement</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s">&#39;whiskey&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>compare with</strong></p>
+<p><em>filter(function, iterable)</em></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">high performance, memory efficient generalization of list comprehensions [1] and generators [2].
+<a class="reference external" href="http://legacy.python.org/dev/peps/pep-0289/">http://legacy.python.org/dev/peps/pep-0289/</a></p>
+</div>
+
+</article>
+<article class="slide level-2" id="filter-replacement">
+<h2>filter replacement</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s">&#39;whiskey&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+<span class="go">&lt;generator object &lt;genexpr&gt; at 0x7f429d7c8eb0&gt;</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="id1">
+<h2>filter replacement</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">list</span><span class="p">((</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s">&#39;whiskey&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span><span class="o">**</span><span class="p">)</span>
+<span class="go">[&#39;1.5 oz whiskey\n&#39;]</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="original-fp-1">
+<h2>original FP #1</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return not line.startswith(&#39;#&#39;)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return str(line.split()[:2])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)))</span> <span class="p">)</span>
+<span class="go">[&#39;1.5&#39;, &#39;oz&#39;]</span>
+<span class="go">[&#39;1&#39;, &#39;tsp&#39;]</span>
+<span class="go">[&#39;0.5&#39;, &#39;tsp&#39;]</span>
+<span class="go">[&#39;2&#39;, &#39;dash&#39;]</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="updated-fp-1">
+<h2>updated FP #1</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return not line.startswith(&#39;#&#39;)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return str(line.split()[:2])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="p">(</span>
+<span class="go">    amount(hasdata)</span>
+<span class="go">    for hasdata in (</span>
+<span class="go">        line for line in open(&#39;ing.txt&#39;)</span>
+<span class="go">            if isdata(line)</span>
+<span class="go">    )</span>
+<span class="go">) )</span>
+<span class="go">[&#39;1.5&#39;, &#39;oz&#39;]</span>
+<span class="go">[&#39;1&#39;, &#39;tsp&#39;]</span>
+<span class="go">[&#39;0.5&#39;, &#39;tsp&#39;]</span>
+<span class="go">[&#39;2&#39;, &#39;dash&#39;]</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="iterator-functions">
+<h2>Iterator Functions</h2>
+<dl class="function">
+<dt id="xrange">
+<tt class="descname">xrange</tt><big>(</big><em>stop) -&gt; counter (xrange object</em><big>)</big></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">xrange</tt><big>(</big><em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><big>)</big> &rarr; counter</dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="chain">
+<tt class="descname">chain</tt><big>(</big><em>*iterables</em><big>)</big></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">ifilter()      pred, seq       elements of seq where pred(elem) is True        ifilter(lambda x: x%2, range(10)) --&gt; 1 3 5 7 9</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">ifilterfalse() pred, seq       elements of seq where pred(elem) is False       ifilterfalse(lambda x: x%2, range(10)) --&gt; 0 2 4 6 8</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">islice()       seq, [start,] stop [, step]     elements from seq[start:stop:step]      islice('ABCDEFG', 2, None) --&gt; C D E F G</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">imap() func, p, q, ... func(p0, q0), func(p1, q1), ... imap(pow, (2,3,10), (5,2,3)) --&gt; 32 9 1000</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">starmap()      func, seq       func(*seq[0]), func(*seq[1]), ...       starmap(pow, [(2,5), (3,2), (10,3)]) --&gt; 32 9 1000</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">tee()  it, n   it1, it2 , ... itn splits one iterator into n</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">takewhile()    pred, seq       seq[0], seq[1], until pred fails        takewhile(lambda x: x&lt;5, [1,4,6,4,1]) --&gt; 1 4</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">izip() p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip('ABCD', 'xy') --&gt; Ax By</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">izip_longest() p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip_longest('ABCD', 'xy', fillvalue='-') --&gt; Ax By C- D-</tt></dt>
+<dd></dd></dl>
+
+
+</article>
+<article class="slide level-2" id="iter-chain">
+<h2>iter: chain</h2>
+<p><strong>chain(streams)</strong> gives elements of each stream in order</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chain</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span>
+<span class="go">&lt;itertools.chain object at 0x7f429d848510&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span> <span class="n">chain</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span> <span class="p">)</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">stream of objects with state
+lazy vs eager</p>
+</div>
+
+</article>
+
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

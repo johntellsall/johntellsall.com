@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Map &mdash; Django QuerySets and Functional Programming 2014.05.12 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.05.12',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    <link rel="top" title="Django QuerySets and Functional Programming 2014.05.12 documentation" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="slide level-1" id="map">
+<h1>Map</h1>
+<dl class="function">
+<dt>
+<tt class="descname">map</tt><big>(</big><em>function</em>, <em>iterable</em>, <em>...</em><big>)</big></dt>
+<dd><p>Apply function to every item of iterable and return a <strong>list</strong> of the results.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="go">[1, 2]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If additional iterable arguments are passed, function must
+take that many arguments and is applied to the items from
+all iterables in parallel. If one iterable is shorter than
+another it is assumed to be extended with None items. If
+function is None, the identity function is assumed; if there
+are multiple arguments, map() returns a list consisting of
+tuples containing the corresponding items from all iterables
+(a kind of transpose operation). The iterable arguments may
+be a sequence or any iterable object; the result is always a
+list.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;ab&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="go">[(&#39;a&#39;, 1), (&#39;b&#39;, 2), (None, 3)]</span>
+</pre></div>
+</div>
+
+</article>
+
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

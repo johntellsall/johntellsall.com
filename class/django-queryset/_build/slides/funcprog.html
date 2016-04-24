@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Why Functional Programming &mdash; Django QuerySets and Functional Programming 2014.05.12 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.05.12',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    <link rel="top" title="Django QuerySets and Functional Programming 2014.05.12 documentation" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="admonition-three-programming-paradigms slide level-2">
+<h2>Three Programming Paradigms</h2>
+<div class="figure">
+<img alt="_static/3-hoodlums-nancy.png" src="_static/3-hoodlums-nancy.png" />
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">class:</th><td class="field-body">fill</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+<article class="slide level-1" id="why-functional-programming">
+<h1>Why Functional Programming</h1>
+
+</article>
+<article class="slide level-2" id="practical-advantages-to-functional-programming">
+<h2>Practical Advantages to Functional Programming</h2>
+<blockquote>
+<div><ul class="simple">
+<li>Modularity</li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Composability">Composability!</a></li>
+<li>Ease of debugging and testing</li>
+<li>Caching</li>
+<li>Parallelization</li>
+</ul>
+</div></blockquote>
+<ul class="build simple">
+<li>Buzzwordy!</li>
+<li>Chicks dig it!</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="fp-vs-procedural-programming">
+<h2>FP vs Procedural programming</h2>
+<p><strong>procedural: list of instructions</strong></p>
+<p>input, output, can modify inputs</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">upfile</span><span class="p">(</span><span class="n">inpath</span><span class="p">,</span> <span class="n">outpath</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">inpath</span><span class="p">):</span>
+            <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="p">)</span>
+
+<span class="n">upfile</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">,</span> <span class="s">&#39;/dev/stdout&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="build simple">
+<li>how can you test this?</li>
+<li>run in parallel?</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">[Many] Languages are procedural: programs are lists of instructions
+that tell the computer what to do with the program’s input.</p>
+</div>
+
+</article>
+<article class="slide level-2" id="fp-vs-object-orientation">
+<h2>FP vs Object Orientation</h2>
+<p>procedural: list of instructions</p>
+<p><strong>object oriented: Object has state and specific functions to
+query/modify state.  Easy to specialize by subclassing.</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Upcase</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inpath</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Upcase</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">inpath</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outpath</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="p">)</span>
+
+<span class="n">Upcase</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s">&#39;/dev/stdout&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Object-oriented programs manipulate collections of objects. Objects
+have internal state and support methods that query or modify this
+internal state in some way. Smalltalk and Java are object-oriented
+languages. C++ and Python are languages that support
+object-oriented programming, but don’t force the use of
+object-oriented features. [&quot;Object obsessive&quot;]</p>
+</div>
+
+</article>
+<article class="slide level-2" id="functional-programming">
+<h2>Functional Programming</h2>
+<p>procedural: list of instructions</p>
+<p>object oriented: object has state and specific functions to
+query/modify state.  Easy to specialize by subclassing</p>
+<p><strong>functional: functions operate on streams of objects</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">preferably without internal state</p>
+</div>
+
+</article>
+<article class="slide level-2" id="fp-list-of-functions">
+<h2>FP: list of functions</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="p">(</span>
+<span class="go">    amount(hasdata)</span>
+<span class="go">    for hasdata in (</span>
+<span class="go">        line for line in open(&#39;ing.txt&#39;)</span>
+<span class="go">            if isdata(line)</span>
+<span class="go">    )</span>
+<span class="go">) )</span>
+</pre></div>
+</div>
+<div class="figure" style="width: 50%">
+<img alt="_static/girl-with-beads2.jpg" src="_static/girl-with-beads2.jpg" />
+</div>
+
+</article>
+<article class="slide level-2" id="stop-right-now">
+<h2>Stop right now</h2>
+<p>read Andy Kuchling's <a class="reference external" href="https://docs.python.org/2.7/howto/functional.html">Functional Programming HOWTO</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Functional programming decomposes a problem into a set of
+functions. Ideally, functions only take inputs and produce outputs,
+and don’t have any internal state that affects the output produced
+for a given input.</p>
+<p>Eliminating side effects, i.e. changes in state that do not depend
+on the function inputs, can make it much easier to understand and
+predict the behavior of a program</p>
+<p class="last"><a class="reference external" href="http://en.wikipedia.org/wiki/Functional_programming">http://en.wikipedia.org/wiki/Functional_programming</a></p>
+</div>
+
+</article>
+<article class="slide level-2" id="fp-upcase">
+<h2>FP: upcase</h2>
+<p>functional: functions operate on streams of objects</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
+
+<span class="n">writelines</span><span class="p">(</span> <span class="s">&#39;/dev/stdout&#39;</span><span class="p">,</span>
+            <span class="n">upcase</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="p">)</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="fp-upcase-2">
+<h2>FP: upcase 2</h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="c"># IN: stream of lines; OUT: stream of lines</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="c"># IN: stream of lines; OUT: nothing</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
+
+<span class="c"># open() is OUT: stream of lines</span>
+<span class="n">writelines</span><span class="p">(</span> <span class="s">&#39;/dev/stdout&#39;</span><span class="p">,</span>
+            <span class="n">upcase</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="p">)</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Generally you'll mix these styles. IE: function that returns
+a stream of objects.</p>
+</div>
+
+</article>
+
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
