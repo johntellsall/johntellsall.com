@@ -23,7 +23,7 @@ ME
 
 
 Contents
-=====
+========
 
 iterator/generator = "stream"
 
@@ -37,6 +37,7 @@ overview
 --------
 
 .. image:: _static/large_BaxterCutawayFF3.jpg
+
 
 
 Iterators
@@ -136,23 +137,228 @@ Traceback (most recent call last):
 TypeError: object of type 'file' has no len()
 
 
-You already use common iterator functions
+Common iterator functions
 ----------------------------------------------------------------
 
 * .. py:function:: enumerate(iter)
 * .. py:function:: sorted(iter)
 * .. py:function:: range(stop)
+* .. py:function:: dict.iteritems()
 
 very important:
 
 * .. py:function:: filter(func/None, iter)
 * .. py:function:: map(func, *iterables)
 
-  and _itertools_
+  and *itertools*, and *fileinput*
+
+
+☃
+=
+
+
+Functional Programming
+==============================
+
+
+what?
+-----
+
+.. image:: _static/jimmy-2.jpg
+
+
+
+
+programming paradigms
+---------------------
+
+*procedural*
+
+	list of instructions
+        can modify caller's state
+
+*object oriented*
+
+	object has state and functions to query/modify state
+        specialize by subclassing
+
+
+FP vs Procedural programming
+----------------------------------------------------------------
+
+*procedural: list of instructions*
+
+.. code-block:: python
+
+    def upfile(inpath, outpath):
+        with open(outpath, 'w') as outf:
+            for line in open(inpath):
+                outf.write( line.upper() )
+
+    upfile('ing.txt', '/dev/stdout')
+
+.. rst-class:: build
+
+   * how can you test this?
+
+   * run in parallel?
+
+.. note::
+
+  [Many] Languages are procedural: programs are lists of instructions
+  that tell the computer what to do with the program’s input.
+
+
+FP vs Object Orientation
+----------------------------------------------------------------
+
+**object oriented: Object has state and specific functions to
+query/modify state.  Easy to specialize by subclassing.**
+
+.. code-block:: python
+
+    class RWFile(list):
+        def __init__(self, inpath):
+            super(Upcase,self).__init__(
+                open(inpath).readlines()
+                )
+        def transform(self, line):
+            return line
+        def writelines(self, outpath):
+            with open(outpath, 'w') as outf:
+                for line in self:
+                    outf.write( self.transform(line) )
+
+    class UpFile(RWFile):
+                def transform(self, line):
+    return line.upper()
+
+    UpFile('ing.txt').writelines('/dev/stdout')
+
+.. note::
+
+   Object-oriented programs manipulate collections of objects. Objects
+   have internal state and support methods that query or modify this
+   internal state in some way. Smalltalk and Java are object-oriented
+   languages. C++ and Python are languages that support
+   object-oriented programming, but don’t force the use of
+   object-oriented features. ["Object obsessive"]
+
+
+Functional Programming
+----------------------------------------------------------------
+
+procedural: list of instructions
+
+    object oriented: object has state and specific functions to
+    query/modify state.  Easy to specialize by subclassing
+
+**functional: functions operate on streams of objects**
+
+    preferably without internal state
+
+
+food chain
+----------
+
+.. image:: _static/FoodChain.jpg
+
+
+UpFile example in Functional Programming
+----------------------------------------
+
+.. code-block:: python
+
+   open('out.txt', 'w').writelines(
+       line.upper() for line in open('in.txt')
+   )
+
+.. note::
+   seed, then transforms
+   recombine elements, vs specialize
+
+
+UpFile in FP: specialize with named function
+--------------------------------------------
+
+.. code-block:: python
+
+    def upcase(line):
+        return line.upper()
+
+    open('out.txt', 'w').writelines(map(upcase, open('in.txt')))
+
+
+Ex2: print list of ingredients in a recipe
+------------------------------------------
+
+::
+
+     # very tasty
+     [Old Fashioned]
+     1:1.5 oz whiskey
+     2:1 tsp water
+     3:0.5 tsp sugar
+     4:2 dash bitters
+
+::
+
+   whiskey
+   water
+   sugar
+   bitters
+
+Ex2: procedural style
+---------------------
+
+*print list of ingredients in a recipe*
+
+.. code-block:: python
+
+    ingredients = []
+    for line in open('ing.txt'):
+        ing = parse(line)
+        if ing:
+            ingredients.append(ing.name)
+    print '\n'.join(ingredients)
+
+
+FP: Lisp style with generator expressions
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+>>> print '\n'.join( (
+    (ing.name
+    for ing in (
+        parse(line) for line in open('ing.txt')
+            ) if ing
+    )
+) )
+
+FP: Lisp style with map-filter
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+XX
+
+.. code-block:: python
+
+   print '\n'.join(
+       map(lambda ing: ing.name,
+       filter(None,
+            map(parse,
+                open('ing.txt')
+            )
+        )
+   )
+
+
 
 
 `itertools <https://docs.python.org/2/library/itertools.html>`_
----------
+---------------------------------------------------------------
 
 .. hlist::
    *  **chain()**
@@ -215,38 +421,7 @@ Equivalent to **+** for lists.
    lazy vs eager
    ****************************************************************
 
-☃
-=
 
-
-Functional Programming
-==============================
-
-
-what?
------
-
-.. image:: _static/jimmy-2.jpg
-
-
-
-food chain
-----------
-
-.. image:: _static/FoodChain.jpg
-
-
-
-programming styles
-------------------
-
-*procedural*
-
-	list of instructions
-
-*object oriented*
-
-	object has state and functions to query/modify state; specialize by subclassing
 
 **functional**
 
@@ -356,7 +531,7 @@ Empty List?
    *How can you tell if a list is empty or not?*
 
 A: Empty List
-----------
+-------------
 
 >>> bool([])
 False
@@ -462,7 +637,7 @@ Can mix/match QS/iterators...
 
 
 ...but not always
---------------
+-----------------
 
 
 *How can you tell if a QuerySet is empty or not?*
@@ -592,88 +767,8 @@ Practical Advantages to Functional Programming
 .. _`Composability!`: http://en.wikipedia.org/wiki/Composability
 
 
-FP vs Procedural programming
-----------------------------------------------------------------
-
-**procedural: list of instructions**
-
-input, output, can modify inputs
-
-.. code-block:: python
-
-    def upfile(inpath, outpath):
-        with open(outpath, 'w') as outf:
-            for line in open(inpath):
-                outf.write( line.upper() )
-
-    upfile('ing.txt', '/dev/stdout')
-
-.. rst-class:: build
-
-   * how can you test this?
-
-   * run in parallel?
-
-.. note::
-
-  [Many] Languages are procedural: programs are lists of instructions
-  that tell the computer what to do with the program’s input.
 
 
-FP vs Object Orientation
-----------------------------------------------------------------
-
-procedural: list of instructions
-
-**object oriented: Object has state and specific functions to
-query/modify state.  Easy to specialize by subclassing.**
-
-.. code-block:: python
-
-    class Upcase(list):
-        def __init__(self, inpath):
-            super(Upcase,self).__init__(
-                open(inpath).readlines()
-                )
-        def writelines(self, outpath):
-            with open(outpath, 'w') as outf:
-                for line in self:
-                    outf.write( line.upper() )
-
-    Upcase('ing.txt').writelines('/dev/stdout')
-
-.. note::
-
-   Object-oriented programs manipulate collections of objects. Objects
-   have internal state and support methods that query or modify this
-   internal state in some way. Smalltalk and Java are object-oriented
-   languages. C++ and Python are languages that support
-   object-oriented programming, but don’t force the use of
-   object-oriented features. ["Object obsessive"]
-
-
-Functional Programming
-----------------------------------------------------------------
-
-procedural: list of instructions
-
-object oriented: object has state and specific functions to
-query/modify state.  Easy to specialize by subclassing
-
-**functional: functions operate on streams of objects**
-
-.. note:: preferably without internal state
-
-FP: list of functions
-----------------------------------------------------------------
-
->>> print '\n'.join( (
-    amount(hasdata)
-    for hasdata in (
-        line for line in open('ing.txt')
-            if isdata(line)
-    )
-) )
 
 .. note:: add "happy girl with beads" image
 

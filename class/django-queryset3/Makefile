@@ -25,6 +25,9 @@ watch:
 	fswatch --one-per-batch --latency=10 index.rst \
 	| xargs -n1 -I{} make singlehtml
 
+slides:
+	sphinx-build -b slides . ./_build/slides
+
 .PHONY: help
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
