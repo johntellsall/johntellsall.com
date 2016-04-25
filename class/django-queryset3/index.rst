@@ -33,8 +33,8 @@ QuerySet is a stream
 
 
 
-overview
---------
+FP+QS overview
+--------------
 
 .. image:: _static/large_BaxterCutawayFF3.jpg
 
@@ -94,7 +94,6 @@ iterate across a *stream* of strings
    Ex: Database iterator
 
 
-
 Lists/Iterators are very similar
 ----------------------------------------------------------------
 
@@ -111,6 +110,31 @@ Lists/Iterators are very similar
 
    for name in glob.iglob('*.txt'):
        print name
+
+
+What can you do with a iterator?
+----------------------------------------------------------------
+
+>>> f = open('ing.txt')
+>>> f.next()
+'# Old Fashioned\n'
+>>> f.next()
+'1.5 oz whiskey\n'
+
+
+What happens at the end?
+----------------------------------------------------------------
+
+>>> f = open('/dev/null')
+>>> f.next()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+
+>>> iter([]).next()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
 
 
 What can you *not* do with an iterator?
@@ -136,6 +160,29 @@ Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 TypeError: object of type 'file' has no len()
 
+
+List vs Iterator
+----------------
+
+===========  =======  ==========
+feature      list     iterator
+===========  =======  ==========
+overall      eager    lazy
+len(x)       yes      no
+slice        x[:3]    islice(x, 3)
+addition     x + y    chain(x, y)
+has items    if x     no
+easy debug   yes      no
+===========  =======  ==========
+
+.. note::
+
+   List are "eager" -- know everything about them all the time
+
+   Million item list can be rough, because they hold all million
+   - have to deal with all items
+
+   Million item iter is no biggie, can proc a few
 
 Common iterator functions
 ----------------------------------------------------------------
@@ -252,6 +299,11 @@ procedural: list of instructions
 
     object oriented: object has state and specific functions to
     query/modify state.  Easy to specialize by subclassing
+
+object oriented
+
+    object has state and functions to query/modify state
+    specialize by subclassing
 
 **functional: functions operate on streams of objects**
 
@@ -827,25 +879,6 @@ iterate across a *stream* of strings
 
    you already use iterators
 
-Database iterator
---------------------
-
-iterate with a *stream* of rows
-
-.. code-block:: python
-
-    import os, sqlite3
-    conn = sqlite3.connect('recipe')
-    cursor = conn.cursor()
-
-    cursor.execute("""select name from ingridient""")
-
-    for row in cursor.fetchall():
-        print(row)
-
-    cursor.close()
-    conn.close()
-
 List very similar to Iterator
 ----------------------------------------------------------------
 
@@ -866,53 +899,6 @@ List very similar to Iterator
 Work with a *stream* of objects
 
 
-
-What can you do with a iterator?
-----------------------------------------------------------------
-
->>> f = open('ing.txt')
->>> f.next()
-'# Old Fashioned\n'
->>> f.next()
-'1.5 oz whiskey\n'
-
-
-What happens at the end?
-----------------------------------------------------------------
-
->>> f = open('/dev/null')
->>> f.next()
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-StopIteration
-
->>> iter([]).next()
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-StopIteration
-
-List vs Iterator
-----------------
-
-===========  =======  ==========
-feature      list     iterator
-===========  =======  ==========
-overall      eager    lazy
-len(x)       yes      no
-slice        x[:3]    islice(x, 3)
-addition     x + y    chain(x, y)
-has items    if x     no
-easy debug   yes      no
-===========  =======  ==========
-
-.. note::
-
-   List are "eager" -- know everything about them all the time
-
-   Million item list can be rough, because they hold all million
-   - have to deal with all items
-
-   Million item iter is no biggie, can proc a few
 
 FP: upcase
 ----------------------------------------------------------------
@@ -1410,3 +1396,23 @@ HISTORICAL
    Traceback (most recent call last):
      File "<stdin>", line 1, in <module>
    StopIteration
+
+
+Database iterator
+--------------------
+
+iterate with a *stream* of rows
+
+.. code-block:: python
+
+    import os, sqlite3
+    conn = sqlite3.connect('recipe')
+    cursor = conn.cursor()
+
+    cursor.execute("""select name from ingredient""")
+
+    for row in cursor.fetchall():
+        print(row)
+
+    cursor.close()
+    conn.close()

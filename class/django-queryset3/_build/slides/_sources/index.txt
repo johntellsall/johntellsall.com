@@ -2,26 +2,28 @@
    hieroglyph-quickstart on Sat Jul 19 13:59:19 2014.
 
 
-Functional Programming and Django QuerySets
-===========================================
+Functional Programming and Django QuerySets 2016
+================================================
 
-April 20, 2016
+SoCal Python
 
-beer
-==
-.. note::
+April 26, 2016
 
-   ME
+
+ME
+====
 
    - Senior dev/server guy; DevOps
-   - 15 years experience with Python
+   - 20 years experience with Python
    - john@johntellsall.com
+
+.. note::
 
    - first PyCon I went to had 40 people!
 
 
-IDEAS
-=====
+Contents
+========
 
 iterator/generator = "stream"
 
@@ -29,18 +31,13 @@ FP: programming with composition
 
 QuerySet is a stream
 
-.. note::
-
-	- itertools
-	- functions
-
-	- no side effects
 
 
-overview
---------
+FP+QS overview
+--------------
 
 .. image:: _static/large_BaxterCutawayFF3.jpg
+
 
 
 Iterators
@@ -72,8 +69,8 @@ efficient list.
    - Preferred, because they take almost no space
 
 
-File iterator
-----------------
+You already use iterators
+-------------------------
 
 iterate across a *stream* of strings
 
@@ -97,33 +94,8 @@ iterate across a *stream* of strings
    Ex: Database iterator
 
 
-..
-   What can you do with a iterator?
-   ----------------------------------------------------------------
 
-   >>> f = open('ing.txt')
-   >>> f.next()
-   '# Old Fashioned\n'
-   >>> f.next()
-   '1.5 oz whiskey\n'
-
-
-   What happens at the end?
-   ----------------------------------------------------------------
-
-   >>> f = open('/dev/null')
-   >>> f.next()
-   Traceback (most recent call last):
-     File "<stdin>", line 1, in <module>
-   StopIteration
-
-   >>> iter([]).next()
-   Traceback (most recent call last):
-     File "<stdin>", line 1, in <module>
-   StopIteration
-
-
-Very similar
+Lists/Iterators are very similar
 ----------------------------------------------------------------
 
 .. code-block:: python
@@ -165,21 +137,233 @@ Traceback (most recent call last):
 TypeError: object of type 'file' has no len()
 
 
-Common Iterator Functions
+Common iterator functions
 ----------------------------------------------------------------
 
 * .. py:function:: enumerate(iter)
 * .. py:function:: sorted(iter)
 * .. py:function:: range(stop)
+* .. py:function:: dict.iteritems()
 
-very important, although "old style":
+very important:
 
 * .. py:function:: filter(func/None, iter)
 * .. py:function:: map(func, *iterables)
 
+  and *itertools*, and *fileinput*
+
+
+☃
+=
+
+
+Functional Programming
+==============================
+
+
+what?
+-----
+
+.. image:: _static/jimmy-2.jpg
+
+
+
+
+programming paradigms
+---------------------
+
+*procedural*
+
+	list of instructions
+        can modify caller's state
+
+*object oriented*
+
+	object has state and functions to query/modify state
+        specialize by subclassing
+
+
+FP vs Procedural programming
+----------------------------------------------------------------
+
+*procedural: list of instructions*
+
+.. code-block:: python
+
+    def upfile(inpath, outpath):
+        with open(outpath, 'w') as outf:
+            for line in open(inpath):
+                outf.write( line.upper() )
+
+    upfile('ing.txt', '/dev/stdout')
+
+.. rst-class:: build
+
+   * how can you test this?
+
+   * run in parallel?
+
+.. note::
+
+  [Many] Languages are procedural: programs are lists of instructions
+  that tell the computer what to do with the program’s input.
+
+
+FP vs Object Orientation
+----------------------------------------------------------------
+
+**object oriented: Object has state and specific functions to
+query/modify state.  Easy to specialize by subclassing.**
+
+.. code-block:: python
+
+    class RWFile(list):
+        def __init__(self, inpath):
+            super(Upcase,self).__init__(
+                open(inpath).readlines()
+                )
+        def transform(self, line):
+            return line
+        def writelines(self, outpath):
+            with open(outpath, 'w') as outf:
+                for line in self:
+                    outf.write( self.transform(line) )
+
+    class UpFile(RWFile):
+                def transform(self, line):
+    return line.upper()
+
+    UpFile('ing.txt').writelines('/dev/stdout')
+
+.. note::
+
+   Object-oriented programs manipulate collections of objects. Objects
+   have internal state and support methods that query or modify this
+   internal state in some way. Smalltalk and Java are object-oriented
+   languages. C++ and Python are languages that support
+   object-oriented programming, but don’t force the use of
+   object-oriented features. ["Object obsessive"]
+
+
+Functional Programming
+----------------------------------------------------------------
+
+procedural: list of instructions
+
+    object oriented: object has state and specific functions to
+    query/modify state.  Easy to specialize by subclassing
+
+object oriented
+
+    object has state and functions to query/modify state
+    specialize by subclassing
+
+**functional: functions operate on streams of objects**
+
+    preferably without internal state
+
+
+food chain
+----------
+
+.. image:: _static/FoodChain.jpg
+
+
+UpFile example in Functional Programming
+----------------------------------------
+
+.. code-block:: python
+
+   open('out.txt', 'w').writelines(
+       line.upper() for line in open('in.txt')
+   )
+
+.. note::
+   seed, then transforms
+   recombine elements, vs specialize
+
+
+UpFile in FP: specialize with named function
+--------------------------------------------
+
+.. code-block:: python
+
+    def upcase(line):
+        return line.upper()
+
+    open('out.txt', 'w').writelines(map(upcase, open('in.txt')))
+
+
+Ex2: print list of ingredients in a recipe
+------------------------------------------
+
+::
+
+     # very tasty
+     [Old Fashioned]
+     1:1.5 oz whiskey
+     2:1 tsp water
+     3:0.5 tsp sugar
+     4:2 dash bitters
+
+::
+
+   whiskey
+   water
+   sugar
+   bitters
+
+Ex2: procedural style
+---------------------
+
+*print list of ingredients in a recipe*
+
+.. code-block:: python
+
+    ingredients = []
+    for line in open('ing.txt'):
+        ing = parse(line)
+        if ing:
+            ingredients.append(ing.name)
+    print '\n'.join(ingredients)
+
+
+FP: Lisp style with generator expressions
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+>>> print '\n'.join( (
+    (ing.name
+    for ing in (
+        parse(line) for line in open('ing.txt')
+            ) if ing
+    )
+) )
+
+FP: Lisp style with map-filter
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+XX
+
+.. code-block:: python
+
+   print '\n'.join(
+       map(lambda ing: ing.name,
+       filter(None,
+            map(parse,
+                open('ing.txt')
+            )
+        )
+   )
+
+
+
 
 `itertools <https://docs.python.org/2/library/itertools.html>`_
-----------------------------------------------------------------------
+---------------------------------------------------------------
 
 .. hlist::
    *  **chain()**
@@ -198,7 +382,7 @@ very important, although "old style":
    *  tee()
    *  takewhile()
    *  **izip()**
-   *  **izip_longest()**
+   *  izip_longest()
 
 
 islice -- similar to list
@@ -240,59 +424,13 @@ Equivalent to **+** for lists.
 
    stream of objects with state
    lazy vs eager
-
-izip/izip_longest
-------------------------------------------------------------
-
->>> zip([1,2],[3,4])
-Out[1]: [(1, 3), (2, 4)]
-
->>> zip([1,2],[3])
-Out[2]: [(1, 3)]
-
->>> list(itertools.izip([1,2],[3]))
-Out[6]: [(1, 3)]
-
->>> list(itertools.izip_longest([1,2],[3]))
-Out[7]: [(1, 3), (2, None)]
+   ****************************************************************
 
 
-☃
-=
-
-
-Functional Programming
-==============================
-
-
-what?
------
-
-.. image:: _static/jimmy-2.jpg
-
-
-
-food chain
-----------
-
-.. image:: _static/FoodChain.jpg
-
->>> open('up.txt', 'w').writelines(
-  map(lambda line: line.upper(),
-  open('beer.txt')))
-
-programming styles
-------------------
-
-*procedural*
-  list of instructions
-
-
-*object oriented*
-  object has state and functions to query/modify state; specialize by subclassing
 
 **functional**
-  functions operate on streams of immutable objects
+
+	functions operate on streams of immutable objects
 
 .. note::
 
@@ -338,7 +476,7 @@ Example: Windows INI-file parser; aka ConfigParser
 Django QuerySets
 ================================================================
 
-represents a *stream* of objects from the database
+represents a *stream* of rows from the database
 
 
 .. note:: models.py
@@ -376,16 +514,6 @@ QuerySets can be shifty
 >>> x = Meeting.objects.filter(name='java')
 >>> x
 []
-
-*what is type(x)?*
-
-QuerySet is *not* a list!
-----------------------------------------------------------------
-
->>> x = Meeting.objects.filter(name='java')
->>> x
-[]
-
 >>> type(x)
 <class 'django.db.models.query.QuerySet'>
 
@@ -408,7 +536,7 @@ Empty List?
    *How can you tell if a list is empty or not?*
 
 A: Empty List
-----------------------------------------------------------------------
+-------------
 
 >>> bool([])
 False
@@ -514,12 +642,12 @@ Can mix/match QS/iterators...
 
 
 ...but not always
-----------------------------------------------------------------------
-
+-----------------
 
 
 *How can you tell if a QuerySet is empty or not?*
-  Use x.exists(), not bool(x) -- `more efficient <https://docs.djangoproject.com/en/dev/ref/models/querysets/>`_
+
+Use x.exists(), not bool(x) -- `more efficient <https://docs.djangoproject.com/en/dev/ref/models/querysets/>`_
 
 .. note::
 
@@ -578,20 +706,27 @@ https://docs.python.org/2/howto/functional.html
 
 Using Django querysets effectively by Dave Hall
 
-(best blog title ever: *... and then it crashed*)
+(best blog title ever)
 
 http://blog.etianen.com/blog/2013/06/08/django-querysets/
 
 .. Django QuerySets and Functional Programming slides file, created by
    hieroglyph-quickstart on Mon May 12 14:08:05 2014.
 
-1 THEME
+Django QuerySets and Functional Programming
+===================================================
+
+john@johntellsall.com
+
+v2
+
+THEME
 ================
 
 By using techniques from Functional Programming, we can
 make modular, reliable and testable code, faster.
 
-1 ME
+ME
 ====
 
    - Senior dev/server guy; Devops
@@ -616,10 +751,10 @@ make modular, reliable and testable code, faster.
   slide:: Three Programming Paradigms
 
 
-1 Why Functional Programming
+Why Functional Programming
 ================================================================
 
-1 Practical Advantages to Functional Programming
+Practical Advantages to Functional Programming
 ----------------------------------------------------------------
 
    * Modularity
@@ -637,88 +772,8 @@ make modular, reliable and testable code, faster.
 .. _`Composability!`: http://en.wikipedia.org/wiki/Composability
 
 
-1 FP vs Procedural programming
-----------------------------------------------------------------
-
-**procedural: list of instructions**
-
-input, output, can modify inputs
-
-.. code-block:: python
-
-    def upfile(inpath, outpath):
-        with open(outpath, 'w') as outf:
-            for line in open(inpath):
-                outf.write( line.upper() )
-
-    upfile('ing.txt', '/dev/stdout')
-
-.. rst-class:: build
-
-   * how can you test this?
-
-   * run in parallel?
-
-.. note::
-
-  [Many] Languages are procedural: programs are lists of instructions
-  that tell the computer what to do with the program’s input.
 
 
-1 FP vs Object Orientation
-----------------------------------------------------------------
-
-procedural: list of instructions
-
-**object oriented: Object has state and specific functions to
-query/modify state.  Easy to specialize by subclassing.**
-
-.. code-block:: python
-
-    class Upcase(list):
-        def __init__(self, inpath):
-            super(Upcase,self).__init__(
-                open(inpath).readlines()
-                )
-        def writelines(self, outpath):
-            with open(outpath, 'w') as outf:
-                for line in self:
-                    outf.write( line.upper() )
-
-    Upcase('ing.txt').writelines('/dev/stdout')
-
-.. note::
-
-   Object-oriented programs manipulate collections of objects. Objects
-   have internal state and support methods that query or modify this
-   internal state in some way. Smalltalk and Java are object-oriented
-   languages. C++ and Python are languages that support
-   object-oriented programming, but don’t force the use of
-   object-oriented features. ["Object obsessive"]
-
-
-1 Functional Programming
-----------------------------------------------------------------
-
-procedural: list of instructions
-
-object oriented: object has state and specific functions to
-query/modify state.  Easy to specialize by subclassing
-
-**functional: functions operate on streams of objects**
-
-.. note:: preferably without internal state
-
-1 FP: list of functions
-----------------------------------------------------------------
-
->>> print '\n'.join( (
-    amount(hasdata)
-    for hasdata in (
-        line for line in open('ing.txt')
-            if isdata(line)
-    )
-) )
 
 .. note:: add "happy girl with beads" image
 
@@ -744,7 +799,7 @@ query/modify state.  Easy to specialize by subclassing
    http://en.wikipedia.org/wiki/Functional_programming
 
 
-1 Iterators
+Iterators
 ----------------
 
 An iterator is a *stream* of data -- sort of a restricted, very
@@ -762,7 +817,7 @@ efficient list
    - Preferred, because they take almost no space
 
 
-1 File iterator
+File iterator
 ----------------
 
 iterate across a *stream* of strings
@@ -777,7 +832,7 @@ iterate across a *stream* of strings
 
    you already use iterators
 
-1 Database iterator
+Database iterator
 --------------------
 
 iterate with a *stream* of rows
@@ -796,7 +851,7 @@ iterate with a *stream* of rows
     cursor.close()
     conn.close()
 
-1 List very similar to Iterator
+List very similar to Iterator
 ----------------------------------------------------------------
 
 .. code-block:: python
@@ -817,7 +872,7 @@ Work with a *stream* of objects
 
 
 
-1 What can you do with a iterator?
+What can you do with a iterator?
 ----------------------------------------------------------------
 
 >>> f = open('ing.txt')
@@ -827,7 +882,7 @@ Work with a *stream* of objects
 '1.5 oz whiskey\n'
 
 
-1 What happens at the end?
+What happens at the end?
 ----------------------------------------------------------------
 
 >>> f = open('/dev/null')
@@ -841,8 +896,8 @@ Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 StopIteration
 
-1 List vs Iterator
-------------------
+List vs Iterator
+----------------
 
 ===========  =======  ==========
 feature      list     iterator
@@ -864,7 +919,7 @@ easy debug   yes      no
 
    Million item iter is no biggie, can proc a few
 
-1 FP: upcase
+FP: upcase
 ----------------------------------------------------------------
 
 functional: functions operate on streams of objects
@@ -884,7 +939,7 @@ functional: functions operate on streams of objects
                 upcase( open('ing.txt') )
                 )
 
-1 FP: upcase 2
+FP: upcase 2
 ----------------------------------------------------------------
 
 .. code-block:: python
@@ -913,10 +968,10 @@ functional: functions operate on streams of objects
    ****************************************************************
 
 
-1 Functional Programming in Python
+Functional Programming in Python
 ================================================================
 
-1 Old Primary Functions
+Old Primary Functions
 ----------------------------------------------------------------
 
 .. py:function:: filter(function, iterable)
@@ -952,7 +1007,7 @@ functional: functions operate on streams of objects
    *sequence*. (And so on.)
 
 
-1 FP: important dataset
+FP: important dataset
 ----------------------------------------------------------------
 
 >>> print open('ing.txt')
@@ -962,14 +1017,14 @@ functional: functions operate on streams of objects
 0.5 tsp sugar
 2 dash bitters
 
-1 Functional Prog for Better Booze!
+Functional Prog for Better Booze!
 ----------------------------------------------------------------
 
 .. figure:: /_static/Oldfashioned-cocktail.png
 
    CC PD http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png
 
-1 FP: filter
+FP: filter
 ----------------
 
 >>> def isdata(line):
@@ -986,8 +1041,8 @@ functional: functions operate on streams of objects
    Construct a **list** from those elements of iterable for which function returns true.
 
 
-1 FP: map, filter
------------------
+FP: map, filter
+----------------
 
 >>> def amount(line):
     return str(line.split()[:2])
@@ -1005,7 +1060,7 @@ functional: functions operate on streams of objects
    Apply function to every item of iterable and return a **list** of the results.
 
 
-1 Preferred: generator expressions
+Preferred: generator expressions
 ----------------------------------------------------------------
 
 **filter replacement**
@@ -1021,19 +1076,19 @@ functional: functions operate on streams of objects
    http://legacy.python.org/dev/peps/pep-0289/
 
 
-1 Preferred: filter replacement
+Preferred: filter replacement
 ----------------------------------------------------------------
 
 >>> print (line for line in open('ing.txt') if 'whiskey' in line)
 <generator object <genexpr> at 0x7f429d7c8eb0>
 
-1 convert to list so we can see
+convert to list so we can see
 ----------------------------------------------------------------
 
 >>> print list((line for line in open('ing.txt') if 'whiskey' in line)**)
 ['1.5 oz whiskey\n']
 
-1 original FP #1
+original FP #1
 ----------------------------------------------------------------
 >>> def isdata(line):
     return not line.startswith('#')
@@ -1048,7 +1103,7 @@ functional: functions operate on streams of objects
 ['2', 'dash']
 
 
-1 updated FP #1
+updated FP #1
 ----------------------------------------------------------------
 >>> def isdata(line):
     return not line.startswith('#')
@@ -1071,7 +1126,7 @@ functional: functions operate on streams of objects
 
 
 
-1 Iterator Functions
+Iterator Functions
 ----------------------------------------------------------------
 
 .. py:function:: xrange(stop) -> counter (xrange object)
@@ -1093,7 +1148,7 @@ functional: functions operate on streams of objects
 
 
 
-1 iter: chain
+iter: chain
 ----------------------------------------------------------------
 
 **chain(streams)** gives elements of each stream in order
@@ -1115,7 +1170,7 @@ Equivalent to **+** for lists.
    lazy vs eager
    ****************************************************************
 
-1 iter: islice
+iter: islice
 ----------------------------------------------------------------
 
 **islice(stream, num)** -- get counted elements of stream
@@ -1135,7 +1190,7 @@ TypeError: 'listiterator' object has no attribute '__getitem__'
 [1, 2]
 
 
-1 Django QuerySets
+Django QuerySets
 ================================================================
 
 QuerySets are Django's way of getting and updating data
@@ -1147,7 +1202,7 @@ QuerySets are Django's way of getting and updating data
           name = models.CharField(max_length=100)
           meet_date = models.DateTimeField()
 
-1 QuerySet review
+QuerySet review
 ----------------------------------------------------------------
 >>> m = Meeting.objects.get(id=12)
 <Meeting: Meeting object>
@@ -1162,7 +1217,7 @@ QuerySets are Django's way of getting and updating data
 LA Django Monthly Meeting
 
 
-1 QuerySet and iterators
+QuerySet and iterators
 ----------------------------------------------------------------
 
 >>> x=Meeting.objects.filter(name='java')
@@ -1171,7 +1226,7 @@ LA Django Monthly Meeting
 >>> type(x)
 <class 'django.db.models.query.QuerySet'>
 
-1 Functional QuerySets
+Functional QuerySets
 ================================================================
 
 .. rst-class:: build
@@ -1182,7 +1237,7 @@ LA Django Monthly Meeting
 
    . a QuerySet?
 
-1 Empty List
+Empty List
 ----------------------------------------------------------------
 *How can you tell if a list is empty or not?*
 
@@ -1194,7 +1249,7 @@ True
 .. note::
    Lists are *eager* -- always know everything
 
-1 Empty Iterator
+Empty Iterator
 ----------------------------------------------------------------
 *How can you tell if an iterator is empty or not?*
 
@@ -1208,11 +1263,11 @@ True
 .. note::
    Iterators are *lazy* -- don't know what they contain!
 
-1 How can you tell if a QuerySet is empty or not?
+How can you tell if a QuerySet is empty or not?
 ================================================================
 
 
-1 QuerySet like Iterator
+QuerySet like Iterator
 ----------------------------------------------------------------
 
 filter with QuerySet:
@@ -1231,7 +1286,7 @@ filter with iterator:
 >>> list(ifilter(lambda d: d['id']==1, iter([{'id':1}, {'id':2}])))
 [{'id': 1}]
 
-1 Because QuerySet *is* an iterator
+Because QuerySet *is* an iterator
 ----------------------------------------------------------------
 
 >>> from meetup.models import *
@@ -1263,7 +1318,7 @@ filter with iterator:
 
    qs.values(); qs.values_list(); qs.values-list(flat=True)
 
-1 Can mix and match
+Can mix and match
 ----------------------------------------------------------------
 
 >>> Meeting.objects.all()[0].id
@@ -1278,7 +1333,7 @@ filter with iterator:
 >>> list(islice( Meeting.objects.all(), 1))
 [<Meeting: Meeting object>]
 
-1 ?But not always
+But not always
 ----------------------------------------------------------------
 
 
@@ -1301,7 +1356,7 @@ Use x.exists(), not bool(x) -- more efficient
    list of results.
 
 
-1 Questions?
+Questions?
 ================
 
 .. figure:: /_static/john-bold.jpg
@@ -1310,7 +1365,7 @@ Use x.exists(), not bool(x) -- more efficient
    john@johntellsall.com
 
 
-1 References
+References
 ----------------
 
 Can Your Programming Language Do This? by Joel Spolsky
@@ -1328,3 +1383,35 @@ https://docs.python.org/2/howto/functional.html
 Using Django querysets effectively by Dave Hall
 
 http://blog.etianen.com/blog/2013/06/08/django-querysets/
+
+
+
+
+
+HISTORICAL
+----------
+
+..
+   What can you do with a iterator?
+   ----------------------------------------------------------------
+
+   >>> f = open('ing.txt')
+   >>> f.next()
+   '# Old Fashioned\n'
+   >>> f.next()
+   '1.5 oz whiskey\n'
+
+
+   What happens at the end?
+   ----------------------------------------------------------------
+
+   >>> f = open('/dev/null')
+   >>> f.next()
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   StopIteration
+
+   >>> iter([]).next()
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   StopIteration
