@@ -200,6 +200,10 @@ very important:
   and *itertools*, and *fileinput*
 
 
+XX more here
+
+XX "will be code" meme image
+
 ☃
 =
 
@@ -259,8 +263,8 @@ FP vs Procedural programming
 FP vs Object Orientation
 ----------------------------------------------------------------
 
-**object oriented: Object has state and specific functions to
-query/modify state.  Easy to specialize by subclassing.**
+object oriented: Object has state and specific functions to
+query/modify state.  Easy to specialize by subclassing.
 
 .. code-block:: python
 
@@ -277,8 +281,8 @@ query/modify state.  Easy to specialize by subclassing.**
                     outf.write( self.transform(line) )
 
     class UpFile(RWFile):
-                def transform(self, line):
-    return line.upper()
+        def transform(self, line):
+            return line.upper()
 
     UpFile('ing.txt').writelines('/dev/stdout')
 
@@ -305,7 +309,9 @@ object oriented
     object has state and functions to query/modify state
     specialize by subclassing
 
-**functional: functions operate on streams of objects**
+**functional**
+
+    **functions operate on streams of objects**
 
     preferably without internal state
 
@@ -316,8 +322,11 @@ food chain
 .. image:: _static/FoodChain.jpg
 
 
+
 UpFile example in Functional Programming
 ----------------------------------------
+
+using a generator expression
 
 .. code-block:: python
 
@@ -330,15 +339,71 @@ UpFile example in Functional Programming
    recombine elements, vs specialize
 
 
-UpFile in FP: specialize with named function
+UpFile in FP: map
 --------------------------------------------
+
+specialize with named function and *map*
 
 .. code-block:: python
 
     def upcase(line):
         return line.upper()
 
-    open('out.txt', 'w').writelines(map(upcase, open('in.txt')))
+    open('out.txt', 'w').writelines(
+        map(upcase, open('in.txt'))
+    )
+
+
+map-filter
+----------
+
+**map(func, iter)** -- transform items using a function
+
+.. code-block:: python
+
+    def square(num):
+        return num ** 2
+
+>>> map(square, [1,2])
+[1, 4]
+
+
+.. note::
+
+   function applies a passed-in function to
+   each item in an iterable object and returns a list containing all the
+   function call results.
+
+map-filter
+----------
+
+**filter(func, iter)** -- provide items matching a function
+
+.. code-block:: python
+
+    def square(num):
+        return num ** 2
+    def is_odd(num):
+        return num % 2
+
+
+.. note::
+
+   The filter filters out items based on a test function which is a
+   filter and apply functions to pairs of item and running result
+   which is reduce.
+
+
+XX imap
+-------
+
+In [6]: import itertools
+
+In [7]: itertools.imap(square, [1,2])
+Out[7]: <itertools.imap at 0x7fc004e6bb50>
+
+In [8]: list(itertools.imap(square, [1,2]))
+Out[8]: [1, 4]
 
 
 Ex2: print list of ingredients in a recipe
