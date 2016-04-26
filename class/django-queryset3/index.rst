@@ -17,6 +17,7 @@ ME
 
    - Senior dev/server guy; DevOps
    - 20 years experience with Python
+   - john@theblacktux.com
    - john@johntellsall.com
 
 .. note::
@@ -26,23 +27,23 @@ ME
 The Black Tux
 =============
 
-.. figure:: /_static/john-bold.jpg
+.. figure:: /_static/TheBlackTux.png
    :class: fill
 
 
 Contents
 ========
 
-iterator/generator = "stream"
+* iterator/generator = "stream"
 
-FP: programming with composition
+* FP: programming with composition
 
-QuerySet is a stream
+* QuerySet is a stream
 
 
 
-FP+QS overview
---------------
+Programmers use lots of tools
+-----------------------------
 
 .. image:: _static/large_BaxterCutawayFF3.jpg
 

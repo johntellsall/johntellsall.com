@@ -7,6 +7,8 @@ Functional Programming and Django QuerySets 2016
 
 SoCal Python
 
+at Media Temple
+
 April 26, 2016
 
 
@@ -20,6 +22,12 @@ ME
 .. note::
 
    - first PyCon I went to had 40 people!
+
+The Black Tux
+=============
+
+.. figure:: /_static/TheBlackTux.png
+   :class: fill
 
 
 Contents
@@ -94,7 +102,6 @@ iterate across a *stream* of strings
    Ex: Database iterator
 
 
-
 Lists/Iterators are very similar
 ----------------------------------------------------------------
 
@@ -111,6 +118,31 @@ Lists/Iterators are very similar
 
    for name in glob.iglob('*.txt'):
        print name
+
+
+What can you do with a iterator?
+----------------------------------------------------------------
+
+>>> f = open('ing.txt')
+>>> f.next()
+'# Old Fashioned\n'
+>>> f.next()
+'1.5 oz whiskey\n'
+
+
+What happens at the end?
+----------------------------------------------------------------
+
+>>> f = open('/dev/null')
+>>> f.next()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+
+>>> iter([]).next()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
 
 
 What can you *not* do with an iterator?
@@ -137,6 +169,29 @@ Traceback (most recent call last):
 TypeError: object of type 'file' has no len()
 
 
+List vs Iterator
+----------------
+
+===========  =======  ==========
+feature      list     iterator
+===========  =======  ==========
+overall      eager    lazy
+len(x)       yes      no
+slice        x[:3]    islice(x, 3)
+addition     x + y    chain(x, y)
+has items    if x     no
+easy debug   yes      no
+===========  =======  ==========
+
+.. note::
+
+   List are "eager" -- know everything about them all the time
+
+   Million item list can be rough, because they hold all million
+   - have to deal with all items
+
+   Million item iter is no biggie, can proc a few
+
 Common iterator functions
 ----------------------------------------------------------------
 
@@ -152,6 +207,10 @@ very important:
 
   and *itertools*, and *fileinput*
 
+
+XX more here
+
+XX "will be code" meme image
 
 ☃
 =
@@ -212,8 +271,8 @@ FP vs Procedural programming
 FP vs Object Orientation
 ----------------------------------------------------------------
 
-**object oriented: Object has state and specific functions to
-query/modify state.  Easy to specialize by subclassing.**
+object oriented: Object has state and specific functions to
+query/modify state.  Easy to specialize by subclassing.
 
 .. code-block:: python
 
@@ -230,8 +289,8 @@ query/modify state.  Easy to specialize by subclassing.**
                     outf.write( self.transform(line) )
 
     class UpFile(RWFile):
-                def transform(self, line):
-    return line.upper()
+        def transform(self, line):
+            return line.upper()
 
     UpFile('ing.txt').writelines('/dev/stdout')
 
@@ -258,7 +317,9 @@ object oriented
     object has state and functions to query/modify state
     specialize by subclassing
 
-**functional: functions operate on streams of objects**
+**functional**
+
+    **functions operate on streams of objects**
 
     preferably without internal state
 
@@ -269,8 +330,11 @@ food chain
 .. image:: _static/FoodChain.jpg
 
 
+
 UpFile example in Functional Programming
 ----------------------------------------
+
+using a generator expression
 
 .. code-block:: python
 
@@ -283,21 +347,79 @@ UpFile example in Functional Programming
    recombine elements, vs specialize
 
 
-UpFile in FP: specialize with named function
+UpFile in FP: map
 --------------------------------------------
+
+specialize with named function and *map*
 
 .. code-block:: python
 
     def upcase(line):
         return line.upper()
 
-    open('out.txt', 'w').writelines(map(upcase, open('in.txt')))
+    open('out.txt', 'w').writelines(
+        map(upcase, open('in.txt'))
+    )
+
+
+map-filter
+----------
+
+**map(func, iter)** -- transform items using a function
+
+.. code-block:: python
+
+    def square(num):
+        return num ** 2
+
+>>> map(square, [1,2,3])
+[1, 4, 9]
+
+
+.. note::
+
+   function applies a passed-in function to
+   each item in an iterable object and returns a list containing all the
+   function call results.
+
+map-filter
+----------
+
+**filter(func, iter)** -- provide items matching a function
+
+.. code-block:: python
+
+    def is_odd(num):
+        return num % 2
+
+>>> filter(is_odd, [1, 2, 3])
+[1, 3]
+
+
+
+.. note::
+
+   The filter filters out items based on a test function which is a
+   filter and apply functions to pairs of item and running result
+   which is reduce.
+
+
+imap-ifilter
+------------
+
+>>> import itertools
+
+>>> itertools.imap(square, [1,2])
+<itertools.imap at 0x7fc004e6bb50>
+
+>>> list(itertools.imap(square, [1,2]))
+[1, 4]
 
 
 Ex2: print list of ingredients in a recipe
 ------------------------------------------
 
-::
+**oldfashioned.ini**::
 
      # very tasty
      [Old Fashioned]
@@ -321,133 +443,15 @@ Ex2: procedural style
 .. code-block:: python
 
     ingredients = []
-    for line in open('ing.txt'):
-        ing = parse(line)
+    for line in open('oldfashioned.ini'):
+        ing = parse_ing(line)
         if ing:
             ingredients.append(ing.name)
     print '\n'.join(ingredients)
 
-
-FP: Lisp style with generator expressions
-----------------------------------------------------------------
-
-*print list of ingredients in a recipe*
-
->>> print '\n'.join( (
-    (ing.name
-    for ing in (
-        parse(line) for line in open('ing.txt')
-            ) if ing
-    )
-) )
-
-FP: Lisp style with map-filter
-----------------------------------------------------------------
-
-*print list of ingredients in a recipe*
-
-XX
-
-.. code-block:: python
-
-   print '\n'.join(
-       map(lambda ing: ing.name,
-       filter(None,
-            map(parse,
-                open('ing.txt')
-            )
-        )
-   )
-
-
-
-
-`itertools <https://docs.python.org/2/library/itertools.html>`_
----------------------------------------------------------------
-
-.. hlist::
-   *  **chain()**
-   *  count()
-   *  cycle()
-   *  repeat()
-   *  **chain()**
-   *  compress()
-   *  dropwhile()
-   *  groupby()
-   *  **ifilter()**
-   *  ifilterfalse()
-   *  **islice()**
-   *  imap()
-   *  starmap()
-   *  tee()
-   *  takewhile()
-   *  **izip()**
-   *  izip_longest()
-
-
-islice -- similar to list
--------------------------
-
-**islice(iter, num)** -- return first few items
-
->>> list([1,2,3])[:2]
-[1,2]
-
->>> from itertools import *
->>> iter([1,2,3])[:2]
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: 'listiterator' object has no attribute '__getitem__'
->>> islice(iter([1,2,3]), 2)
-<itertools.islice object at 0x7f429d7de9f0>
->>> list(_)
-[1, 2]
-
-
-chain -- only for iterators
-----------------------------------------------------------------
-
-**chain(iter*)** gives elements of each stream in order
-Equivalent to **+** for lists.
-
->>> [1,2]+[3]
-[1, 2, 3]
-
->>> from itertools import *
->>> chain(iter([1,2]), iter([3]))
-<itertools.chain object at 0x7f429d848510>
->>> list(_)
-[1, 2, 3]
-
-
 .. note::
-
-   stream of objects with state
-   lazy vs eager
-   ****************************************************************
-
-
-
-**functional**
-
-	functions operate on streams of immutable objects
-
-.. note::
-
-   https://docs.python.org/dev/howto/functional.html
-
-
-Practical Advantages to FP
---------------------------
-
-   * Modularity
-   * `Composability!`_
-   * Ease of debugging and testing
-   * Caching
-   * Parallelization
-   * Buzzwordy!
-
-.. _`Composability!`: http://en.wikipedia.org/wiki/Composability
+    def parse_ing(line):
+        return re.match(r'[0-9].+\s(?P<name>\w+)', line)
 
 
 Functional Programming examples
@@ -467,6 +471,110 @@ Example: Windows INI-file parser; aka ConfigParser
 
 
 .. include:: fp-examples.rst
+FP: generator expressions
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+XX
+
+.. code-block:: python
+
+   print '\n'.join(
+       map(ing_name,
+       filter(None,
+            map(parse_ing,
+                open('ing.txt')
+            )
+        )
+   )
+
+
+
+
+`itertools <https://docs.python.org/2/library/itertools.html>`_
+---------------------------------------------------------------
+
+.. hlist::
+   *  **chain()**
+   *  compress()
+   *  count()
+   *  cycle()
+   *  dropwhile()
+   *  groupby()
+   *  **ifilter()**
+   *  ifilterfalse()
+   *  **imap()**
+   *  **islice()**
+   *  **izip()**
+   *  izip_longest()
+   *  repeat()
+   *  starmap()
+   *  takewhile()
+   *  tee()
+
+
+chain -- only for iterators
+----------------------------------------------------------------
+
+**chain(iter*)** gives elements of each stream in order
+Equivalent to **+** for lists.
+
+>>> [1,2] + [3]
+[1, 2, 3]
+
+>>> from itertools import *
+>>> chain(iter([1,2]), iter([3]))
+<itertools.chain object at 0x7f429d848510>
+>>> list(_)
+[1, 2, 3]
+
+
+.. note::
+
+   stream of objects with state
+   lazy vs eager
+
+
+islice -- similar to list
+-------------------------
+
+**islice(iter, num)** -- return first few items
+
+>>> list([1, 2, 3])[:2]
+[1,2]
+
+>>> iter([1, 2, 3])[:2]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'listiterator' object has no attribute '__getitem__'
+
+>>> itertools.islice(iter([1, 2, 3]), 2)
+<itertools.islice object at 0x7f429d7de9f0>
+>>> list(_)
+[1, 2]
+
+
+
+
+.. note::
+
+   https://docs.python.org/dev/howto/functional.html
+
+
+Practical Advantages to FP
+--------------------------
+
+   * Modularity
+   * `Composability!`_
+   * Ease of debugging and testing
+   * Caching
+   * Parallelization
+   * Buzzwordy!
+
+.. _`Composability!`: http://en.wikipedia.org/wiki/Composability
+
+
 
 
 ☃
@@ -832,25 +940,6 @@ iterate across a *stream* of strings
 
    you already use iterators
 
-Database iterator
---------------------
-
-iterate with a *stream* of rows
-
-.. code-block:: python
-
-    import os, sqlite3
-    conn = sqlite3.connect('recipe')
-    cursor = conn.cursor()
-
-    cursor.execute("""select name from ingridient""")
-
-    for row in cursor.fetchall():
-        print(row)
-
-    cursor.close()
-    conn.close()
-
 List very similar to Iterator
 ----------------------------------------------------------------
 
@@ -871,53 +960,6 @@ List very similar to Iterator
 Work with a *stream* of objects
 
 
-
-What can you do with a iterator?
-----------------------------------------------------------------
-
->>> f = open('ing.txt')
->>> f.next()
-'# Old Fashioned\n'
->>> f.next()
-'1.5 oz whiskey\n'
-
-
-What happens at the end?
-----------------------------------------------------------------
-
->>> f = open('/dev/null')
->>> f.next()
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-StopIteration
-
->>> iter([]).next()
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-StopIteration
-
-List vs Iterator
-----------------
-
-===========  =======  ==========
-feature      list     iterator
-===========  =======  ==========
-overall      eager    lazy
-len(x)       yes      no
-slice        x[:3]    islice(x, 3)
-addition     x + y    chain(x, y)
-has items    if x     no
-easy debug   yes      no
-===========  =======  ==========
-
-.. note::
-
-   List are "eager" -- know everything about them all the time
-
-   Million item list can be rough, because they hold all million
-   - have to deal with all items
-
-   Million item iter is no biggie, can proc a few
 
 FP: upcase
 ----------------------------------------------------------------
@@ -1415,3 +1457,60 @@ HISTORICAL
    Traceback (most recent call last):
      File "<stdin>", line 1, in <module>
    StopIteration
+
+
+Database iterator
+--------------------
+
+iterate with a *stream* of rows
+
+.. code-block:: python
+
+    import os, sqlite3
+    conn = sqlite3.connect('recipe')
+    cursor = conn.cursor()
+
+    cursor.execute("""select name from ingredient""")
+
+    for row in cursor.fetchall():
+        print(row)
+
+    cursor.close()
+    conn.close()
+
+
+FP: Lisp style with generator expressions
+----------------------------------------------------------------
+
+XX
+
+*print list of ingredients in a recipe*
+
+.. code-block:: python
+
+    print '\n'.join(
+        map(ing_name,
+            filter(None,
+                   map(parse_ing,
+                       open('oldfashioned.ini')
+                   )
+            )
+        ))
+
+FP: Lisp style with map-filter
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+XX
+
+.. code-block:: python
+
+   print '\n'.join(
+       map(ing_name,
+       filter(None,
+            map(parse_ing,
+                open('ing.txt')
+            )
+        )
+   )

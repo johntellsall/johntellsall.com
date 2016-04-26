@@ -8,7 +8,7 @@
     
     <title>Functional Programming and Django QuerySets 2016 3 documentation</title>
     
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,22 +23,25 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="None" href="index.html#document-index" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="top" title="None" href="index.html#document-index" /> 
   </head>
-  <body role="document">  
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="index.html#document-index">Functional Programming and Django QuerySets 2016 3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="functional-programming-and-django-querysets-2016">
 <h1>Functional Programming and Django QuerySets 2016<a class="headerlink" href="#functional-programming-and-django-querysets-2016" title="Permalink to this headline">¶</a></h1>
 <p>SoCal Python</p>
+<p>at Media Temple</p>
 <p>April 26, 2016</p>
 </div>
 <div class="section" id="me">
@@ -57,6 +60,12 @@
 </ul>
 </div>
 </div>
+<div class="section" id="the-black-tux">
+<h1>The Black Tux<a class="headerlink" href="#the-black-tux" title="Permalink to this headline">¶</a></h1>
+<div class="figure">
+<img alt="_images/TheBlackTux.png" class="fill" src="_images/TheBlackTux.png" />
+</div>
+</div>
 <div class="section" id="contents">
 <h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
 <p>iterator/generator = &#8220;stream&#8221;</p>
@@ -73,11 +82,11 @@
 <h2>Iterator review<a class="headerlink" href="#iterator-review" title="Permalink to this headline">¶</a></h2>
 <p>An iterator is a <em>stream</em> of data—sort of a restricted, very
 efficient list.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 <span class="go">[1, 2]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 <span class="go">&lt;listiterator object at 0x7f429d83c750&gt;</span>
 </pre></div>
 </div>
@@ -91,17 +100,17 @@ efficient list.</p>
 <div class="section" id="you-already-use-iterators">
 <h2>You already use iterators<a class="headerlink" href="#you-already-use-iterators" title="Permalink to this headline">¶</a></h2>
 <p>iterate across a <em>stream</em> of strings</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;recipe.ini&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;recipe.ini&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
 <span class="go">    print line</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># very tasty</span>
-<span class="p">[</span><span class="n">Old</span> <span class="n">Fashioned</span><span class="p">]</span>
-<span class="mi">1</span><span class="p">:</span><span class="mf">1.5</span> <span class="n">oz</span> <span class="n">whiskey</span>
-<span class="mi">2</span><span class="p">:</span><span class="mi">1</span> <span class="n">tsp</span> <span class="n">water</span>
-<span class="mi">3</span><span class="p">:</span><span class="mf">0.5</span> <span class="n">tsp</span> <span class="n">sugar</span>
-<span class="mi">4</span><span class="p">:</span><span class="mi">2</span> <span class="n">dash</span> <span class="n">bitters</span>
+<div class="highlight-python"><div class="highlight"><pre># very tasty
+[Old Fashioned]
+1:1.5 oz whiskey
+2:1 tsp water
+3:0.5 tsp sugar
+4:2 dash bitters
 </pre></div>
 </div>
 <div class="admonition note">
@@ -112,7 +121,7 @@ efficient list.</p>
 </div>
 <div class="section" id="lists-iterators-are-very-similar">
 <h2>Lists/Iterators are very similar<a class="headerlink" href="#lists-iterators-are-very-similar" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">):</span>
     <span class="k">print</span> <span class="n">line</span>
 
 <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]):</span>
@@ -121,14 +130,14 @@ efficient list.</p>
 <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]:</span>
     <span class="k">print</span> <span class="n">num</span>
 
-<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="s1">&#39;*.txt&#39;</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="s">&#39;*.txt&#39;</span><span class="p">):</span>
     <span class="k">print</span> <span class="n">name</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="what-can-you-do-with-a-iterator">
 <h2>What can you do with a iterator?<a class="headerlink" href="#what-can-you-do-with-a-iterator" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 <span class="go">&#39;# Old Fashioned\n&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
@@ -138,14 +147,20 @@ efficient list.</p>
 </div>
 <div class="section" id="what-happens-at-the-end">
 <h2>What happens at the end?<a class="headerlink" href="#what-happens-at-the-end" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/dev/null&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/dev/null&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">StopIteration</span>
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">StopIteration</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([])</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([])</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">StopIteration</span>
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">StopIteration</span>
@@ -155,8 +170,11 @@ efficient list.</p>
 <div class="section" id="what-can-you-not-do-with-an-iterator">
 <h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="#what-can-you-not-do-with-an-iterator" title="Permalink to this headline">¶</a></h2>
 <p><strong>no slicing</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">&#39;file&#39; object has no attribute &#39;__getitem__&#39;</span>
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">TypeError</span>: <span class="n">&#39;file&#39; object has no attribute &#39;__getitem__&#39;</span>
@@ -166,8 +184,11 @@ efficient list.</p>
 <div class="section" id="id1">
 <h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p><strong>no length</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">object of type &#39;file&#39; has no len()</span>
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">TypeError</span>: <span class="n">object of type &#39;file&#39; has no len()</span>
@@ -228,25 +249,25 @@ efficient list.</p>
 <ul>
 <li><dl class="function">
 <dt id="enumerate">
-<code class="descname">enumerate</code><span class="sig-paren">(</span><em>iter</em><span class="sig-paren">)</span><a class="headerlink" href="#enumerate" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">enumerate</tt><big>(</big><em>iter</em><big>)</big><a class="headerlink" href="#enumerate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="function">
 <dt id="sorted">
-<code class="descname">sorted</code><span class="sig-paren">(</span><em>iter</em><span class="sig-paren">)</span><a class="headerlink" href="#sorted" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">sorted</tt><big>(</big><em>iter</em><big>)</big><a class="headerlink" href="#sorted" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="function">
 <dt id="range">
-<code class="descname">range</code><span class="sig-paren">(</span><em>stop</em><span class="sig-paren">)</span><a class="headerlink" href="#range" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">range</tt><big>(</big><em>stop</em><big>)</big><a class="headerlink" href="#range" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="function">
 <dt id="dict.iteritems">
-<code class="descclassname">dict.</code><code class="descname">iteritems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dict.iteritems" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">dict.</tt><tt class="descname">iteritems</tt><big>(</big><big>)</big><a class="headerlink" href="#dict.iteritems" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
@@ -255,13 +276,13 @@ efficient list.</p>
 <ul>
 <li><dl class="function">
 <dt id="filter">
-<code class="descname">filter</code><span class="sig-paren">(</span><em>func/None</em>, <em>iter</em><span class="sig-paren">)</span><a class="headerlink" href="#filter" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">filter</tt><big>(</big><em>func/None</em>, <em>iter</em><big>)</big><a class="headerlink" href="#filter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </li>
 <li><dl class="function">
 <dt id="map">
-<code class="descname">map</code><span class="sig-paren">(</span><em>func</em>, <em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#map" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map</tt><big>(</big><em>func</em>, <em>*iterables</em><big>)</big><a class="headerlink" href="#map" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>and <em>itertools</em>, and <em>fileinput</em></p>
@@ -294,12 +315,12 @@ specialize by subclassing</div></blockquote>
 <div class="section" id="fp-vs-procedural-programming">
 <h2>FP vs Procedural programming<a class="headerlink" href="#fp-vs-procedural-programming" title="Permalink to this headline">¶</a></h2>
 <p><em>procedural: list of instructions</em></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upfile</span><span class="p">(</span><span class="n">inpath</span><span class="p">,</span> <span class="n">outpath</span><span class="p">):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">upfile</span><span class="p">(</span><span class="n">inpath</span><span class="p">,</span> <span class="n">outpath</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">inpath</span><span class="p">):</span>
             <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="p">)</span>
 
-<span class="n">upfile</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;/dev/stdout&#39;</span><span class="p">)</span>
+<span class="n">upfile</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">,</span> <span class="s">&#39;/dev/stdout&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="build simple">
@@ -316,7 +337,7 @@ that tell the computer what to do with the program’s input.</p>
 <h2>FP vs Object Orientation<a class="headerlink" href="#fp-vs-object-orientation" title="Permalink to this headline">¶</a></h2>
 <p>object oriented: Object has state and specific functions to
 query/modify state.  Easy to specialize by subclassing.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RWFile</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">RWFile</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inpath</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Upcase</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
             <span class="nb">open</span><span class="p">(</span><span class="n">inpath</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
@@ -324,7 +345,7 @@ query/modify state.  Easy to specialize by subclassing.</p>
     <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">line</span>
     <span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outpath</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
                 <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="p">)</span>
 
@@ -332,7 +353,7 @@ query/modify state.  Easy to specialize by subclassing.</p>
     <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
-<span class="n">UpFile</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s1">&#39;/dev/stdout&#39;</span><span class="p">)</span>
+<span class="n">UpFile</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s">&#39;/dev/stdout&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -368,8 +389,8 @@ specialize by subclassing</div></blockquote>
 <div class="section" id="upfile-example-in-functional-programming">
 <h2>UpFile example in Functional Programming<a class="headerlink" href="#upfile-example-in-functional-programming" title="Permalink to this headline">¶</a></h2>
 <p>using a generator expression</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;out.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span>
-    <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;in.txt&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">open</span><span class="p">(</span><span class="s">&#39;out.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span>
+    <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;in.txt&#39;</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -382,11 +403,11 @@ recombine elements, vs specialize</p>
 <div class="section" id="upfile-in-fp-map">
 <h2>UpFile in FP: map<a class="headerlink" href="#upfile-in-fp-map" title="Permalink to this headline">¶</a></h2>
 <p>specialize with named function and <em>map</em></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
-<span class="nb">open</span><span class="p">(</span><span class="s1">&#39;out.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span>
-    <span class="nb">map</span><span class="p">(</span><span class="n">upcase</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;in.txt&#39;</span><span class="p">))</span>
+<span class="nb">open</span><span class="p">(</span><span class="s">&#39;out.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span>
+    <span class="nb">map</span><span class="p">(</span><span class="n">upcase</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;in.txt&#39;</span><span class="p">))</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -394,11 +415,11 @@ recombine elements, vs specialize</p>
 <div class="section" id="map-filter">
 <h2>map-filter<a class="headerlink" href="#map-filter" title="Permalink to this headline">¶</a></h2>
 <p><strong>map(func, iter)</strong> &#8211; transform items using a function</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
 <span class="go">[1, 4, 9]</span>
 </pre></div>
 </div>
@@ -412,11 +433,11 @@ function call results.</p>
 <div class="section" id="id4">
 <h2>map-filter<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p><strong>filter(func, iter)</strong> &#8211; provide items matching a function</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="n">is_odd</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="n">is_odd</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="go">[1, 3]</span>
 </pre></div>
 </div>
@@ -429,14 +450,14 @@ which is reduce.</p>
 </div>
 <div class="section" id="imap-ifilter">
 <h2>imap-ifilter<a class="headerlink" href="#imap-ifilter" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 <span class="go">&lt;itertools.imap at 0x7fc004e6bb50&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>
 <span class="go">[1, 4]</span>
 </pre></div>
 </div>
@@ -444,15 +465,15 @@ which is reduce.</p>
 <div class="section" id="ex2-print-list-of-ingredients-in-a-recipe">
 <h2>Ex2: print list of ingredients in a recipe<a class="headerlink" href="#ex2-print-list-of-ingredients-in-a-recipe" title="Permalink to this headline">¶</a></h2>
 <p><strong>oldfashioned.ini</strong>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># very tasty</span>
-<span class="p">[</span><span class="n">Old</span> <span class="n">Fashioned</span><span class="p">]</span>
-<span class="mi">1</span><span class="p">:</span><span class="mf">1.5</span> <span class="n">oz</span> <span class="n">whiskey</span>
-<span class="mi">2</span><span class="p">:</span><span class="mi">1</span> <span class="n">tsp</span> <span class="n">water</span>
-<span class="mi">3</span><span class="p">:</span><span class="mf">0.5</span> <span class="n">tsp</span> <span class="n">sugar</span>
-<span class="mi">4</span><span class="p">:</span><span class="mi">2</span> <span class="n">dash</span> <span class="n">bitters</span>
+<div class="highlight-python"><div class="highlight"><pre># very tasty
+[Old Fashioned]
+1:1.5 oz whiskey
+2:1 tsp water
+3:0.5 tsp sugar
+4:2 dash bitters
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">whiskey</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">whiskey</span>
 <span class="n">water</span>
 <span class="n">sugar</span>
 <span class="n">bitters</span>
@@ -462,12 +483,12 @@ which is reduce.</p>
 <div class="section" id="ex2-procedural-style">
 <h2>Ex2: procedural style<a class="headerlink" href="#ex2-procedural-style" title="Permalink to this headline">¶</a></h2>
 <p><em>print list of ingredients in a recipe</em></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ingredients</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;oldfashioned.ini&#39;</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ingredients</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;oldfashioned.ini&#39;</span><span class="p">):</span>
     <span class="n">ing</span> <span class="o">=</span> <span class="n">parse_ing</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">ing</span><span class="p">:</span>
         <span class="n">ingredients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ing</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -491,75 +512,75 @@ which is reduce.</p>
 </div>
 <div class="section" id="parse1-py">
 <h2>parse1.py<a class="headerlink" href="#parse1-py" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># 1. stream of lines</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># 1. stream of lines</span>
 <span class="kn">import</span> <span class="nn">fileinput</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">()</span>
-<span class="k">print</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">lines</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">lines</span> <span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># very tasty</span>
-<span class="p">[</span><span class="n">Old</span> <span class="n">Fashioned</span><span class="p">]</span>
-<span class="mi">1</span><span class="p">:</span><span class="mf">1.5</span> <span class="n">oz</span> <span class="n">whiskey</span>
-<span class="mi">2</span><span class="p">:</span><span class="mi">1</span> <span class="n">tsp</span> <span class="n">water</span>
-<span class="mi">3</span><span class="p">:</span><span class="mf">0.5</span> <span class="n">tsp</span> <span class="n">sugar</span>
-<span class="mi">4</span><span class="p">:</span><span class="mi">2</span> <span class="n">dash</span> <span class="n">bitters</span>
+<div class="highlight-python"><div class="highlight"><pre># very tasty
+[Old Fashioned]
+1:1.5 oz whiskey
+2:1 tsp water
+3:0.5 tsp sugar
+4:2 dash bitters
 </pre></div>
 </div>
 </div>
 <div class="section" id="parse2-py">
 <h2>parse2.py<a class="headerlink" href="#parse2-py" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># 2. stream of valid lines</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># 2. stream of valid lines</span>
 <span class="kn">import</span> <span class="nn">fileinput</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="k">def</span> <span class="nf">has_comment</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">has_keyvalue</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;:&#39;</span> <span class="ow">in</span> <span class="n">line</span>
+    <span class="k">return</span> <span class="s">&#39;:&#39;</span> <span class="ow">in</span> <span class="n">line</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="n">ifilterfalse</span><span class="p">(</span> <span class="n">has_comment</span><span class="p">,</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">()</span> <span class="p">)</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="n">ifilter</span><span class="p">(</span> <span class="n">has_keyvalue</span><span class="p">,</span> <span class="n">lines</span> <span class="p">)</span>
-<span class="k">print</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">lines</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">lines</span> <span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">:</span><span class="mf">1.5</span> <span class="n">oz</span> <span class="n">whiskey</span>
-<span class="mi">2</span><span class="p">:</span><span class="mi">1</span> <span class="n">tsp</span> <span class="n">water</span>
-<span class="mi">3</span><span class="p">:</span><span class="mf">0.5</span> <span class="n">tsp</span> <span class="n">sugar</span>
-<span class="mi">4</span><span class="p">:</span><span class="mi">2</span> <span class="n">dash</span> <span class="n">bitters</span>
+<div class="highlight-python"><div class="highlight"><pre>1:1.5 oz whiskey
+2:1 tsp water
+3:0.5 tsp sugar
+4:2 dash bitters
 </pre></div>
 </div>
 </div>
 <div class="section" id="parse3-py">
 <h2>parse3.py<a class="headerlink" href="#parse3-py" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># 3. stream of key-value match objects</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># 3. stream of key-value match objects</span>
 <span class="kn">import</span> <span class="nn">fileinput</span><span class="o">,</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="k">def</span> <span class="nf">has_comment</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">parse_keyvalue</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">r&#39;(\S+):(.+)&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r&#39;(\S+):(.+)&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">None</span>
 <span class="n">matches</span> <span class="o">=</span> <span class="p">(</span><span class="n">parse_keyvalue</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">())</span>
 <span class="n">keyvalues</span> <span class="o">=</span> <span class="n">ifilter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">matches</span><span class="p">)</span>
-<span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">kv</span><span class="p">)</span> <span class="k">for</span> <span class="n">kv</span> <span class="ow">in</span> <span class="n">keyvalues</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">kv</span><span class="p">)</span> <span class="k">for</span> <span class="n">kv</span> <span class="ow">in</span> <span class="n">keyvalues</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1.5 oz whiskey&#39;</span><span class="p">)</span>
-<span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;1 tsp water&#39;</span><span class="p">)</span>
-<span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;0.5 tsp sugar&#39;</span><span class="p">)</span>
-<span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;2 dash bitters&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1.5 oz whiskey&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;1 tsp water&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&#39;3&#39;</span><span class="p">,</span> <span class="s">&#39;0.5 tsp sugar&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&#39;4&#39;</span><span class="p">,</span> <span class="s">&#39;2 dash bitters&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="parse4-py">
 <h2>parse4.py<a class="headerlink" href="#parse4-py" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># 4. dictionary</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># 4. dictionary</span>
 <span class="kn">import</span> <span class="nn">fileinput</span><span class="o">,</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="k">def</span> <span class="nf">has_comment</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">parse_keyvalue</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">r&#39;(\S+):(.+)&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r&#39;(\S+):(.+)&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">None</span>
@@ -570,7 +591,7 @@ which is reduce.</p>
 <span class="k">print</span> <span class="n">confdict</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="s1">&#39;1.5 oz whiskey&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="s1">&#39;0.5 tsp sugar&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="s1">&#39;1 tsp water&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="s1">&#39;2 dash bitters&#39;</span><span class="p">}</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;1&#39;</span><span class="p">:</span> <span class="s">&#39;1.5 oz whiskey&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">:</span> <span class="s">&#39;0.5 tsp sugar&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">:</span> <span class="s">&#39;1 tsp water&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">:</span> <span class="s">&#39;2 dash bitters&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -578,11 +599,11 @@ which is reduce.</p>
 <h2>FP: generator expressions<a class="headerlink" href="#fp-generator-expressions" title="Permalink to this headline">¶</a></h2>
 <p><em>print list of ingredients in a recipe</em></p>
 <p>XX</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
     <span class="nb">map</span><span class="p">(</span><span class="n">ing_name</span><span class="p">,</span>
     <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
          <span class="nb">map</span><span class="p">(</span><span class="n">parse_ing</span><span class="p">,</span>
-             <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span>
+             <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
          <span class="p">)</span>
      <span class="p">)</span>
 <span class="p">)</span>
@@ -617,11 +638,11 @@ which is reduce.</p>
 <h2>chain &#8211; only for iterators<a class="headerlink" href="#chain-only-for-iterators" title="Permalink to this headline">¶</a></h2>
 <p><strong>chain(iter*)</strong> gives elements of each stream in order
 Equivalent to <strong>+</strong> for lists.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 <span class="go">[1, 2, 3]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chain</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span>
 <span class="go">&lt;itertools.chain object at 0x7f429d848510&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
@@ -637,17 +658,20 @@ lazy vs eager</p>
 <div class="section" id="islice-similar-to-list">
 <h2>islice &#8211; similar to list<a class="headerlink" href="#islice-similar-to-list" title="Permalink to this headline">¶</a></h2>
 <p><strong>islice(iter, num)</strong> &#8211; return first few items</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
 <span class="go">[1,2]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">&#39;listiterator&#39; object has no attribute &#39;__getitem__&#39;</span>
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="gr">TypeError</span>: <span class="n">&#39;listiterator&#39; object has no attribute &#39;__getitem__&#39;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">&lt;itertools.islice object at 0x7f429d7de9f0&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
 <span class="go">[1, 2]</span>
@@ -683,7 +707,7 @@ lazy vs eager</p>
 <p>models.py</p>
 <p>source: <a class="reference external" href="http://blog.etianen.com/blog/2013/06/08/django-querysets/">http://blog.etianen.com/blog/2013/06/08/django-querysets/</a></p>
 <p>QuerySets are Django&#8217;s way of getting and updating data</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 <span class="go">class Meeting(models.Model):</span>
 <span class="go">name = models.CharField(max_length=100)</span>
 <span class="go">meet_date = models.DateTimeField()</span>
@@ -692,18 +716,18 @@ lazy vs eager</p>
 </div>
 <div class="section" id="queryset-review">
 <h2>QuerySet review<a class="headerlink" href="#queryset-review" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="go">&lt;Meeting: Meeting object&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">__dict__</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">__dict__</span>
 <span class="go">{&#39;meet_date&#39;: datetime.datetime(2014, 5, 20, 7, 0, tzinfo=&lt;UTC&gt;),</span>
 <span class="go">&#39;_state&#39;: &lt;django.db.models.base.ModelState object at 0x2bd1050&gt;,</span>
 <span class="go">&#39;id&#39;: 3, &#39;name&#39;: u&#39;LA Django Monthly Meeting&#39;}</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="s1">&#39;go&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span> <span class="nb">print</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="s">&#39;go&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span> <span class="k">print</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span>
 <span class="go">LA Django Monthly Meeting</span>
 </pre></div>
 </div>
@@ -711,7 +735,7 @@ lazy vs eager</p>
 <div class="section" id="queryset-and-iterators">
 <h2>QuerySet and iterators<a class="headerlink" href="#queryset-and-iterators" title="Permalink to this headline">¶</a></h2>
 <p>QuerySets can be shifty</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;java&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;java&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
 <span class="go">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -738,9 +762,9 @@ lazy vs eager</p>
 </div>
 <div class="section" id="a-empty-list">
 <h2>A: Empty List<a class="headerlink" href="#a-empty-list" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([])</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([</span><span class="s1">&#39;beer&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([</span><span class="s">&#39;beer&#39;</span><span class="p">])</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -758,7 +782,7 @@ lazy vs eager</p>
 </div>
 <div class="section" id="a-empty-iterator">
 <h2>A: Empty Iterator<a class="headerlink" href="#a-empty-iterator" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="nb">iter</span><span class="p">([])</span>
@@ -777,30 +801,30 @@ lazy vs eager</p>
 <div class="section" id="queryset-like-iterator">
 <h2>QuerySet like Iterator<a class="headerlink" href="#queryset-like-iterator" title="Permalink to this headline">¶</a></h2>
 <p>filter with QuerySet:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">[&lt;Meeting: Meeting object&gt;]</span>
 </pre></div>
 </div>
 <p>filter with list:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="p">[{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])</span>
 <span class="go">[{&#39;id&#39;: 1}]</span>
 </pre></div>
 </div>
 <p>filter with iterator:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])))</span>
 <span class="go">[{&#39;id&#39;: 1}]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="because-queryset-is-an-iterator">
 <h2>Because QuerySet <em>is</em> an iterator<a class="headerlink" href="#because-queryset-is-an-iterator" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">[&lt;Meeting: Meeting object&gt;]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <span class="go">&lt;class &#39;django.db.models.query.QuerySet&#39;&gt;</span>
 </pre></div>
 </div>
@@ -810,12 +834,12 @@ lazy vs eager</p>
 <p>diff: stream of objs, same class
 qs[:3] &lt;=&gt; islice(it, 3)
 bool(iter) vs qs.empty()</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="nb">iter</span><span class="p">([])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="nb">iter</span><span class="p">([])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="p">[]</span> <span class="p">;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="p">[]</span> <span class="p">;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="go">False</span>
 </pre></div>
 </div>
@@ -826,15 +850,15 @@ bool(iter) vs qs.empty()</p>
 </div>
 <div class="section" id="can-mix-match-qs-iterators">
 <h2>Can mix/match QS/iterators...<a class="headerlink" href="#can-mix-match-qs-iterators" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span>
 <span class="go">1</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">id</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">id</span>
 <span class="go">1</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">&lt;itertools.islice object at 0x2bb9ec0&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="mi">1</span><span class="p">))</span>
@@ -870,9 +894,9 @@ list of results.</p>
 </div>
 <div class="questions section" id="questions">
 <h1>Questions?<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h1>
-<div class="figure" id="id22">
+<div class="figure">
 <img alt="_images/john-bold.jpg" class="fill" src="_images/john-bold.jpg" />
-<p class="caption"><span class="caption-text"><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></span></p>
+<p class="caption"><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></p>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
@@ -969,11 +993,11 @@ predict the behavior of a program</p>
 <h2>Iterators<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>An iterator is a <em>stream</em> of data &#8211; sort of a restricted, very
 efficient list</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 <span class="go">[1, 2]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 <span class="go">&lt;listiterator object at 0x7f429d83c750&gt;</span>
 </pre></div>
 </div>
@@ -986,7 +1010,7 @@ efficient list</p>
 <div class="section" id="file-iterator">
 <h2>File iterator<a class="headerlink" href="#file-iterator" title="Permalink to this headline">¶</a></h2>
 <p>iterate across a <em>stream</em> of strings</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;beer.txt&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;beer.txt&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
     <span class="k">print</span> <span class="n">line</span>
 </pre></div>
@@ -998,7 +1022,7 @@ efficient list</p>
 </div>
 <div class="section" id="list-very-similar-to-iterator">
 <h2>List very similar to Iterator<a class="headerlink" href="#list-very-similar-to-iterator" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">):</span>
     <span class="k">print</span> <span class="n">line</span>
 
 <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]):</span>
@@ -1007,7 +1031,7 @@ efficient list</p>
 <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]:</span>
     <span class="k">print</span> <span class="n">num</span>
 
-<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.txt&#39;</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;*.txt&#39;</span><span class="p">):</span>
     <span class="k">print</span> <span class="n">name</span>
 </pre></div>
 </div>
@@ -1016,37 +1040,37 @@ efficient list</p>
 <div class="section" id="fp-upcase">
 <h2>FP: upcase<a class="headerlink" href="#fp-upcase" title="Permalink to this headline">¶</a></h2>
 <p>functional: functions operate on streams of objects</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
             <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
 
-<span class="n">writelines</span><span class="p">(</span> <span class="s1">&#39;/dev/stdout&#39;</span><span class="p">,</span>
-            <span class="n">upcase</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">writelines</span><span class="p">(</span> <span class="s">&#39;/dev/stdout&#39;</span><span class="p">,</span>
+            <span class="n">upcase</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="p">)</span>
             <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="fp-upcase-2">
 <h2>FP: upcase 2<a class="headerlink" href="#fp-upcase-2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
-    <span class="c1"># IN: stream of lines; OUT: stream of lines</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="c"># IN: stream of lines; OUT: stream of lines</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
-    <span class="c1"># IN: stream of lines; OUT: nothing</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+    <span class="c"># IN: stream of lines; OUT: nothing</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
             <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
 
-<span class="c1"># open() is OUT: stream of lines</span>
-<span class="n">writelines</span><span class="p">(</span> <span class="s1">&#39;/dev/stdout&#39;</span><span class="p">,</span>
-            <span class="n">upcase</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="c"># open() is OUT: stream of lines</span>
+<span class="n">writelines</span><span class="p">(</span> <span class="s">&#39;/dev/stdout&#39;</span><span class="p">,</span>
+            <span class="n">upcase</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="p">)</span>
             <span class="p">)</span>
 </pre></div>
 </div>
@@ -1064,17 +1088,17 @@ a stream of objects.
 <h2>Old Primary Functions<a class="headerlink" href="#old-primary-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt>
-<code class="descname">filter</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="sig-paren">)</span></dt>
+<tt class="descname">filter</tt><big>(</big><em>function</em>, <em>iterable</em><big>)</big></dt>
 <dd><p>Construct a <strong>list</strong> from those elements of iterable for which function returns true.</p>
 </dd></dl>
 
 <dl class="function">
 <dt>
-<code class="descname">map</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em>, <em>...</em><span class="sig-paren">)</span></dt>
+<tt class="descname">map</tt><big>(</big><em>function</em>, <em>iterable</em>, <em>...</em><big>)</big></dt>
 <dd><p>Apply function to every item of iterable and return a <strong>list</strong> of the results.</p>
 </dd></dl>
 
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="go">[1, 2]</span>
 </pre></div>
 </div>
@@ -1095,7 +1119,7 @@ list.</p>
 <p class="first admonition-title">Note</p>
 <dl class="function">
 <dt id="reduce">
-<code class="descname">reduce</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="optional">[</span>, <em>initializer</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#reduce" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">reduce</tt><big>(</big><em>function</em>, <em>iterable</em><span class="optional">[</span>, <em>initializer</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#reduce" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p class="last">Apply function of two arguments cumulatively to the items of iterable, from left to right, so as to reduce the iterable to a single value.</p>
@@ -1104,7 +1128,7 @@ list.</p>
 <p class="first admonition-title">Note</p>
 <dl class="function">
 <dt>
-<code class="descname">enumerate</code><span class="sig-paren">(</span><em>sequence</em><span class="optional">[</span>, <em>start=0</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<tt class="descname">enumerate</tt><big>(</big><em>sequence</em><span class="optional">[</span>, <em>start=0</em><span class="optional">]</span><big>)</big></dt>
 <dd></dd></dl>
 
 <p class="last">Return an iterator that yields tuples of an index and an item of the
@@ -1113,7 +1137,7 @@ list.</p>
 </div>
 <div class="section" id="fp-important-dataset">
 <h2>FP: important dataset<a class="headerlink" href="#fp-important-dataset" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
 <span class="go"># Old Fashioned</span>
 <span class="go">1.5 oz whiskey</span>
 <span class="go">1 tsp water</span>
@@ -1124,18 +1148,18 @@ list.</p>
 </div>
 <div class="section" id="functional-prog-for-better-booze">
 <h2>Functional Prog for Better Booze!<a class="headerlink" href="#functional-prog-for-better-booze" title="Permalink to this headline">¶</a></h2>
-<div class="figure" id="id23">
+<div class="figure">
 <img alt="_images/Oldfashioned-cocktail.png" src="_images/Oldfashioned-cocktail.png" />
-<p class="caption"><span class="caption-text">CC PD <a class="reference external" href="http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png">http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png</a></span></p>
+<p class="caption">CC PD <a class="reference external" href="http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png">http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png</a></p>
 </div>
 </div>
 <div class="section" id="fp-filter">
 <h2>FP: filter<a class="headerlink" href="#fp-filter" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="go">    return not line.startswith(&#39;#&#39;)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">))</span> <span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">))</span> <span class="p">)</span>
 <span class="go">1.5 oz whiskey</span>
 <span class="go">1 tsp water</span>
 <span class="go">0.5 tsp sugar</span>
@@ -1144,20 +1168,20 @@ list.</p>
 </div>
 <dl class="function">
 <dt>
-<code class="descname">filter</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="sig-paren">)</span></dt>
+<tt class="descname">filter</tt><big>(</big><em>function</em>, <em>iterable</em><big>)</big></dt>
 <dd><p>Construct a <strong>list</strong> from those elements of iterable for which function returns true.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="fp-map-filter">
 <h2>FP: map, filter<a class="headerlink" href="#fp-map-filter" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="go">    return str(line.split()[:2])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="go">    return not line.startswith(&#39;#&#39;)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)))</span> <span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)))</span> <span class="p">)</span>
 <span class="go">[&#39;1.5&#39;, &#39;oz&#39;]</span>
 <span class="go">[&#39;1&#39;, &#39;tsp&#39;]</span>
 <span class="go">[&#39;0.5&#39;, &#39;tsp&#39;]</span>
@@ -1166,7 +1190,7 @@ list.</p>
 </div>
 <dl class="function">
 <dt>
-<code class="descname">map</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em>, <em>...</em><span class="sig-paren">)</span></dt>
+<tt class="descname">map</tt><big>(</big><em>function</em>, <em>iterable</em>, <em>...</em><big>)</big></dt>
 <dd><p>Apply function to every item of iterable and return a <strong>list</strong> of the results.</p>
 </dd></dl>
 
@@ -1174,7 +1198,7 @@ list.</p>
 <div class="section" id="preferred-generator-expressions">
 <h2>Preferred: generator expressions<a class="headerlink" href="#preferred-generator-expressions" title="Permalink to this headline">¶</a></h2>
 <p><strong>filter replacement</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;whiskey&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s">&#39;whiskey&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>compare with</strong></p>
@@ -1187,29 +1211,29 @@ list.</p>
 </div>
 <div class="section" id="preferred-filter-replacement">
 <h2>Preferred: filter replacement<a class="headerlink" href="#preferred-filter-replacement" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;whiskey&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s">&#39;whiskey&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
 <span class="go">&lt;generator object &lt;genexpr&gt; at 0x7f429d7c8eb0&gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="convert-to-list-so-we-can-see">
 <h2>convert to list so we can see<a class="headerlink" href="#convert-to-list-so-we-can-see" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">list</span><span class="p">((</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;whiskey&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span><span class="o">**</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">list</span><span class="p">((</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s">&#39;whiskey&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span><span class="o">**</span><span class="p">)</span>
 <span class="go">[&#39;1.5 oz whiskey\n&#39;]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="original-fp-1">
 <h2>original FP #1<a class="headerlink" href="#original-fp-1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="go">    return not line.startswith(&#39;#&#39;)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="go">    return str(line.split()[:2])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)))</span> <span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)))</span> <span class="p">)</span>
 <span class="go">[&#39;1.5&#39;, &#39;oz&#39;]</span>
 <span class="go">[&#39;1&#39;, &#39;tsp&#39;]</span>
 <span class="go">[&#39;0.5&#39;, &#39;tsp&#39;]</span>
@@ -1219,15 +1243,15 @@ list.</p>
 </div>
 <div class="section" id="updated-fp-1">
 <h2>updated FP #1<a class="headerlink" href="#updated-fp-1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="go">    return not line.startswith(&#39;#&#39;)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="go">    return str(line.split()[:2])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="p">(</span>
 <span class="go">    amount(hasdata)</span>
 <span class="go">    for hasdata in (</span>
 <span class="go">        line for line in open(&#39;ing.txt&#39;)</span>
@@ -1245,39 +1269,39 @@ list.</p>
 <h2>Iterator Functions<a class="headerlink" href="#iterator-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="xrange">
-<code class="descname">xrange</code><span class="sig-paren">(</span><em>stop) -&gt; counter (xrange object</em><span class="sig-paren">)</span><a class="headerlink" href="#xrange" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">xrange</tt><big>(</big><em>stop) -&gt; counter (xrange object</em><big>)</big><a class="headerlink" href="#xrange" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt>
-<code class="descname">xrange</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><span class="sig-paren">)</span> &rarr; counter</dt>
+<tt class="descname">xrange</tt><big>(</big><em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><big>)</big> &rarr; counter</dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="chain">
-<code class="descname">chain</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span> &rarr; each item in order<a class="headerlink" href="#chain" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">chain</tt><big>(</big><em>*iterables</em><big>)</big> &rarr; each item in order<a class="headerlink" href="#chain" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="ifilter">
-<code class="descname">ifilter</code><span class="sig-paren">(</span><em>f</em>, <em>iter</em><span class="sig-paren">)</span> &rarr; substream of iter. Like filter, for iterators.<a class="headerlink" href="#ifilter" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">ifilter</tt><big>(</big><em>f</em>, <em>iter</em><big>)</big> &rarr; substream of iter. Like filter, for iterators.<a class="headerlink" href="#ifilter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="islice">
-<code class="descname">islice</code><span class="sig-paren">(</span><em>iter</em>, <em>num</em><span class="sig-paren">)</span> &rarr; counted items of iter<a class="headerlink" href="#islice" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">islice</tt><big>(</big><em>iter</em>, <em>num</em><big>)</big> &rarr; counted items of iter<a class="headerlink" href="#islice" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <dl class="last function">
 <dt id="imap">
-<code class="descname">imap</code><span class="sig-paren">(</span><em>func</em>, <em>p</em>, <em>q</em><span class="sig-paren">)</span> &rarr; f(p), f(q), ...<a class="headerlink" href="#imap" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">imap</tt><big>(</big><em>func</em>, <em>p</em>, <em>q</em><big>)</big> &rarr; f(p), f(q), ...<a class="headerlink" href="#imap" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="function">
 <dt>
-<code class="descname">izip()     p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip('ABCD', 'xy') --&gt; Ax By</code></dt>
+<tt class="descname">izip()     p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip('ABCD', 'xy') --&gt; Ax By</tt></dt>
 <dt>
-<code class="descname">.. py:function:: izip_longest()    p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip_longest('ABCD', 'xy', fillvalue='-') --&gt; Ax By C- D-</code></dt>
+<tt class="descname">.. py:function:: izip_longest()    p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip_longest('ABCD', 'xy', fillvalue='-') --&gt; Ax By C- D-</tt></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1288,11 +1312,11 @@ list.</p>
 <h2>iter: chain<a class="headerlink" href="#iter-chain" title="Permalink to this headline">¶</a></h2>
 <p><strong>chain(streams)</strong> gives elements of each stream in order
 Equivalent to <strong>+</strong> for lists.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 <span class="go">[1, 2, 3]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chain</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span>
 <span class="go">&lt;itertools.chain object at 0x7f429d848510&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span> <span class="n">chain</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span> <span class="p">)</span>
@@ -1310,11 +1334,11 @@ lazy vs eager
 <h2>iter: islice<a class="headerlink" href="#iter-islice" title="Permalink to this headline">¶</a></h2>
 <p><strong>islice(stream, num)</strong> &#8211; get counted elements of stream
 Equivalent to slice operator for lists.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[:</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[:</span><span class="mi">1</span><span class="p">]</span>
 <span class="go">[2]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[:</span><span class="mi">1</span><span class="p">]</span>
 <span class="gt">Traceback (most recent call last):</span>
   File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
@@ -1323,6 +1347,9 @@ Equivalent to slice operator for lists.</p>
 <span class="go">&lt;itertools.islice object at 0x7f429d7de9f0&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span> <span class="mi">2</span><span class="p">))</span>
 <span class="go">[1, 2]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">&#39;listiterator&#39; object has no attribute &#39;__getitem__&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1333,7 +1360,7 @@ Equivalent to slice operator for lists.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>models.py</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 <span class="go">class Meeting(models.Model):</span>
 <span class="go">name = models.CharField(max_length=100)</span>
 <span class="go">meet_date = models.DateTimeField()</span>
@@ -1342,25 +1369,25 @@ Equivalent to slice operator for lists.</p>
 </div>
 <div class="section" id="id11">
 <h2>QuerySet review<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="go">&lt;Meeting: Meeting object&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">__dict__</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">__dict__</span>
 <span class="go">{&#39;meet_date&#39;: datetime.datetime(2014, 5, 20, 7, 0, tzinfo=&lt;UTC&gt;),</span>
 <span class="go">&#39;_state&#39;: &lt;django.db.models.base.ModelState object at 0x2bd1050&gt;,</span>
 <span class="go">&#39;id&#39;: 3, &#39;name&#39;: u&#39;LA Django Monthly Meeting&#39;}</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="s1">&#39;go&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span> <span class="nb">print</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="s">&#39;go&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span> <span class="k">print</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span>
 <span class="go">LA Django Monthly Meeting</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id12">
 <h2>QuerySet and iterators<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;java&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;java&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
 <span class="go">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1377,9 +1404,9 @@ Equivalent to slice operator for lists.</p>
 <div class="section" id="id14">
 <h2>Empty List<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <p><em>How can you tell if a list is empty or not?</em></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([])</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([</span><span class="s1">&#39;beer&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([</span><span class="s">&#39;beer&#39;</span><span class="p">])</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -1391,7 +1418,7 @@ Equivalent to slice operator for lists.</p>
 <div class="section" id="id15">
 <h2>Empty Iterator<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <p><em>How can you tell if an iterator is empty or not?</em></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="nb">iter</span><span class="p">([])</span>
@@ -1410,30 +1437,30 @@ Equivalent to slice operator for lists.</p>
 <div class="section" id="id17">
 <h2>QuerySet like Iterator<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
 <p>filter with QuerySet:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">[&lt;Meeting: Meeting object&gt;]</span>
 </pre></div>
 </div>
 <p>filter with list:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="p">[{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])</span>
 <span class="go">[{&#39;id&#39;: 1}]</span>
 </pre></div>
 </div>
 <p>filter with iterator:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])))</span>
 <span class="go">[{&#39;id&#39;: 1}]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id18">
 <h2>Because QuerySet <em>is</em> an iterator<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">[&lt;Meeting: Meeting object&gt;]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <span class="go">&lt;class &#39;django.db.models.query.QuerySet&#39;&gt;</span>
 </pre></div>
 </div>
@@ -1443,12 +1470,12 @@ Equivalent to slice operator for lists.</p>
 <p>diff: stream of objs, same class
 qs[:3] &lt;=&gt; islice(it, 3)
 bool(iter) vs qs.empty()</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="nb">iter</span><span class="p">([])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="nb">iter</span><span class="p">([])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="p">[]</span> <span class="p">;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="p">[]</span> <span class="p">;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="go">False</span>
 </pre></div>
 </div>
@@ -1459,15 +1486,15 @@ bool(iter) vs qs.empty()</p>
 </div>
 <div class="section" id="can-mix-and-match">
 <h2>Can mix and match<a class="headerlink" href="#can-mix-and-match" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span>
 <span class="go">1</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">id</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">id</span>
 <span class="go">1</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">&lt;itertools.islice object at 0x2bb9ec0&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="mi">1</span><span class="p">))</span>
@@ -1493,9 +1520,9 @@ list of results.</p>
 </div>
 <div class="section" id="id20">
 <h1>Questions?<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h1>
-<div class="figure" id="id24">
+<div class="figure">
 <img alt="_images/john-bold.jpg" class="fill" src="_images/john-bold.jpg" />
-<p class="caption"><span class="caption-text"><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></span></p>
+<p class="caption"><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></p>
 </div>
 <div class="section" id="id21">
 <h2>References<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
@@ -1514,11 +1541,11 @@ list of results.</p>
 <div class="section" id="database-iterator">
 <h2>Database iterator<a class="headerlink" href="#database-iterator" title="Permalink to this headline">¶</a></h2>
 <p>iterate with a <em>stream</em> of rows</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sqlite3</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;recipe&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sqlite3</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;recipe&#39;</span><span class="p">)</span>
 <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 
-<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;select name from ingredient&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;&quot;&quot;select name from ingredient&quot;&quot;&quot;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
     <span class="k">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
@@ -1532,11 +1559,11 @@ list of results.</p>
 <h2>FP: Lisp style with generator expressions<a class="headerlink" href="#fp-lisp-style-with-generator-expressions" title="Permalink to this headline">¶</a></h2>
 <p>XX</p>
 <p><em>print list of ingredients in a recipe</em></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
     <span class="nb">map</span><span class="p">(</span><span class="n">ing_name</span><span class="p">,</span>
         <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
                <span class="nb">map</span><span class="p">(</span><span class="n">parse_ing</span><span class="p">,</span>
-                   <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;oldfashioned.ini&#39;</span><span class="p">)</span>
+                   <span class="nb">open</span><span class="p">(</span><span class="s">&#39;oldfashioned.ini&#39;</span><span class="p">)</span>
                <span class="p">)</span>
         <span class="p">)</span>
     <span class="p">))</span>
@@ -1547,11 +1574,11 @@ list of results.</p>
 <h2>FP: Lisp style with map-filter<a class="headerlink" href="#fp-lisp-style-with-map-filter" title="Permalink to this headline">¶</a></h2>
 <p><em>print list of ingredients in a recipe</em></p>
 <p>XX</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
     <span class="nb">map</span><span class="p">(</span><span class="n">ing_name</span><span class="p">,</span>
     <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
          <span class="nb">map</span><span class="p">(</span><span class="n">parse_ing</span><span class="p">,</span>
-             <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span>
+             <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
          <span class="p">)</span>
      <span class="p">)</span>
 <span class="p">)</span>
@@ -1564,29 +1591,21 @@ list of results.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html#document-index">Documentation overview</a><ul>
-  </ul></li>
-</ul>
-</div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2016, John Mitchell.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
-      
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="index.html#document-index">Functional Programming and Django QuerySets 2016 3 documentation</a> &raquo;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer">
+        &copy; Copyright 2016, John Mitchell.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
   </body>
 </html>
