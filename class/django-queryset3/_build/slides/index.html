@@ -52,6 +52,7 @@
 <h1>ME</h1>
 <blockquote>
 <div><ul class="simple">
+<li>beer</li>
 <li>Senior dev/server guy; DevOps</li>
 <li>20 years experience with Python</li>
 <li><a class="reference external" href="mailto:john&#37;&#52;&#48;theblacktux&#46;com">john<span>&#64;</span>theblacktux<span>&#46;</span>com</a></li>
@@ -66,15 +67,23 @@
 </div>
 
 </article>
-<article class="slide level-1" id="the-black-tux">
-<h1>The Black Tux</h1>
+<article class="slide level-1" id="id1">
+<h1>.</h1>
 <div class="figure">
 <img alt="_images/TheBlackTux.png" class="fill" src="_images/TheBlackTux.png" />
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Black Tux
+Tech Project Manager (and Product Manager)
+seasoned UX person
+senior Python people
+DevOps</p>
+</div>
 
 </article>
-<article class="slide level-1" id="contents">
-<h1>Contents</h1>
+<article class="slide level-1" id="functional-programming-and-django-querysets">
+<h1>Functional Programming and Django QuerySets</h1>
 <ul class="simple">
 <li>iterator/generator = &quot;stream&quot;</li>
 <li>FP: programming with composition</li>
@@ -85,6 +94,10 @@
 <article class="slide level-2" id="programmers-use-lots-of-tools">
 <h2>Programmers use lots of tools</h2>
 <img alt="_images/large_BaxterCutawayFF3.jpg" src="_images/large_BaxterCutawayFF3.jpg" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">XX hide RHS</p>
+</div>
 
 </article>
 <article class="slide level-1" id="iterators">
@@ -200,7 +213,7 @@ efficient list.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id1">
+<article class="slide level-2" id="id2">
 <h2>What can you <em>not</em> do with an iterator?</h2>
 <p><strong>no length</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
@@ -313,7 +326,7 @@ efficient list.</p>
 <p>XX &quot;will be code&quot; meme image</p>
 
 </article>
-<article class="slide level-1" id="id2">
+<article class="slide level-1" id="id3">
 <h1>☃</h1>
 
 </article>
@@ -394,7 +407,7 @@ object-oriented features. [&quot;Object obsessive&quot;]</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id3">
+<article class="slide level-2" id="id4">
 <h2>Functional Programming</h2>
 <p>procedural: list of instructions</p>
 <blockquote>
@@ -416,8 +429,8 @@ specialize by subclassing</div></blockquote>
 <img alt="_images/FoodChain.jpg" src="_images/FoodChain.jpg" />
 
 </article>
-<article class="slide level-2" id="upfile-example-in-functional-programming">
-<h2>UpFile example in Functional Programming</h2>
+<article class="slide level-2" id="example-1-upfile-in-functional-programming">
+<h2>Example 1: UpFile in Functional Programming</h2>
 <p>using a generator expression</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nb">open</span><span class="p">(</span><span class="s">&#39;out.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span>
     <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;in.txt&#39;</span><span class="p">)</span>
@@ -463,7 +476,7 @@ function call results.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id4">
+<article class="slide level-2" id="id5">
 <h2>map-filter</h2>
 <p><strong>filter(func, iter)</strong> -- provide items matching a function</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
@@ -497,45 +510,6 @@ which is reduce.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="ex2-print-list-of-ingredients-in-a-recipe">
-<h2>Ex2: print list of ingredients in a recipe</h2>
-<p><strong>oldfashioned.ini</strong>:</p>
-<div class="highlight-python"><div class="highlight"><pre># very tasty
-[Old Fashioned]
-1:1.5 oz whiskey
-2:1 tsp water
-3:0.5 tsp sugar
-4:2 dash bitters
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">whiskey</span>
-<span class="n">water</span>
-<span class="n">sugar</span>
-<span class="n">bitters</span>
-</pre></div>
-</div>
-
-</article>
-<article class="slide level-2" id="ex2-procedural-style">
-<h2>Ex2: procedural style</h2>
-<p><em>print list of ingredients in a recipe</em></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ingredients</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;oldfashioned.ini&#39;</span><span class="p">):</span>
-    <span class="n">ing</span> <span class="o">=</span> <span class="n">parse_ing</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ing</span><span class="p">:</span>
-        <span class="n">ingredients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ing</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<dl class="last docutils">
-<dt>def parse_ing(line):</dt>
-<dd>return re.match(r'[0-9].+s(?P&lt;name&gt;w+)', line)</dd>
-</dl>
-</div>
-
-</article>
 <article class="slide level-2" id="functional-programming-examples">
 <h2>Functional Programming examples</h2>
 <p>Example: Windows INI-file parser; aka ConfigParser</p>
@@ -544,15 +518,18 @@ which is reduce.</p>
 <li>stream of valid lines (no comments, has key-value)</li>
 <li>stream of key-value match objects</li>
 <li>dictionary</li>
-<li>TBD: dict of dictionaries</li>
 </ol>
 
 </article>
-<article class="slide level-2" id="parse1-py">
-<h2>parse1.py</h2>
+<article class="slide level-2" id="yum">
+<h2>yum</h2>
+<img alt="_images/Oldfashioned-cocktail.png" src="_images/Oldfashioned-cocktail.png" />
+
+</article>
+<article class="slide level-2" id="fp-in-two-step-workflow">
+<h2>FP in two step workflow</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># 1. stream of lines</span>
-<span class="kn">import</span> <span class="nn">fileinput</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">()</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;recipe.ini&#39;</span><span class="p">)</span>
 <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">lines</span> <span class="p">)</span>
 </pre></div>
 </div>
@@ -566,16 +543,16 @@ which is reduce.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="parse2-py">
-<h2>parse2.py</h2>
+<article class="slide level-2" id="fp-workflow-with-ifilter">
+<h2>FP workflow with ifilter</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># 2. stream of valid lines</span>
-<span class="kn">import</span> <span class="nn">fileinput</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="k">def</span> <span class="nf">has_comment</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">has_keyvalue</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
     <span class="k">return</span> <span class="s">&#39;:&#39;</span> <span class="ow">in</span> <span class="n">line</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="n">ifilterfalse</span><span class="p">(</span> <span class="n">has_comment</span><span class="p">,</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">()</span> <span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;recipe.ini&#39;</span><span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">ifilterfalse</span><span class="p">(</span> <span class="n">has_comment</span><span class="p">,</span> <span class="n">lines</span> <span class="p">)</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="n">ifilter</span><span class="p">(</span> <span class="n">has_keyvalue</span><span class="p">,</span> <span class="n">lines</span> <span class="p">)</span>
 <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">lines</span> <span class="p">)</span>
 </pre></div>
@@ -588,8 +565,8 @@ which is reduce.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="parse3-py">
-<h2>parse3.py</h2>
+<article class="slide level-2" id="fp-with-generator-expression-and-ifilter">
+<h2>FP with generator expression and ifilter</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># 3. stream of key-value match objects</span>
 <span class="kn">import</span> <span class="nn">fileinput</span><span class="o">,</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
@@ -613,8 +590,8 @@ which is reduce.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="parse4-py">
-<h2>parse4.py</h2>
+<article class="slide level-2" id="fp-with-map-ifilter-dict-output">
+<h2>FP with map-ifilter, dict output</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># 4. dictionary</span>
 <span class="kn">import</span> <span class="nn">fileinput</span><span class="o">,</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
@@ -626,13 +603,14 @@ which is reduce.</p>
         <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">None</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="n">ifilterfalse</span><span class="p">(</span><span class="n">has_comment</span><span class="p">,</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">())</span>
-<span class="n">matches</span> <span class="o">=</span> <span class="p">(</span><span class="n">parse_keyvalue</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">)</span>
+<span class="n">matches</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">parse_keyvalue</span><span class="p">,</span> <span class="n">lines</span><span class="p">)</span>
 <span class="n">keyvalues</span> <span class="o">=</span> <span class="n">ifilter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">matches</span><span class="p">)</span>
 <span class="n">confdict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">keyvalues</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">confdict</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;1&#39;</span><span class="p">:</span> <span class="s">&#39;1.5 oz whiskey&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">:</span> <span class="s">&#39;0.5 tsp sugar&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">:</span> <span class="s">&#39;1 tsp water&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">:</span> <span class="s">&#39;2 dash bitters&#39;</span><span class="p">}</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;1&#39;</span><span class="p">:</span> <span class="s">&#39;1.5 oz whiskey&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">:</span> <span class="s">&#39;0.5 tsp sugar&#39;</span><span class="p">,</span>
+ <span class="s">&#39;2&#39;</span><span class="p">:</span> <span class="s">&#39;1 tsp water&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">:</span> <span class="s">&#39;2 dash bitters&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
 
@@ -653,7 +631,7 @@ which is reduce.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id5">
+<article class="slide level-2" id="id6">
 <h2><a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a></h2>
 <table class="hlist"><tr><td><ul class="simple">
 <li><strong>chain()</strong></li>
@@ -742,12 +720,17 @@ lazy vs eager</p>
 </div></blockquote>
 
 </article>
-<article class="slide level-1" id="id6">
+<article class="slide level-1" id="id7">
 <h1>☃</h1>
 
 </article>
 <article class="slide level-1" id="django-querysets">
 <h1>Django QuerySets</h1>
+<ul class="simple">
+<li>iterator/generator = &quot;stream&quot;</li>
+<li>FP: programming with composition</li>
+<li><strong>QuerySet is a stream</strong></li>
+</ul>
 <p>represents a <em>stream</em> of rows from the database</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -986,7 +969,7 @@ list of results.</p>
 make modular, reliable and testable code, faster.</p>
 
 </article>
-<article class="slide level-1" id="id7">
+<article class="slide level-1" id="id8">
 <h1>ME</h1>
 <blockquote>
 <div><ul class="simple">
@@ -1058,7 +1041,7 @@ predict the behavior of a program</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id9">
+<article class="slide level-2" id="id10">
 <h2>Iterators</h2>
 <p>An iterator is a <em>stream</em> of data -- sort of a restricted, very
 efficient list</p>
@@ -1441,7 +1424,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-1" id="id10">
+<article class="slide level-1" id="id11">
 <h1>Django QuerySets</h1>
 <p>QuerySets are Django's way of getting and updating data</p>
 <div class="admonition note">
@@ -1456,7 +1439,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id11">
+<article class="slide level-2" id="id12">
 <h2>QuerySet review</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="go">&lt;Meeting: Meeting object&gt;</span>
@@ -1475,7 +1458,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id12">
+<article class="slide level-2" id="id13">
 <h2>QuerySet and iterators</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;java&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
@@ -1486,14 +1469,14 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-1" id="id13">
+<article class="slide level-1" id="id14">
 <h1>Functional QuerySets</h1>
 <p class="build">How can you tell if a list is empty or not?</p>
 <p class="build">. an iterator?</p>
 <p class="build">. a QuerySet?</p>
 
 </article>
-<article class="slide level-2" id="id14">
+<article class="slide level-2" id="id15">
 <h2>Empty List</h2>
 <p><em>How can you tell if a list is empty or not?</em></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([])</span>
@@ -1508,7 +1491,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id15">
+<article class="slide level-2" id="id16">
 <h2>Empty Iterator</h2>
 <p><em>How can you tell if an iterator is empty or not?</em></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
@@ -1525,11 +1508,11 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-1" id="id16">
+<article class="slide level-1" id="id17">
 <h1>How can you tell if a QuerySet is empty or not?</h1>
 
 </article>
-<article class="slide level-2" id="id17">
+<article class="slide level-2" id="id18">
 <h2>QuerySet like Iterator</h2>
 <p>filter with QuerySet:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1549,7 +1532,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id18">
+<article class="slide level-2" id="id19">
 <h2>Because QuerySet <em>is</em> an iterator</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1600,7 +1583,7 @@ bool(iter) vs qs.empty()</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id19">
+<article class="slide level-2" id="id20">
 <h2>But not always</h2>
 <p><em>How can you tell if a QuerySet is empty or not?</em></p>
 <p>Use x.exists(), not bool(x) -- more efficient</p>
@@ -1616,7 +1599,7 @@ list of results.</p>
 </div>
 
 </article>
-<article class="slide level-1" id="id20">
+<article class="slide level-1" id="id21">
 <h1>Questions?</h1>
 <div class="figure">
 <img alt="_images/john-bold.jpg" class="fill" src="_images/john-bold.jpg" />
@@ -1624,7 +1607,7 @@ list of results.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id21">
+<article class="slide level-2" id="id22">
 <h2>References</h2>
 <p>Can Your Programming Language Do This? by Joel Spolsky</p>
 <p><a class="reference external" href="http://www.joelonsoftware.com/items/2006/08/01.html">http://www.joelonsoftware.com/items/2006/08/01.html</a></p>
@@ -1687,6 +1670,45 @@ list of results.</p>
      <span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="ex2-print-list-of-ingredients-in-a-recipe">
+<h2>Ex2: print list of ingredients in a recipe</h2>
+<p><strong>oldfashioned.ini</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre># very tasty
+[Old Fashioned]
+1:1.5 oz whiskey
+2:1 tsp water
+3:0.5 tsp sugar
+4:2 dash bitters
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">whiskey</span>
+<span class="n">water</span>
+<span class="n">sugar</span>
+<span class="n">bitters</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="ex2-procedural-style">
+<h2>Ex2: procedural style</h2>
+<p><em>print list of ingredients in a recipe</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ingredients</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;oldfashioned.ini&#39;</span><span class="p">):</span>
+    <span class="n">ing</span> <span class="o">=</span> <span class="n">parse_ing</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ing</span><span class="p">:</span>
+        <span class="n">ingredients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ing</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="last docutils">
+<dt>def parse_ing(line):</dt>
+<dd>return re.match(r'[0-9].+s(?P&lt;name&gt;w+)', line)</dd>
+</dl>
 </div>
 
 </article>

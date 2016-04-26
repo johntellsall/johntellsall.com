@@ -1,11 +1,10 @@
-parse1.py
-----------------
+FP in two step workflow
+-----------------------
 
 .. code-block:: python
 
      # 1. stream of lines
-     import fileinput
-     lines = fileinput.input()
+     lines = open('recipe.ini')
      print ''.join( lines )
 
 ::
@@ -16,21 +15,21 @@ parse1.py
      2:1 tsp water
      3:0.5 tsp sugar
      4:2 dash bitters
-     
-     
-parse2.py
-----------------
+
+
+FP workflow with ifilter
+------------------------
 
 .. code-block:: python
 
      # 2. stream of valid lines
-     import fileinput
      from itertools import *
      def has_comment(line):
          return line.startswith('#')
      def has_keyvalue(line):
          return ':' in line
-     lines = ifilterfalse( has_comment, fileinput.input() )
+     lines = open('recipe.ini')
+     lines = ifilterfalse( has_comment, lines )
      lines = ifilter( has_keyvalue, lines )
      print ''.join( lines )
 
@@ -40,10 +39,10 @@ parse2.py
      2:1 tsp water
      3:0.5 tsp sugar
      4:2 dash bitters
-     
-     
-parse3.py
-----------------
+
+
+FP with generator expression and ifilter
+----------------------------------------
 
 .. code-block:: python
 
@@ -67,9 +66,10 @@ parse3.py
      ('2', '1 tsp water')
      ('3', '0.5 tsp sugar')
      ('4', '2 dash bitters')
-     
-parse4.py
-----------------
+
+
+FP with map-ifilter, dict output
+--------------------------------
 
 .. code-block:: python
 
@@ -84,12 +84,12 @@ parse4.py
              return m.groups()
          return None
      lines = ifilterfalse(has_comment, fileinput.input())
-     matches = (parse_keyvalue(line) for line in lines)
+     matches = map(parse_keyvalue, lines)
      keyvalues = ifilter(None, matches)
      confdict = dict(keyvalues)
      print confdict
 
 ::
 
-     {'1': '1.5 oz whiskey', '3': '0.5 tsp sugar', '2': '1 tsp water', '4': '2 dash bitters'}
-     
+     {'1': '1.5 oz whiskey', '3': '0.5 tsp sugar',
+      '2': '1 tsp water', '4': '2 dash bitters'}

@@ -15,6 +15,7 @@ April 26, 2016
 ME
 ====
 
+   - beer
    - Senior dev/server guy; DevOps
    - 20 years experience with Python
    - john@theblacktux.com
@@ -24,15 +25,23 @@ ME
 
    - first PyCon I went to had 40 people!
 
-The Black Tux
+.
 =============
 
 .. figure:: /_static/TheBlackTux.png
    :class: fill
 
+.. note::
 
-Contents
-========
+   The Black Tux
+   Tech Project Manager (and Product Manager)
+   seasoned UX person
+   senior Python people
+   DevOps
+
+
+Functional Programming and Django QuerySets
+===========================================
 
 * iterator/generator = "stream"
 
@@ -45,8 +54,11 @@ Contents
 Programmers use lots of tools
 -----------------------------
 
+
 .. image:: _static/large_BaxterCutawayFF3.jpg
 
+.. note::
+   XX hide RHS
 
 
 Iterators
@@ -332,7 +344,7 @@ food chain
 
 
 
-UpFile example in Functional Programming
+Example 1: UpFile in Functional Programming
 ----------------------------------------
 
 using a generator expression
@@ -417,43 +429,6 @@ imap-ifilter
 [1, 4]
 
 
-Ex2: print list of ingredients in a recipe
-------------------------------------------
-
-**oldfashioned.ini**::
-
-     # very tasty
-     [Old Fashioned]
-     1:1.5 oz whiskey
-     2:1 tsp water
-     3:0.5 tsp sugar
-     4:2 dash bitters
-
-::
-
-   whiskey
-   water
-   sugar
-   bitters
-
-Ex2: procedural style
----------------------
-
-*print list of ingredients in a recipe*
-
-.. code-block:: python
-
-    ingredients = []
-    for line in open('oldfashioned.ini'):
-        ing = parse_ing(line)
-        if ing:
-            ingredients.append(ing.name)
-    print '\n'.join(ingredients)
-
-.. note::
-    def parse_ing(line):
-        return re.match(r'[0-9].+\s(?P<name>\w+)', line)
-
 
 Functional Programming examples
 -------------------------------
@@ -468,7 +443,11 @@ Example: Windows INI-file parser; aka ConfigParser
 
 4. dictionary
 
-5. TBD: dict of dictionaries
+
+yum
+---
+
+.. image:: _static/Oldfashioned-cocktail.png
 
 
 .. include:: fp-examples.rst
@@ -584,6 +563,12 @@ Practical Advantages to FP
 
 Django QuerySets
 ================================================================
+
+* iterator/generator = "stream"
+
+* FP: programming with composition
+
+* **QuerySet is a stream**
 
 represents a *stream* of rows from the database
 
@@ -1515,3 +1500,39 @@ XX
             )
         )
    )
+Ex2: print list of ingredients in a recipe
+------------------------------------------
+
+**oldfashioned.ini**::
+
+     # very tasty
+     [Old Fashioned]
+     1:1.5 oz whiskey
+     2:1 tsp water
+     3:0.5 tsp sugar
+     4:2 dash bitters
+
+::
+
+   whiskey
+   water
+   sugar
+   bitters
+
+Ex2: procedural style
+---------------------
+
+*print list of ingredients in a recipe*
+
+.. code-block:: python
+
+    ingredients = []
+    for line in open('oldfashioned.ini'):
+        ing = parse_ing(line)
+        if ing:
+            ingredients.append(ing.name)
+    print '\n'.join(ingredients)
+
+.. note::
+    def parse_ing(line):
+        return re.match(r'[0-9].+\s(?P<name>\w+)', line)

@@ -5,6 +5,8 @@
 Functional Programming and Django QuerySets 2016
 ================================================
 
+John Mitchell
+
 SoCal Python
 
 at Media Temple
@@ -51,14 +53,10 @@ Functional Programming and Django QuerySets
 
 
 
-Programmers use lots of tools
+.
 -----------------------------
 
-
-.. image:: _static/large_BaxterCutawayFF3.jpg
-
-.. note::
-   XX hide RHS
+.. image:: /static/there\ will\ be\ code\ success\ kid.jpg
 
 
 Iterators
@@ -221,9 +219,12 @@ very important:
   and *itertools*, and *fileinput*
 
 
-XX more here
 
 XX "will be code" meme image
+
+.. note::
+   XX more here
+
 
 ☃
 =
@@ -443,28 +444,14 @@ Example: Windows INI-file parser; aka ConfigParser
 
 4. dictionary
 
-5. TBD: dict of dictionaries
+
+yum
+---
+
+.. image:: _static/Oldfashioned-cocktail.png
 
 
 .. include:: fp-examples.rst
-FP: generator expressions
-----------------------------------------------------------------
-
-*print list of ingredients in a recipe*
-
-XX
-
-.. code-block:: python
-
-   print '\n'.join(
-       map(ing_name,
-       filter(None,
-            map(parse_ing,
-                open('ing.txt')
-            )
-        )
-   )
-
 
 
 
@@ -1532,3 +1519,33 @@ Ex2: procedural style
 .. note::
     def parse_ing(line):
         return re.match(r'[0-9].+\s(?P<name>\w+)', line)
+
+
+FP: generator expressions
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+XX
+
+.. code-block:: python
+
+   print '\n'.join(
+       map(ing_name,
+       filter(None,
+            map(parse_ing,
+                open('ing.txt')
+            )
+        )
+   )
+
+
+
+
+Programmers use lots of tools
+-----------------------------
+
+.. image:: _static/large_BaxterCutawayFF3.jpg
+
+.. note::
+   XX hide RHS
