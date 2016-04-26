@@ -7,6 +7,8 @@ Functional Programming and Django QuerySets 2016
 
 SoCal Python
 
+at Media Temple
+
 April 26, 2016
 
 
@@ -20,6 +22,12 @@ ME
 .. note::
 
    - first PyCon I went to had 40 people!
+
+The Black Tux
+=============
+
+.. figure:: /_static/john-bold.jpg
+   :class: fill
 
 
 Contents
