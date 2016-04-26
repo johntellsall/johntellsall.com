@@ -43,6 +43,7 @@
 
   <article class="slide level-1" id="functional-programming-and-django-querysets-2016">
 <h1>Functional Programming and Django QuerySets 2016</h1>
+<p>John Mitchell</p>
 <p>SoCal Python</p>
 <p>at Media Temple</p>
 <p>April 26, 2016</p>
@@ -91,13 +92,9 @@ DevOps</p>
 </ul>
 
 </article>
-<article class="slide level-2" id="programmers-use-lots-of-tools">
-<h2>Programmers use lots of tools</h2>
-<img alt="_images/large_BaxterCutawayFF3.jpg" src="_images/large_BaxterCutawayFF3.jpg" />
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">XX hide RHS</p>
-</div>
+<article class="slide level-2" id="id2">
+<h2>.</h2>
+<img alt="_static/therewillbecodesuccesskid.jpg" src="_static/therewillbecodesuccesskid.jpg" />
 
 </article>
 <article class="slide level-1" id="iterators">
@@ -213,7 +210,7 @@ efficient list.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id2">
+<article class="slide level-2" id="id3">
 <h2>What can you <em>not</em> do with an iterator?</h2>
 <p><strong>no length</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
@@ -322,11 +319,14 @@ efficient list.</p>
 <p>and <em>itertools</em>, and <em>fileinput</em></p>
 </li>
 </ul>
-<p>XX more here</p>
 <p>XX &quot;will be code&quot; meme image</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">XX more here</p>
+</div>
 
 </article>
-<article class="slide level-1" id="id3">
+<article class="slide level-1" id="id4">
 <h1>☃</h1>
 
 </article>
@@ -407,7 +407,7 @@ object-oriented features. [&quot;Object obsessive&quot;]</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id4">
+<article class="slide level-2" id="id5">
 <h2>Functional Programming</h2>
 <p>procedural: list of instructions</p>
 <blockquote>
@@ -476,7 +476,7 @@ function call results.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id5">
+<article class="slide level-2" id="id6">
 <h2>map-filter</h2>
 <p><strong>filter(func, iter)</strong> -- provide items matching a function</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
@@ -615,23 +615,7 @@ which is reduce.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="fp-generator-expressions">
-<h2>FP: generator expressions</h2>
-<p><em>print list of ingredients in a recipe</em></p>
-<p>XX</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="nb">map</span><span class="p">(</span><span class="n">ing_name</span><span class="p">,</span>
-    <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
-         <span class="nb">map</span><span class="p">(</span><span class="n">parse_ing</span><span class="p">,</span>
-             <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
-         <span class="p">)</span>
-     <span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-
-</article>
-<article class="slide level-2" id="id6">
+<article class="slide level-2" id="id7">
 <h2><a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a></h2>
 <table class="hlist"><tr><td><ul class="simple">
 <li><strong>chain()</strong></li>
@@ -720,7 +704,7 @@ lazy vs eager</p>
 </div></blockquote>
 
 </article>
-<article class="slide level-1" id="id7">
+<article class="slide level-1" id="id8">
 <h1>☃</h1>
 
 </article>
@@ -969,7 +953,7 @@ list of results.</p>
 make modular, reliable and testable code, faster.</p>
 
 </article>
-<article class="slide level-1" id="id8">
+<article class="slide level-1" id="id9">
 <h1>ME</h1>
 <blockquote>
 <div><ul class="simple">
@@ -1041,7 +1025,7 @@ predict the behavior of a program</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id10">
+<article class="slide level-2" id="id11">
 <h2>Iterators</h2>
 <p>An iterator is a <em>stream</em> of data -- sort of a restricted, very
 efficient list</p>
@@ -1424,7 +1408,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-1" id="id11">
+<article class="slide level-1" id="id12">
 <h1>Django QuerySets</h1>
 <p>QuerySets are Django's way of getting and updating data</p>
 <div class="admonition note">
@@ -1439,7 +1423,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id12">
+<article class="slide level-2" id="id13">
 <h2>QuerySet review</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="go">&lt;Meeting: Meeting object&gt;</span>
@@ -1458,7 +1442,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id13">
+<article class="slide level-2" id="id14">
 <h2>QuerySet and iterators</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;java&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
@@ -1469,14 +1453,14 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-1" id="id14">
+<article class="slide level-1" id="id15">
 <h1>Functional QuerySets</h1>
 <p class="build">How can you tell if a list is empty or not?</p>
 <p class="build">. an iterator?</p>
 <p class="build">. a QuerySet?</p>
 
 </article>
-<article class="slide level-2" id="id15">
+<article class="slide level-2" id="id16">
 <h2>Empty List</h2>
 <p><em>How can you tell if a list is empty or not?</em></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([])</span>
@@ -1491,7 +1475,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id16">
+<article class="slide level-2" id="id17">
 <h2>Empty Iterator</h2>
 <p><em>How can you tell if an iterator is empty or not?</em></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
@@ -1508,11 +1492,11 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-1" id="id17">
+<article class="slide level-1" id="id18">
 <h1>How can you tell if a QuerySet is empty or not?</h1>
 
 </article>
-<article class="slide level-2" id="id18">
+<article class="slide level-2" id="id19">
 <h2>QuerySet like Iterator</h2>
 <p>filter with QuerySet:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1532,7 +1516,7 @@ Equivalent to slice operator for lists.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id19">
+<article class="slide level-2" id="id20">
 <h2>Because QuerySet <em>is</em> an iterator</h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1583,7 +1567,7 @@ bool(iter) vs qs.empty()</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id20">
+<article class="slide level-2" id="id21">
 <h2>But not always</h2>
 <p><em>How can you tell if a QuerySet is empty or not?</em></p>
 <p>Use x.exists(), not bool(x) -- more efficient</p>
@@ -1599,7 +1583,7 @@ list of results.</p>
 </div>
 
 </article>
-<article class="slide level-1" id="id21">
+<article class="slide level-1" id="id22">
 <h1>Questions?</h1>
 <div class="figure">
 <img alt="_images/john-bold.jpg" class="fill" src="_images/john-bold.jpg" />
@@ -1607,7 +1591,7 @@ list of results.</p>
 </div>
 
 </article>
-<article class="slide level-2" id="id22">
+<article class="slide level-2" id="id23">
 <h2>References</h2>
 <p>Can Your Programming Language Do This? by Joel Spolsky</p>
 <p><a class="reference external" href="http://www.joelonsoftware.com/items/2006/08/01.html">http://www.joelonsoftware.com/items/2006/08/01.html</a></p>
@@ -1709,6 +1693,31 @@ list of results.</p>
 <dt>def parse_ing(line):</dt>
 <dd>return re.match(r'[0-9].+s(?P&lt;name&gt;w+)', line)</dd>
 </dl>
+</div>
+
+</article>
+<article class="slide level-2" id="fp-generator-expressions">
+<h2>FP: generator expressions</h2>
+<p><em>print list of ingredients in a recipe</em></p>
+<p>XX</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="nb">map</span><span class="p">(</span><span class="n">ing_name</span><span class="p">,</span>
+    <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
+         <span class="nb">map</span><span class="p">(</span><span class="n">parse_ing</span><span class="p">,</span>
+             <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
+         <span class="p">)</span>
+     <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="programmers-use-lots-of-tools">
+<h2>Programmers use lots of tools</h2>
+<img alt="_images/large_BaxterCutawayFF3.jpg" src="_images/large_BaxterCutawayFF3.jpg" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">XX hide RHS</p>
 </div>
 
 </article>
