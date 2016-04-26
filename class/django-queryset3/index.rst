@@ -364,8 +364,8 @@ map-filter
     def square(num):
         return num ** 2
 
->>> map(square, [1,2])
-[1, 4]
+>>> map(square, [1,2,3])
+[1, 4, 9]
 
 
 .. note::
@@ -381,10 +381,12 @@ map-filter
 
 .. code-block:: python
 
-    def square(num):
-        return num ** 2
     def is_odd(num):
         return num % 2
+
+>>> filter(is_odd, [1, 2, 3])
+[1, 3]
+
 
 
 .. note::
@@ -394,22 +396,22 @@ map-filter
    which is reduce.
 
 
-XX imap
--------
+imap-ifilter
+------------
 
-In [6]: import itertools
+>>> import itertools
 
-In [7]: itertools.imap(square, [1,2])
-Out[7]: <itertools.imap at 0x7fc004e6bb50>
+>>> itertools.imap(square, [1,2])
+<itertools.imap at 0x7fc004e6bb50>
 
-In [8]: list(itertools.imap(square, [1,2]))
-Out[8]: [1, 4]
+>>> list(itertools.imap(square, [1,2]))
+[1, 4]
 
 
 Ex2: print list of ingredients in a recipe
 ------------------------------------------
 
-::
+**oldfashioned.ini**::
 
      # very tasty
      [Old Fashioned]
@@ -433,133 +435,15 @@ Ex2: procedural style
 .. code-block:: python
 
     ingredients = []
-    for line in open('ing.txt'):
-        ing = parse(line)
+    for line in open('oldfashioned.ini'):
+        ing = parse_ing(line)
         if ing:
             ingredients.append(ing.name)
     print '\n'.join(ingredients)
 
-
-FP: Lisp style with generator expressions
-----------------------------------------------------------------
-
-*print list of ingredients in a recipe*
-
->>> print '\n'.join( (
-    (ing.name
-    for ing in (
-        parse(line) for line in open('ing.txt')
-            ) if ing
-    )
-) )
-
-FP: Lisp style with map-filter
-----------------------------------------------------------------
-
-*print list of ingredients in a recipe*
-
-XX
-
-.. code-block:: python
-
-   print '\n'.join(
-       map(lambda ing: ing.name,
-       filter(None,
-            map(parse,
-                open('ing.txt')
-            )
-        )
-   )
-
-
-
-
-`itertools <https://docs.python.org/2/library/itertools.html>`_
----------------------------------------------------------------
-
-.. hlist::
-   *  **chain()**
-   *  count()
-   *  cycle()
-   *  repeat()
-   *  **chain()**
-   *  compress()
-   *  dropwhile()
-   *  groupby()
-   *  **ifilter()**
-   *  ifilterfalse()
-   *  **islice()**
-   *  imap()
-   *  starmap()
-   *  tee()
-   *  takewhile()
-   *  **izip()**
-   *  izip_longest()
-
-
-islice -- similar to list
--------------------------
-
-**islice(iter, num)** -- return first few items
-
->>> list([1,2,3])[:2]
-[1,2]
-
->>> from itertools import *
->>> iter([1,2,3])[:2]
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: 'listiterator' object has no attribute '__getitem__'
->>> islice(iter([1,2,3]), 2)
-<itertools.islice object at 0x7f429d7de9f0>
->>> list(_)
-[1, 2]
-
-
-chain -- only for iterators
-----------------------------------------------------------------
-
-**chain(iter*)** gives elements of each stream in order
-Equivalent to **+** for lists.
-
->>> [1,2]+[3]
-[1, 2, 3]
-
->>> from itertools import *
->>> chain(iter([1,2]), iter([3]))
-<itertools.chain object at 0x7f429d848510>
->>> list(_)
-[1, 2, 3]
-
-
 .. note::
-
-   stream of objects with state
-   lazy vs eager
-   ****************************************************************
-
-
-
-**functional**
-
-	functions operate on streams of immutable objects
-
-.. note::
-
-   https://docs.python.org/dev/howto/functional.html
-
-
-Practical Advantages to FP
---------------------------
-
-   * Modularity
-   * `Composability!`_
-   * Ease of debugging and testing
-   * Caching
-   * Parallelization
-   * Buzzwordy!
-
-.. _`Composability!`: http://en.wikipedia.org/wiki/Composability
+    def parse_ing(line):
+        return re.match(r'[0-9].+\s(?P<name>\w+)', line)
 
 
 Functional Programming examples
@@ -579,6 +463,110 @@ Example: Windows INI-file parser; aka ConfigParser
 
 
 .. include:: fp-examples.rst
+FP: generator expressions
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+XX
+
+.. code-block:: python
+
+   print '\n'.join(
+       map(ing_name,
+       filter(None,
+            map(parse_ing,
+                open('ing.txt')
+            )
+        )
+   )
+
+
+
+
+`itertools <https://docs.python.org/2/library/itertools.html>`_
+---------------------------------------------------------------
+
+.. hlist::
+   *  **chain()**
+   *  compress()
+   *  count()
+   *  cycle()
+   *  dropwhile()
+   *  groupby()
+   *  **ifilter()**
+   *  ifilterfalse()
+   *  **imap()**
+   *  **islice()**
+   *  **izip()**
+   *  izip_longest()
+   *  repeat()
+   *  starmap()
+   *  takewhile()
+   *  tee()
+
+
+chain -- only for iterators
+----------------------------------------------------------------
+
+**chain(iter*)** gives elements of each stream in order
+Equivalent to **+** for lists.
+
+>>> [1,2] + [3]
+[1, 2, 3]
+
+>>> from itertools import *
+>>> chain(iter([1,2]), iter([3]))
+<itertools.chain object at 0x7f429d848510>
+>>> list(_)
+[1, 2, 3]
+
+
+.. note::
+
+   stream of objects with state
+   lazy vs eager
+
+
+islice -- similar to list
+-------------------------
+
+**islice(iter, num)** -- return first few items
+
+>>> list([1, 2, 3])[:2]
+[1,2]
+
+>>> iter([1, 2, 3])[:2]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'listiterator' object has no attribute '__getitem__'
+
+>>> itertools.islice(iter([1, 2, 3]), 2)
+<itertools.islice object at 0x7f429d7de9f0>
+>>> list(_)
+[1, 2]
+
+
+
+
+.. note::
+
+   https://docs.python.org/dev/howto/functional.html
+
+
+Practical Advantages to FP
+--------------------------
+
+   * Modularity
+   * `Composability!`_
+   * Ease of debugging and testing
+   * Caching
+   * Parallelization
+   * Buzzwordy!
+
+.. _`Composability!`: http://en.wikipedia.org/wiki/Composability
+
+
 
 
 ☃
@@ -1481,3 +1469,40 @@ iterate with a *stream* of rows
 
     cursor.close()
     conn.close()
+
+
+FP: Lisp style with generator expressions
+----------------------------------------------------------------
+
+XX
+
+*print list of ingredients in a recipe*
+
+.. code-block:: python
+
+    print '\n'.join(
+        map(ing_name,
+            filter(None,
+                   map(parse_ing,
+                       open('oldfashioned.ini')
+                   )
+            )
+        ))
+
+FP: Lisp style with map-filter
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+XX
+
+.. code-block:: python
+
+   print '\n'.join(
+       map(ing_name,
+       filter(None,
+            map(parse_ing,
+                open('ing.txt')
+            )
+        )
+   )
