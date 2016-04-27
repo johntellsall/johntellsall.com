@@ -53,6 +53,19 @@ Functional Programming and Django QuerySets
 
 
 
+Practical Advantages to FP
+--------------------------
+
+   * Modularity
+   * `Composability!`_
+   * Ease of debugging and testing
+   * Caching
+   * Parallelization
+   * Buzzwordy!
+
+.. _`Composability!`: http://en.wikipedia.org/wiki/Composability
+
+
 .
 -----------------------------
 
@@ -219,8 +232,6 @@ very important:
   and *itertools*, and *fileinput*
 
 
-
-XX "will be code" meme image
 
 .. note::
    XX more here
@@ -418,19 +429,6 @@ map-filter
    which is reduce.
 
 
-imap-ifilter
-------------
-
->>> import itertools
-
->>> itertools.imap(square, [1,2])
-<itertools.imap at 0x7fc004e6bb50>
-
->>> list(itertools.imap(square, [1,2]))
-[1, 4]
-
-
-
 Functional Programming examples
 -------------------------------
 
@@ -523,20 +521,6 @@ TypeError: 'listiterator' object has no attribute '__getitem__'
 .. note::
 
    https://docs.python.org/dev/howto/functional.html
-
-
-Practical Advantages to FP
---------------------------
-
-   * Modularity
-   * `Composability!`_
-   * Ease of debugging and testing
-   * Caching
-   * Parallelization
-   * Buzzwordy!
-
-.. _`Composability!`: http://en.wikipedia.org/wiki/Composability
-
 
 
 
@@ -744,14 +728,11 @@ Use x.exists(), not bool(x) -- `more efficient <https://docs.djangoproject.com/e
 IDEAS
 =====
 
-iterator/generator = "stream"
+* iterator/generator = "stream"
 
-FP: functions operate on streams of immutable objects
+* FP: programming with composition
 
-QuerySet is a stream
-
-.. note::
-   programming with composition
+* QuerySet is a stream
 
 
 .. rst-class:: questions
@@ -1133,29 +1114,6 @@ updated FP #1
 ['1', 'tsp']
 ['0.5', 'tsp']
 ['2', 'dash']
-
-
-
-
-Iterator Functions
-----------------------------------------------------------------
-
-.. py:function:: xrange(stop) -> counter (xrange object)
-
-.. py:function:: xrange(start, stop[, step]) -> counter
-
-.. py:function:: chain(*iterables) -> each item in order
-
-.. py:function:: ifilter(f, iter) -> substream of iter. Like filter, for iterators.
-
-.. py:function:: islice(iter, num) -> counted items of iter
-
-
-.. note::
-   .. py:function:: imap(func, p, q) -> f(p), f(q), ...
-
-                    .. py:function:: izip()	p, q, ...	(p[0], q[0]), (p[1], q[1]), ...	izip('ABCD', 'xy') --> Ax By
-                                     .. py:function:: izip_longest()	p, q, ...	(p[0], q[0]), (p[1], q[1]), ...	izip_longest('ABCD', 'xy', fillvalue='-') --> Ax By C- D-
 
 
 

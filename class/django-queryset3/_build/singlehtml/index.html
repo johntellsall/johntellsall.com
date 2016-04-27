@@ -84,6 +84,19 @@ DevOps</p>
 <li>FP: programming with composition</li>
 <li>QuerySet is a stream</li>
 </ul>
+<div class="section" id="practical-advantages-to-fp">
+<h2>Practical Advantages to FP<a class="headerlink" href="#practical-advantages-to-fp" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Modularity</li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Composability">Composability!</a></li>
+<li>Ease of debugging and testing</li>
+<li>Caching</li>
+<li>Parallelization</li>
+<li>Buzzwordy!</li>
+</ul>
+</div></blockquote>
+</div>
 <div class="section" id="id2">
 <h2>.<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <img alt="_images/there-will-be-code-success-kid.jpg" src="_images/there-will-be-code-success-kid.jpg" />
@@ -301,7 +314,6 @@ efficient list.</p>
 <p>and <em>itertools</em>, and <em>fileinput</em></p>
 </li>
 </ul>
-<p>XX &#8220;will be code&#8221; meme image</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">XX more here</p>
@@ -462,20 +474,6 @@ function call results.</p>
 <p class="last">The filter filters out items based on a test function which is a
 filter and apply functions to pairs of item and running result
 which is reduce.</p>
-</div>
-</div>
-<div class="section" id="imap-ifilter">
-<h2>imap-ifilter<a class="headerlink" href="#imap-ifilter" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
-<span class="go">&lt;itertools.imap at 0x7fc004e6bb50&gt;</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>
-<span class="go">[1, 4]</span>
-</pre></div>
 </div>
 </div>
 <div class="section" id="functional-programming-examples">
@@ -648,19 +646,6 @@ lazy vs eager</p>
 <p class="first admonition-title">Note</p>
 <p class="last"><a class="reference external" href="https://docs.python.org/dev/howto/functional.html">https://docs.python.org/dev/howto/functional.html</a></p>
 </div>
-</div>
-<div class="section" id="practical-advantages-to-fp">
-<h2>Practical Advantages to FP<a class="headerlink" href="#practical-advantages-to-fp" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li>Modularity</li>
-<li><a class="reference external" href="http://en.wikipedia.org/wiki/Composability">Composability!</a></li>
-<li>Ease of debugging and testing</li>
-<li>Caching</li>
-<li>Parallelization</li>
-<li>Buzzwordy!</li>
-</ul>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="id8">
@@ -856,13 +841,11 @@ list of results.</p>
 </div>
 <div class="section" id="ideas">
 <h1>IDEAS<a class="headerlink" href="#ideas" title="Permalink to this headline">¶</a></h1>
-<p>iterator/generator = &#8220;stream&#8221;</p>
-<p>FP: functions operate on streams of immutable objects</p>
-<p>QuerySet is a stream</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">programming with composition</p>
-</div>
+<ul class="simple">
+<li>iterator/generator = &#8220;stream&#8221;</li>
+<li>FP: programming with composition</li>
+<li>QuerySet is a stream</li>
+</ul>
 </div>
 <div class="questions section" id="questions">
 <h1>Questions?<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h1>
@@ -1235,49 +1218,6 @@ list.</p>
 <span class="go">[&#39;0.5&#39;, &#39;tsp&#39;]</span>
 <span class="go">[&#39;2&#39;, &#39;dash&#39;]</span>
 </pre></div>
-</div>
-</div>
-<div class="section" id="iterator-functions">
-<h2>Iterator Functions<a class="headerlink" href="#iterator-functions" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="xrange">
-<tt class="descname">xrange</tt><big>(</big><em>stop) -&gt; counter (xrange object</em><big>)</big><a class="headerlink" href="#xrange" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt>
-<tt class="descname">xrange</tt><big>(</big><em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><big>)</big> &rarr; counter</dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="chain">
-<tt class="descname">chain</tt><big>(</big><em>*iterables</em><big>)</big> &rarr; each item in order<a class="headerlink" href="#chain" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="ifilter">
-<tt class="descname">ifilter</tt><big>(</big><em>f</em>, <em>iter</em><big>)</big> &rarr; substream of iter. Like filter, for iterators.<a class="headerlink" href="#ifilter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="islice">
-<tt class="descname">islice</tt><big>(</big><em>iter</em>, <em>num</em><big>)</big> &rarr; counted items of iter<a class="headerlink" href="#islice" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<dl class="last function">
-<dt id="imap">
-<tt class="descname">imap</tt><big>(</big><em>func</em>, <em>p</em>, <em>q</em><big>)</big> &rarr; f(p), f(q), ...<a class="headerlink" href="#imap" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="function">
-<dt>
-<tt class="descname">izip()     p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip('ABCD', 'xy') --&gt; Ax By</tt></dt>
-<dt>
-<tt class="descname">.. py:function:: izip_longest()    p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip_longest('ABCD', 'xy', fillvalue='-') --&gt; Ax By C- D-</tt></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 </div>
 </div>
 <div class="section" id="iter-chain">
