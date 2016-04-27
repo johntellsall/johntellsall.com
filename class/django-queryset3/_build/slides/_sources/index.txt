@@ -17,8 +17,7 @@ April 26, 2016
 ME
 ====
 
-   - beer
-   - Senior dev/server guy; DevOps
+   - Senior DevOps at TheBlackTux
    - 20 years experience with Python
    - john@theblacktux.com
    - john@johntellsall.com
@@ -240,6 +239,15 @@ very important:
 ☃
 =
 
+
+Functional Programming, woot
+================================================================
+
+* iterator/generator = "stream"
+
+* **FP: programming with composition**
+
+* QuerySet is a stream
 
 Functional Programming
 ==============================
@@ -535,9 +543,7 @@ Django QuerySets
 
 * FP: programming with composition
 
-* **QuerySet is a stream**
-
-represents a *stream* of rows from the database
+* **QuerySet is a stream** of rows from the database
 
 
 .. note:: models.py
