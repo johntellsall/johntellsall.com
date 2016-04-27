@@ -1408,18 +1408,18 @@ Equivalent to slice operator for lists.</p>
 <h1>How can you tell if a QuerySet is empty or not?<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id19">
 <h2>QuerySet like Iterator<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
-<p>filter with QuerySet:</p>
+<p>filter returning QuerySet:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">meetup.models</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">[&lt;Meeting: Meeting object&gt;]</span>
 </pre></div>
 </div>
-<p>filter with list:</p>
+<p>filter returning list:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="p">[{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])</span>
 <span class="go">[{&#39;id&#39;: 1}]</span>
 </pre></div>
 </div>
-<p>filter with iterator:</p>
+<p>filter returning iterator:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}])))</span>
 <span class="go">[{&#39;id&#39;: 1}]</span>
 </pre></div>
@@ -1477,9 +1477,16 @@ bool(iter) vs qs.empty()</p>
 <div class="section" id="id21">
 <h2>But not always<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
 <p><em>How can you tell if a QuerySet is empty or not?</em></p>
-<p>Use x.exists(), not bool(x) &#8211; more efficient</p>
+<p>Use <cite>x.exists()</cite>, not <cite>bool(x)</cite> &#8211; more efficient</p>
+<dl class="docutils">
+<dt><strong>x.exists()</strong></dt>
+<dd>database query to find any matches</dd>
+<dt><strong>bool(x)</strong></dt>
+<dd>retrieve matches, have Python count if any</dd>
+</dl>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
+<p>some_queryset.exists() will do more overall work (one query for the existence check plus an extra one to later retrieve the results) than simply using bool(some_queryset), which retrieves the results and then checks if any were returned.</p>
 <p>Both iterators and QuerySets are <em>lazy</em></p>
 <p>In functional programming, we have functions which operate on infinite-length streams.</p>
 <p>With QuerySets, it&#8217;s assumed we have many thousands of results, but we don&#8217;t want to fetch all of them at once before returning to caller.</p>
@@ -1488,6 +1495,10 @@ bool(iter) vs qs.empty()</p>
 little work, then process a batch, without waiting for the entire
 list of results.</p>
 </div>
+</div>
+<div class="section" id="programmers-use-lots-of-tools">
+<h2>Programmers use lots of tools<a class="headerlink" href="#programmers-use-lots-of-tools" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/large_BaxterCutawayFF3.jpg" src="_images/large_BaxterCutawayFF3.jpg" />
 </div>
 </div>
 <div class="section" id="id22">
@@ -1506,116 +1517,6 @@ list of results.</p>
 <p><a class="reference external" href="https://docs.python.org/2/howto/functional.html">https://docs.python.org/2/howto/functional.html</a></p>
 <p>Using Django querysets effectively by Dave Hall</p>
 <p><a class="reference external" href="http://blog.etianen.com/blog/2013/06/08/django-querysets/">http://blog.etianen.com/blog/2013/06/08/django-querysets/</a></p>
-</div>
-<div class="section" id="historical">
-<h2>HISTORICAL<a class="headerlink" href="#historical" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="database-iterator">
-<h2>Database iterator<a class="headerlink" href="#database-iterator" title="Permalink to this headline">¶</a></h2>
-<p>iterate with a <em>stream</em> of rows</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sqlite3</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;recipe&#39;</span><span class="p">)</span>
-<span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-
-<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;&quot;&quot;select name from ingredient&quot;&quot;&quot;</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-
-<span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="fp-lisp-style-with-generator-expressions">
-<h2>FP: Lisp style with generator expressions<a class="headerlink" href="#fp-lisp-style-with-generator-expressions" title="Permalink to this headline">¶</a></h2>
-<p>XX</p>
-<p><em>print list of ingredients in a recipe</em></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="nb">map</span><span class="p">(</span><span class="n">ing_name</span><span class="p">,</span>
-        <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
-               <span class="nb">map</span><span class="p">(</span><span class="n">parse_ing</span><span class="p">,</span>
-                   <span class="nb">open</span><span class="p">(</span><span class="s">&#39;oldfashioned.ini&#39;</span><span class="p">)</span>
-               <span class="p">)</span>
-        <span class="p">)</span>
-    <span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="fp-lisp-style-with-map-filter">
-<h2>FP: Lisp style with map-filter<a class="headerlink" href="#fp-lisp-style-with-map-filter" title="Permalink to this headline">¶</a></h2>
-<p><em>print list of ingredients in a recipe</em></p>
-<p>XX</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="nb">map</span><span class="p">(</span><span class="n">ing_name</span><span class="p">,</span>
-    <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
-         <span class="nb">map</span><span class="p">(</span><span class="n">parse_ing</span><span class="p">,</span>
-             <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
-         <span class="p">)</span>
-     <span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="ex2-print-list-of-ingredients-in-a-recipe">
-<h2>Ex2: print list of ingredients in a recipe<a class="headerlink" href="#ex2-print-list-of-ingredients-in-a-recipe" title="Permalink to this headline">¶</a></h2>
-<p><strong>oldfashioned.ini</strong>:</p>
-<div class="highlight-python"><div class="highlight"><pre># very tasty
-[Old Fashioned]
-1:1.5 oz whiskey
-2:1 tsp water
-3:0.5 tsp sugar
-4:2 dash bitters
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">whiskey</span>
-<span class="n">water</span>
-<span class="n">sugar</span>
-<span class="n">bitters</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="ex2-procedural-style">
-<h2>Ex2: procedural style<a class="headerlink" href="#ex2-procedural-style" title="Permalink to this headline">¶</a></h2>
-<p><em>print list of ingredients in a recipe</em></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ingredients</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;oldfashioned.ini&#39;</span><span class="p">):</span>
-    <span class="n">ing</span> <span class="o">=</span> <span class="n">parse_ing</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ing</span><span class="p">:</span>
-        <span class="n">ingredients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ing</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<dl class="last docutils">
-<dt>def parse_ing(line):</dt>
-<dd>return re.match(r&#8217;[0-9].+s(?P&lt;name&gt;w+)&#8217;, line)</dd>
-</dl>
-</div>
-</div>
-<div class="section" id="fp-generator-expressions">
-<h2>FP: generator expressions<a class="headerlink" href="#fp-generator-expressions" title="Permalink to this headline">¶</a></h2>
-<p><em>print list of ingredients in a recipe</em></p>
-<p>XX</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="nb">map</span><span class="p">(</span><span class="n">ing_name</span><span class="p">,</span>
-    <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
-         <span class="nb">map</span><span class="p">(</span><span class="n">parse_ing</span><span class="p">,</span>
-             <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
-         <span class="p">)</span>
-     <span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="programmers-use-lots-of-tools">
-<h2>Programmers use lots of tools<a class="headerlink" href="#programmers-use-lots-of-tools" title="Permalink to this headline">¶</a></h2>
-<img alt="_images/large_BaxterCutawayFF3.jpg" src="_images/large_BaxterCutawayFF3.jpg" />
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">XX hide RHS</p>
-</div>
 </div>
 </div>
 

@@ -1281,18 +1281,18 @@ How can you tell if a QuerySet is empty or not?
 QuerySet like Iterator
 ----------------------------------------------------------------
 
-filter with QuerySet:
+filter returning QuerySet:
 
 >>> from meetup.models import *
 >>> Meeting.objects.filter(id=1)
 [<Meeting: Meeting object>]
 
-filter with list:
+filter returning list:
 
 >>> filter(lambda d: d['id']==1, [{'id':1}, {'id':2}])
 [{'id': 1}]
 
-filter with iterator:
+filter returning iterator:
 
 >>> list(ifilter(lambda d: d['id']==1, iter([{'id':1}, {'id':2}])))
 [{'id': 1}]
@@ -1347,12 +1347,20 @@ Can mix and match
 But not always
 ----------------------------------------------------------------
 
-
 *How can you tell if a QuerySet is empty or not?*
 
-Use x.exists(), not bool(x) -- more efficient
+Use `x.exists()`, not `bool(x)` -- more efficient
+
+**x.exists()**
+    database query to find any matches
+
+**bool(x)**
+    retrieve matches, have Python count if any
 
 .. note::
+
+   some_queryset.exists() will do more overall work (one query for the existence check plus an extra one to later retrieve the results) than simply using bool(some_queryset), which retrieves the results and then checks if any were returned.
+
 
    Both iterators and QuerySets are *lazy*
 
@@ -1365,6 +1373,12 @@ Use x.exists(), not bool(x) -- more efficient
    This means that for both iterators and query sets, we can do a
    little work, then process a batch, without waiting for the entire
    list of results.
+
+
+Programmers use lots of tools
+-----------------------------
+
+.. image:: _static/large_BaxterCutawayFF3.jpg
 
 
 Questions?
@@ -1394,158 +1408,3 @@ https://docs.python.org/2/howto/functional.html
 Using Django querysets effectively by Dave Hall
 
 http://blog.etianen.com/blog/2013/06/08/django-querysets/
-
-
-
-
-
-HISTORICAL
-----------
-
-..
-   What can you do with a iterator?
-   ----------------------------------------------------------------
-
-   >>> f = open('ing.txt')
-   >>> f.next()
-   '# Old Fashioned\n'
-   >>> f.next()
-   '1.5 oz whiskey\n'
-
-
-   What happens at the end?
-   ----------------------------------------------------------------
-
-   >>> f = open('/dev/null')
-   >>> f.next()
-   Traceback (most recent call last):
-     File "<stdin>", line 1, in <module>
-   StopIteration
-
-   >>> iter([]).next()
-   Traceback (most recent call last):
-     File "<stdin>", line 1, in <module>
-   StopIteration
-
-
-Database iterator
---------------------
-
-iterate with a *stream* of rows
-
-.. code-block:: python
-
-    import os, sqlite3
-    conn = sqlite3.connect('recipe')
-    cursor = conn.cursor()
-
-    cursor.execute("""select name from ingredient""")
-
-    for row in cursor.fetchall():
-        print(row)
-
-    cursor.close()
-    conn.close()
-
-
-FP: Lisp style with generator expressions
-----------------------------------------------------------------
-
-XX
-
-*print list of ingredients in a recipe*
-
-.. code-block:: python
-
-    print '\n'.join(
-        map(ing_name,
-            filter(None,
-                   map(parse_ing,
-                       open('oldfashioned.ini')
-                   )
-            )
-        ))
-
-FP: Lisp style with map-filter
-----------------------------------------------------------------
-
-*print list of ingredients in a recipe*
-
-XX
-
-.. code-block:: python
-
-   print '\n'.join(
-       map(ing_name,
-       filter(None,
-            map(parse_ing,
-                open('ing.txt')
-            )
-        )
-   )
-Ex2: print list of ingredients in a recipe
-------------------------------------------
-
-**oldfashioned.ini**::
-
-     # very tasty
-     [Old Fashioned]
-     1:1.5 oz whiskey
-     2:1 tsp water
-     3:0.5 tsp sugar
-     4:2 dash bitters
-
-::
-
-   whiskey
-   water
-   sugar
-   bitters
-
-Ex2: procedural style
----------------------
-
-*print list of ingredients in a recipe*
-
-.. code-block:: python
-
-    ingredients = []
-    for line in open('oldfashioned.ini'):
-        ing = parse_ing(line)
-        if ing:
-            ingredients.append(ing.name)
-    print '\n'.join(ingredients)
-
-.. note::
-    def parse_ing(line):
-        return re.match(r'[0-9].+\s(?P<name>\w+)', line)
-
-
-FP: generator expressions
-----------------------------------------------------------------
-
-*print list of ingredients in a recipe*
-
-XX
-
-.. code-block:: python
-
-   print '\n'.join(
-       map(ing_name,
-       filter(None,
-            map(parse_ing,
-                open('ing.txt')
-            )
-        )
-   )
-
-
-
-
-Programmers use lots of tools
------------------------------
-
-.. image:: _static/large_BaxterCutawayFF3.jpg
-
-.. note::
-   XX hide RHS
