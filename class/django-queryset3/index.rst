@@ -41,10 +41,10 @@ ME
    DevOps
 
 
-Functional Programming and Django QuerySets
+Iterators
 ===========================================
 
-* iterator/generator = "stream"
+* **iterator/generator = "stream"**
 
 * FP: programming with composition
 
@@ -353,7 +353,7 @@ Functional Programming
 
     **functions operate on streams of objects**
 
-    **composition builds complex
+    **composition**
 
 food chain
 ----------

@@ -76,10 +76,10 @@ senior Python people
 DevOps</p>
 </div>
 </div>
-<div class="section" id="functional-programming-and-django-querysets">
-<h1>Functional Programming and Django QuerySets<a class="headerlink" href="#functional-programming-and-django-querysets" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="iterators">
+<h1>Iterators<a class="headerlink" href="#iterators" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>iterator/generator = &#8220;stream&#8221;</li>
+<li><strong>iterator/generator = &#8220;stream&#8221;</strong></li>
 <li>FP: programming with composition</li>
 <li>QuerySet is a stream</li>
 </ul>
@@ -101,8 +101,8 @@ DevOps</p>
 <img alt="_images/there-will-be-code-success-kid.jpg" src="_images/there-will-be-code-success-kid.jpg" />
 </div>
 </div>
-<div class="section" id="iterators">
-<h1>Iterators<a class="headerlink" href="#iterators" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id3">
+<h1>Iterators<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="iterator-review">
 <h2>Iterator review<a class="headerlink" href="#iterator-review" title="Permalink to this headline">¶</a></h2>
 <p>An iterator is a <em>stream</em> of data—sort of a restricted, very
@@ -206,8 +206,8 @@ efficient list.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p><strong>no length</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -319,8 +319,8 @@ efficient list.</p>
 </div>
 </div>
 </div>
-<div class="section" id="id4">
-<h1>☃<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id5">
+<h1>☃<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="functional-programming-woot">
 <h1>Functional Programming, woot<a class="headerlink" href="#functional-programming-woot" title="Permalink to this headline">¶</a></h1>
@@ -400,8 +400,8 @@ object-oriented programming, but don’t force the use of
 object-oriented features. [&#8220;Object obsessive&#8221;]</p>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>Functional Programming<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>Functional Programming<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p><em>procedural</em></p>
 <blockquote>
 <div>list of instructions
@@ -413,7 +413,7 @@ specialize by subclassing</div></blockquote>
 <p><strong>functional</strong></p>
 <blockquote>
 <div><p><strong>functions operate on streams of objects</strong></p>
-<p><a href="#id6"><span class="problematic" id="id7">**</span></a>composition builds complex</p>
+<p><strong>composition</strong></p>
 </div></blockquote>
 </div>
 <div class="section" id="food-chain">
@@ -464,8 +464,8 @@ each item in an iterable object and returns a list containing all the
 function call results.</p>
 </div>
 </div>
-<div class="section" id="id8">
-<h2>map-filter<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>map-filter<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p><strong>filter(func, iter)</strong> &#8211; provide items matching a function</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span>
@@ -581,8 +581,8 @@ which is reduce.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id9">
-<h2><a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2><a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <table class="hlist"><tr><td><ul class="simple">
 <li><strong>chain()</strong></li>
 <li>compress()</li>
@@ -654,8 +654,8 @@ lazy vs eager</p>
 </div>
 </div>
 </div>
-<div class="section" id="id10">
-<h1>☃<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id9">
+<h1>☃<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="django-querysets">
 <h1>Django QuerySets<a class="headerlink" href="#django-querysets" title="Permalink to this headline">¶</a></h1>
