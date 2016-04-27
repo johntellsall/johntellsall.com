@@ -56,7 +56,7 @@ Functional Programming and Django QuerySets
 .
 -----------------------------
 
-.. image:: /_static/there will be code success kid.jpg
+.. image:: /_static/there-will-be-code-success-kid.jpg
 
 
 Iterators
