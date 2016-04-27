@@ -344,24 +344,25 @@ efficient list.</p>
 can modify caller&#8217;s state</div></blockquote>
 <p><em>object oriented</em></p>
 <blockquote>
-<div>object has state and functions to query/modify state
+<div>object&#8217;s functions query/modify state
 specialize by subclassing</div></blockquote>
+<p><em>functional</em></p>
+<blockquote>
+<div><strong>?</strong></div></blockquote>
 </div>
 <div class="section" id="fp-vs-procedural-programming">
 <h2>FP vs Procedural programming<a class="headerlink" href="#fp-vs-procedural-programming" title="Permalink to this headline">¶</a></h2>
 <p><em>procedural: list of instructions</em></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">upfile</span><span class="p">(</span><span class="n">inpath</span><span class="p">,</span> <span class="n">outpath</span><span class="p">):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">inpath</span><span class="p">):</span>
-            <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre> def upfile(inpath, outpath):
+     with open(outpath, &#39;w&#39;) as outf:
+         for line in open(inpath):
+             outf.write( line.upper() )
 
-<span class="n">upfile</span><span class="p">(</span><span class="s">&#39;ing.txt&#39;</span><span class="p">,</span> <span class="s">&#39;/dev/stdout&#39;</span><span class="p">)</span>
+ upfile(&#39;ing.txt&#39;, &#39;/dev/stdout&#39;)
+
+* how can you test this?
 </pre></div>
 </div>
-<ul class="build simple">
-<li>how can you test this?</li>
-<li>run in parallel?</li>
-</ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">[Many] Languages are procedural: programs are lists of instructions
@@ -374,9 +375,7 @@ that tell the computer what to do with the program’s input.</p>
 query/modify state.  Easy to specialize by subclassing.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">RWFile</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inpath</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Upcase</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
-            <span class="nb">open</span><span class="p">(</span><span class="n">inpath</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
-            <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Upcase</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">inpath</span><span class="p">))</span>
     <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">line</span>
     <span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outpath</span><span class="p">):</span>
@@ -403,13 +402,13 @@ object-oriented features. [&#8220;Object obsessive&#8221;]</p>
 </div>
 <div class="section" id="id5">
 <h2>Functional Programming<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p>procedural: list of instructions</p>
+<p><em>procedural</em></p>
 <blockquote>
-<div>object oriented: object has state and specific functions to
-query/modify state.  Easy to specialize by subclassing</div></blockquote>
-<p>object oriented</p>
+<div>list of instructions
+can modify caller&#8217;s state</div></blockquote>
+<p><em>object oriented</em></p>
 <blockquote>
-<div>object has state and functions to query/modify state
+<div>object&#8217;s functions query/modify state
 specialize by subclassing</div></blockquote>
 <p><strong>functional</strong></p>
 <blockquote>

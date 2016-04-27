@@ -271,8 +271,12 @@ programming paradigms
 
 *object oriented*
 
-	object has state and functions to query/modify state
+	object's functions query/modify state
         specialize by subclassing
+
+*functional*
+
+        **?**
 
 
 FP vs Procedural programming
@@ -289,11 +293,8 @@ FP vs Procedural programming
 
     upfile('ing.txt', '/dev/stdout')
 
-.. rst-class:: build
-
    * how can you test this?
 
-   * run in parallel?
 
 .. note::
 
@@ -311,9 +312,7 @@ query/modify state.  Easy to specialize by subclassing.
 
     class RWFile(list):
         def __init__(self, inpath):
-            super(Upcase,self).__init__(
-                open(inpath).readlines()
-                )
+            super(Upcase,self).__init__(open(inpath))
         def transform(self, line):
             return line
         def writelines(self, outpath):
@@ -340,15 +339,15 @@ query/modify state.  Easy to specialize by subclassing.
 Functional Programming
 ----------------------------------------------------------------
 
-procedural: list of instructions
+*procedural*
 
-    object oriented: object has state and specific functions to
-    query/modify state.  Easy to specialize by subclassing
+	list of instructions
+        can modify caller's state
 
-object oriented
+*object oriented*
 
-    object has state and functions to query/modify state
-    specialize by subclassing
+	object's functions query/modify state
+        specialize by subclassing
 
 **functional**
 

@@ -1,0 +1,181 @@
+HISTORICAL
+----------
+
+..
+   What can you do with a iterator?
+   ----------------------------------------------------------------
+
+   >>> f = open('ing.txt')
+   >>> f.next()
+   '# Old Fashioned\n'
+   >>> f.next()
+   '1.5 oz whiskey\n'
+
+
+   What happens at the end?
+   ----------------------------------------------------------------
+
+   >>> f = open('/dev/null')
+   >>> f.next()
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   StopIteration
+
+   >>> iter([]).next()
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   StopIteration
+
+
+Database iterator
+--------------------
+
+iterate with a *stream* of rows
+
+.. code-block:: python
+
+    import os, sqlite3
+    conn = sqlite3.connect('recipe')
+    cursor = conn.cursor()
+
+    cursor.execute("""select name from ingredient""")
+
+    for row in cursor.fetchall():
+        print(row)
+
+    cursor.close()
+    conn.close()
+
+
+FP: Lisp style with generator expressions
+----------------------------------------------------------------
+
+XX
+
+*print list of ingredients in a recipe*
+
+.. code-block:: python
+
+    print '\n'.join(
+        map(ing_name,
+            filter(None,
+                   map(parse_ing,
+                       open('oldfashioned.ini')
+                   )
+            )
+        ))
+
+FP: Lisp style with map-filter
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+XX
+
+.. code-block:: python
+
+   print '\n'.join(
+       map(ing_name,
+       filter(None,
+            map(parse_ing,
+                open('ing.txt')
+            )
+        )
+   )
+Ex2: print list of ingredients in a recipe
+------------------------------------------
+
+**oldfashioned.ini**::
+
+     # very tasty
+     [Old Fashioned]
+     1:1.5 oz whiskey
+     2:1 tsp water
+     3:0.5 tsp sugar
+     4:2 dash bitters
+
+::
+
+   whiskey
+   water
+   sugar
+   bitters
+
+Ex2: procedural style
+---------------------
+
+*print list of ingredients in a recipe*
+
+.. code-block:: python
+
+    ingredients = []
+    for line in open('oldfashioned.ini'):
+        ing = parse_ing(line)
+        if ing:
+            ingredients.append(ing.name)
+    print '\n'.join(ingredients)
+
+.. note::
+    def parse_ing(line):
+        return re.match(r'[0-9].+\s(?P<name>\w+)', line)
+
+
+FP: generator expressions
+----------------------------------------------------------------
+
+*print list of ingredients in a recipe*
+
+XX
+
+.. code-block:: python
+
+   print '\n'.join(
+       map(ing_name,
+       filter(None,
+            map(parse_ing,
+                open('ing.txt')
+            )
+        )
+   )
+
+
+
+
+.. note::
+   XX hide RHS
+
+
+
+
+Iterator Functions
+----------------------------------------------------------------
+
+.. py:function:: xrange(stop) -> counter (xrange object)
+
+.. py:function:: xrange(start, stop[, step]) -> counter
+
+.. py:function:: chain(*iterables) -> each item in order
+
+.. py:function:: ifilter(f, iter) -> substream of iter. Like filter, for iterators.
+
+.. py:function:: islice(iter, num) -> counted items of iter
+
+
+.. note::
+   .. py:function:: imap(func, p, q) -> f(p), f(q), ...
+
+                    .. py:function:: izip()	p, q, ...	(p[0], q[0]), (p[1], q[1]), ...	izip('ABCD', 'xy') --> Ax By
+                                     .. py:function:: izip_longest()	p, q, ...	(p[0], q[0]), (p[1], q[1]), ...	izip_longest('ABCD', 'xy', fillvalue='-') --> Ax By C- D-
+
+
+
+imap-ifilter
+------------
+
+>>> import itertools
+
+>>> itertools.imap(square, [1,2])
+<itertools.imap at 0x7fc004e6bb50>
+
+>>> list(itertools.imap(square, [1,2]))
+[1, 4]
