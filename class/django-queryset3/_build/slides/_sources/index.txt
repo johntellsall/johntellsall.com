@@ -709,10 +709,13 @@ Can mix/match QS/iterators...
 ...but not always
 -----------------
 
+Use `x.exists()`, not `bool(x)` -- more efficient
 
-*How can you tell if a QuerySet is empty or not?*
+**x.exists()**
+    database query to find any matches
 
-Use x.exists(), not bool(x) -- `more efficient <https://docs.djangoproject.com/en/dev/ref/models/querysets/>`_
+**bool(x)**
+    retrieve matches, have Python count if any
 
 .. note::
 

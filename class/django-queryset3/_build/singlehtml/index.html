@@ -830,8 +830,13 @@ bool(iter) vs qs.empty()</p>
 </div>
 <div class="section" id="but-not-always">
 <h2>...but not always<a class="headerlink" href="#but-not-always" title="Permalink to this headline">¶</a></h2>
-<p><em>How can you tell if a QuerySet is empty or not?</em></p>
-<p>Use x.exists(), not bool(x) &#8211; <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/querysets/">more efficient</a></p>
+<p>Use <cite>x.exists()</cite>, not <cite>bool(x)</cite> &#8211; more efficient</p>
+<dl class="docutils">
+<dt><strong>x.exists()</strong></dt>
+<dd>database query to find any matches</dd>
+<dt><strong>bool(x)</strong></dt>
+<dd>retrieve matches, have Python count if any</dd>
+</dl>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Both iterators and QuerySets are <em>lazy</em></p>
