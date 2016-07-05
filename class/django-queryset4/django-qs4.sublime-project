@@ -1,0 +1,36 @@
+{
+	"build_systems":
+	[
+		{
+			"name": "Py.test",
+			"path": "/home/johnm/lilbub/bin/",
+			"shell_cmd": "py.test"
+		},
+		{
+			"name": "build",
+			"path": "/home/johnm/lilbub/bin/",
+			"shell_cmd": "make build"
+		}
+	],
+	"folders":
+	[
+		{
+			"file_exclude_patterns":
+			[
+				".*",
+				"*.pyc"
+			],
+			"folder_exclude_patterns":
+			[
+				"_*",
+				".cache",
+				"backup",
+			],
+			"path": "/home/johnm/src/johntellsall.com/class/django-queryset4",
+		}
+	],
+	"settings":
+	{
+		"tab_size": 4
+	}
+}

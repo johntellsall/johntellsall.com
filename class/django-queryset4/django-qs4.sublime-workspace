@@ -1,0 +1,610 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cal",
+				"calc_sym_color"
+			],
+			[
+				"draw",
+				"draw_styles"
+			],
+			[
+				"pdir",
+				"pdir"
+			],
+			[
+				"proj",
+				"project"
+			],
+			[
+				"sh",
+				"shutdown"
+			],
+			[
+				"def",
+				"definition_line"
+			],
+			[
+				"index_",
+				"index_c_mmcabe"
+			],
+			[
+				"color",
+				"colorbrewer"
+			],
+			[
+				"radon",
+				"radon_cc"
+			],
+			[
+				"if",
+				"ifmain	if __name__ == '__main__'"
+			],
+			[
+				"parse",
+				"parseRPN"
+			],
+			[
+				"Dia",
+				"DiagramEncoder"
+			],
+			[
+				"From",
+				"FromProject"
+			],
+			[
+				"p",
+				"project"
+			],
+			[
+				"calc",
+				"calc_width"
+			],
+			[
+				"clas",
+				"classmethod"
+			],
+			[
+				"symbols",
+				"symbols"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/johnm/src/shotglass/TECH.md",
+			"settings":
+			{
+				"buffer_size": 1073,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/johnm/src/shotglass/shotglass/app/render.py",
+			"settings":
+			{
+				"buffer_size": 1722,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/johnm/src/shotglass/shotglass/app/views.py",
+			"settings":
+			{
+				"buffer_size": 2109,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 8379,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/johnm/src/shotglass/shotglass/app/draw.py",
+			"settings":
+			{
+				"buffer_size": 5286,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Makefile/Make.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				]
+			],
+			[
+				"Packages/Makefile/Make.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 374.0,
+		"last_filter": "inst",
+		"selected_items":
+		[
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: pdb"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"lint",
+				"SublimeLinter: Toggle Linter"
+			],
+			[
+				"mode",
+				"SublimeLinter: Choose Lint Mode"
+			],
+			[
+				"",
+				"Snippet: Lorem ipsum"
+			]
+		],
+		"width": 453.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) ",
+			"for i in range(100): print('BEER')",
+			"for i in range(100): print('BEER'),",
+			"for i in range(100): print 'BEER',",
+			"beer",
+			"2+3"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+	],
+	"file_history":
+	[
+		"/home/johnm/src/shotglass/shotglass/app/render.py",
+		"/home/johnm/src/shotglass/shotglass/app/tests/test_render.py",
+		"/home/johnm/src/shotglass/shotglass/app/tests/test_perf.py",
+		"/home/johnm/src/shotglass/shotglass/app/models.py",
+		"/home/johnm/src/shotglass/shotglass/app/tests/test_draw.py",
+		"/home/johnm/src/shotglass/shotglass/app/draw.py",
+		"/home/johnm/src/shotglass/shotglass/app/utils.py",
+		"/home/johnm/src/shotglass/shotglass/app/views.py",
+		"/home/johnm/src/shotglass/shotglass/shotglass/settings.py",
+		"/home/johnm/src/shotglass/shotglass/Makefile",
+		"/home/johnm/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/johnm/src/shotglass/shotglass/app/tests/test_views.py",
+		"/home/johnm/src/shotglass/shotglass/*/test_views.py",
+		"/home/johnm/src/shotglass/shotglass/templates/list_symbols.html",
+		"/home/johnm/src/shotglass/shotglass/app/urls.py",
+		"/home/johnm/src/shotglass/docker-compose.yml",
+		"/home/johnm/src/shotglass/Dockerfile",
+		"/home/johnm/src/shotglass/requirements.txt",
+		"/home/johnm/src/SOURCE/Makefile",
+		"/home/johnm/src/shotglass/shotglass/app/management/commands/make_index.py",
+		"/home/johnm/src/SOURCE/linux.mak",
+		"/home/johnm/src/shotglass/NOTES.md",
+		"/home/johnm/src/shotglass/shotglass/urls.py",
+		"/home/johnm/src/shotglass/shotglass/app/management/commands/show.py",
+		"/home/johnm/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/johnm/lilbub/lib/python2.7/site-packages/radon/complexity.py",
+		"/home/johnm/lilbub/lib/python2.7/site-packages/radon/visitors.py",
+		"/home/johnm/.config/sublime-text-3/Packages/User/SublimeLinter.sublime-settings",
+		"/home/johnm/src/shotglass/pylintrc",
+		"/home/johnm/src/SOURCE/sqlite-2.8.17/.pc/03-add-fprintf-format-argument.patch/src/shell.c",
+		"/home/johnm/src/shotglass/+26590",
+		"/home/johnm/SOURCE/postgresql-9.3-9.3.13/src/interfaces/ecpg/preproc/preproc.c",
+		"/home/johnm/src/SOURCE/postgresql-9.3-9.3.13/src/interfaces/ecpg/preproc/preproc.c",
+		"/home/johnm/src/shotglass/SOURCE/postgresql-9.3-9.3.13/src/backend/utils/adt/formatting.c",
+		"/home/johnm/src/SOURCE/postgresql-9.3-9.3.13/src/backend/utils/adt/formatting.c",
+		"/home/johnm/src/shotglass/shotglass/app/management/commands/render.py",
+		"/home/johnm/src/shotglass/shotglass/shotglass/app/management/commands/make_index.py",
+		"/home/johnm/src/shotglass/shotglass/templates/list_functions.html",
+		"/home/johnm/src/shotglass/shotglass/shotglass/urls.py",
+		"/home/johnm/.config/sublime-text-3/Packages/User/pylint-no-member.sublime-snippet",
+		"/home/johnm/src/shotglass/shotglass/templates/list_projects.html",
+		"/home/johnm/src/shotglass/shotglass/templates/project_index.html",
+		"/home/johnm/.config/sublime-text-3/Packages/User/ipdb.sublime-snippet",
+		"/home/johnm/src/shotglass/shotglass/walk.py",
+		"/home/johnm/src/shotglass/shotglass.sublime-project",
+		"/home/johnm/src/shotglass/EXPERIMENTS.md",
+		"/home/johnm/src/shotglass/README.md",
+		"/home/johnm/src/shotglass/shotglass/app/grid.py",
+		"/home/johnm/src/shotglass/shotglass/myprof.py",
+		"/home/johnm/src/shotglass/shotglass/app/tests/prof_render.py",
+		"/home/johnm/src/shotglass/shotglass/app/hilbert.py",
+		"/home/johnm/src/shotglass/shotglass/app/fixtures/diagram-django.yaml",
+		"/home/johnm/src/shotglass/shotglass/diagram.yaml",
+		"/home/johnm/src/gdi practice/zoot.html",
+		"/home/johnm/src/johntellsall/karma/rpncalc.py",
+		"/home/johnm/src/shotglass/shotglass/app/management/commands/beer.py",
+		"/home/johnm/src/shotglass/shotglass/app/management/commands/callscan.py",
+		"/home/johnm/src/shotglass/shotglass/diagram.pickle",
+		"/home/johnm/src/shotglass/shotglass/prof/test_add_color.prof",
+		"/home/johnm/src/shotglass/shotglass/app/admin.py",
+		"/home/johnm/src/shotglass/shotglass/app/zoot.py",
+		"/home/johnm/src/shotglass/shotglass/diagram.json",
+		"/home/johnm/src/shotglass/shotglass/app/myprofile.py",
+		"/home/johnm/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/johnm/src/shotglass/shotglass/templates/index_symbols.html",
+		"/home/johnm/src/shotglass/shotglass/app/z.py",
+		"/home/johnm/src/johntellsall/temp/hello.py",
+		"/home/johnm/src/johntellsall/hangman/hangman3.py",
+		"/home/johnm/src/johntellsall/karma/mreturn.py",
+		"/home/johnm/src/johntellsall/temp/hangman.py"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 94.0,
+		"where_history":
+		[
+			"/home/johnm/src/shotglass/shotglass/app",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"make_step",
+			"'color': u'', ",
+			"make_hil",
+			"mark",
+			"keys",
+			"()",
+			"object",
+			"add_color",
+			"object",
+			"skeleton",
+			"':=",
+			"reverse",
+			"shotglass_render",
+			"Render",
+			"render",
+			"dirs",
+			"'\n",
+			"pc",
+			"zoot",
+			"  # ",
+			"linux",
+			".y",
+			"linux",
+			"remotes/origin/",
+			"calculating",
+			"warning",
+			"}'\n",
+			"cc_visit",
+			"([]",
+			"skipping",
+			"('/')",
+			"def",
+			": ",
+			"print",
+			"walk_type",
+			"print",
+			"find_",
+			"tags_json",
+			"function",
+			"list_functions",
+			"functions",
+			"type",
+			"project_dir",
+			"data",
+			"radon",
+			"https",
+			"py",
+			"self",
+			"django_db",
+			"render",
+			"{}\","
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"render",
+			"Draw",
+			"draw",
+			"_linux",
+			"make NAME=",
+			"",
+			"list_symbols"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/johnm/src/shotglass/TECH.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1073,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								888,
+								888
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/johnm/src/shotglass/shotglass/app/render.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1722,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								767,
+								767
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 593.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/johnm/src/shotglass/shotglass/app/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2109,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								409,
+								409
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 220.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8379,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								720,
+								720
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/johnm/src/shotglass/shotglass/app/draw.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5286,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1754,
+								1754
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1071.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 226.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Makefile/Make.sublime-build",
+	"project": "django-qs4.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

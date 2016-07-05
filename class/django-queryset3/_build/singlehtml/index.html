@@ -41,18 +41,23 @@
 <p>SoCal Python</p>
 <p>April 26, 2016</p>
 </div>
-<div class="section" id="me">
-<h1>ME<a class="headerlink" href="#me" title="Permalink to this headline">¶</a></h1>
-<blockquote>
-<div><ul class="simple">
-<li>Senior dev/server guy; DevOps</li>
-<li>20 years experience with Python</li>
-<li><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></li>
-</ul>
-</div></blockquote>
+<div class="section" id="johntellsall">
+<h1>&#64;johntellsall<a class="headerlink" href="#johntellsall" title="Permalink to this headline">¶</a></h1>
+<dl class="docutils">
+<dt>talks:</dt>
+<dd><strong>Practical Python Testing</strong></dd>
+<dt>upcoming:</dt>
+<dd><strong>Container Deep Dive</strong></dd>
+<dt>later:</dt>
+<dd>Networking
+QA-DevOps</dd>
+</dl>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <ul class="last simple">
+<li>Senior dev/server guy; DevOps</li>
+<li>20 years experience with Python</li>
+<li><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></li>
 <li>first PyCon I went to had 40 people!</li>
 </ul>
 </div>
@@ -60,11 +65,19 @@
 <div class="section" id="contents">
 <h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
 <p>iterator/generator = &#8220;stream&#8221;</p>
-<p>FP: programming with composition</p>
+<p>Functional Programming: programming with composition</p>
 <p>QuerySet is a stream</p>
-<div class="section" id="fp-qs-overview">
-<h2>FP+QS overview<a class="headerlink" href="#fp-qs-overview" title="Permalink to this headline">¶</a></h2>
-<img alt="_images/large_BaxterCutawayFF3.jpg" src="_images/large_BaxterCutawayFF3.jpg" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<blockquote>
+<div>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Function_composition_%28computer_science%29">https://en.wikipedia.org/wiki/Function_composition_%28computer_science%29</a>&gt;`</div></blockquote>
+<p class="last">combine simple functions to build more complicated ones</p>
+</div>
+<div class="section" id="id1">
+<h2>.<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="_images/large_BaxterCutawayFF3.jpg" class="fill" src="_images/large_BaxterCutawayFF3.jpg" />
+</div>
 </div>
 </div>
 <div class="section" id="iterators">
@@ -163,8 +176,8 @@ efficient list.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id1">
-<h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><strong>no length</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -267,12 +280,10 @@ efficient list.</p>
 <p>and <em>itertools</em>, and <em>fileinput</em></p>
 </li>
 </ul>
-<p>XX more here</p>
-<p>XX &#8220;will be code&#8221; meme image</p>
 </div>
 </div>
-<div class="section" id="id2">
-<h1>☃<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id3">
+<h1>☃<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="functional-programming">
 <h1>Functional Programming<a class="headerlink" href="#functional-programming" title="Permalink to this headline">¶</a></h1>
@@ -280,16 +291,31 @@ efficient list.</p>
 <h2>what?<a class="headerlink" href="#what" title="Permalink to this headline">¶</a></h2>
 <img alt="_images/jimmy-2.jpg" src="_images/jimmy-2.jpg" />
 </div>
+<div class="section" id="practical-advantages-to-fp">
+<h2>Practical Advantages to FP<a class="headerlink" href="#practical-advantages-to-fp" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Modularity</li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Composability">Composability!</a></li>
+<li>Ease of debugging and testing</li>
+<li>Caching</li>
+<li>Parallelization</li>
+<li>Buzzwordy!</li>
+</ul>
+</div></blockquote>
+</div>
 <div class="section" id="programming-paradigms">
 <h2>programming paradigms<a class="headerlink" href="#programming-paradigms" title="Permalink to this headline">¶</a></h2>
-<p><em>procedural</em></p>
-<blockquote>
-<div>list of instructions
-can modify caller&#8217;s state</div></blockquote>
-<p><em>object oriented</em></p>
-<blockquote>
-<div>object has state and functions to query/modify state
-specialize by subclassing</div></blockquote>
+<dl class="docutils">
+<dt><em>procedural</em></dt>
+<dd><p class="first">list of instructions</p>
+<p class="last">can modify caller&#8217;s state</p>
+</dd>
+<dt><em>object oriented</em></dt>
+<dd><p class="first">object has state and functions to query/modify state</p>
+<p class="last">specialize by subclassing</p>
+</dd>
+</dl>
 </div>
 <div class="section" id="fp-vs-procedural-programming">
 <h2>FP vs Procedural programming<a class="headerlink" href="#fp-vs-procedural-programming" title="Permalink to this headline">¶</a></h2>
@@ -302,10 +328,13 @@ specialize by subclassing</div></blockquote>
 <span class="n">upfile</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;/dev/stdout&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<ul class="build simple">
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
 <li>how can you test this?</li>
 <li>run in parallel?</li>
 </ul>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">[Many] Languages are procedural: programs are lists of instructions
@@ -318,9 +347,7 @@ that tell the computer what to do with the program’s input.</p>
 query/modify state.  Easy to specialize by subclassing.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RWFile</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inpath</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Upcase</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
-            <span class="nb">open</span><span class="p">(</span><span class="n">inpath</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
-            <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Upcase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
     <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">line</span>
     <span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outpath</span><span class="p">):</span>
@@ -332,7 +359,7 @@ query/modify state.  Easy to specialize by subclassing.</p>
     <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
-<span class="n">UpFile</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s1">&#39;/dev/stdout&#39;</span><span class="p">)</span>
+<span class="n">UpFile</span><span class="p">(</span><span class="s1">&#39;recipe.ini&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s1">&#39;/dev/stdout&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -345,21 +372,20 @@ object-oriented programming, but don’t force the use of
 object-oriented features. [&#8220;Object obsessive&#8221;]</p>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>Functional Programming<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>procedural: list of instructions</p>
-<blockquote>
-<div>object oriented: object has state and specific functions to
-query/modify state.  Easy to specialize by subclassing</div></blockquote>
-<p>object oriented</p>
-<blockquote>
-<div>object has state and functions to query/modify state
-specialize by subclassing</div></blockquote>
-<p><strong>functional</strong></p>
-<blockquote>
-<div><p><strong>functions operate on streams of objects</strong></p>
-<p>preferably without internal state</p>
-</div></blockquote>
+<div class="section" id="id4">
+<h2>Functional Programming<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>procedural</dt>
+<dd>list of instructions</dd>
+<dt>object oriented</dt>
+<dd>object has state and functions to query/modify state
+specialize by subclassing</dd>
+<dt><strong>functional</strong></dt>
+<dd><p class="first"><strong>functions operate on streams of objects</strong></p>
+<p><strong>combine simple functions =&gt; complicated</strong></p>
+<p class="last">preferably without internal state</p>
+</dd>
+</dl>
 </div>
 <div class="section" id="food-chain">
 <h2>food chain<a class="headerlink" href="#food-chain" title="Permalink to this headline">¶</a></h2>
@@ -409,8 +435,8 @@ each item in an iterable object and returns a list containing all the
 function call results.</p>
 </div>
 </div>
-<div class="section" id="id4">
-<h2>map-filter<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>map-filter<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p><strong>filter(func, iter)</strong> &#8211; provide items matching a function</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span>
@@ -425,57 +451,6 @@ function call results.</p>
 <p class="last">The filter filters out items based on a test function which is a
 filter and apply functions to pairs of item and running result
 which is reduce.</p>
-</div>
-</div>
-<div class="section" id="imap-ifilter">
-<h2>imap-ifilter<a class="headerlink" href="#imap-ifilter" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
-<span class="go">&lt;itertools.imap at 0x7fc004e6bb50&gt;</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>
-<span class="go">[1, 4]</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="ex2-print-list-of-ingredients-in-a-recipe">
-<h2>Ex2: print list of ingredients in a recipe<a class="headerlink" href="#ex2-print-list-of-ingredients-in-a-recipe" title="Permalink to this headline">¶</a></h2>
-<p><strong>oldfashioned.ini</strong>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># very tasty</span>
-<span class="p">[</span><span class="n">Old</span> <span class="n">Fashioned</span><span class="p">]</span>
-<span class="mi">1</span><span class="p">:</span><span class="mf">1.5</span> <span class="n">oz</span> <span class="n">whiskey</span>
-<span class="mi">2</span><span class="p">:</span><span class="mi">1</span> <span class="n">tsp</span> <span class="n">water</span>
-<span class="mi">3</span><span class="p">:</span><span class="mf">0.5</span> <span class="n">tsp</span> <span class="n">sugar</span>
-<span class="mi">4</span><span class="p">:</span><span class="mi">2</span> <span class="n">dash</span> <span class="n">bitters</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">whiskey</span>
-<span class="n">water</span>
-<span class="n">sugar</span>
-<span class="n">bitters</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="ex2-procedural-style">
-<h2>Ex2: procedural style<a class="headerlink" href="#ex2-procedural-style" title="Permalink to this headline">¶</a></h2>
-<p><em>print list of ingredients in a recipe</em></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ingredients</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;oldfashioned.ini&#39;</span><span class="p">):</span>
-    <span class="n">ing</span> <span class="o">=</span> <span class="n">parse_ing</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ing</span><span class="p">:</span>
-        <span class="n">ingredients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ing</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<dl class="last docutils">
-<dt>def parse_ing(line):</dt>
-<dd>return re.match(r&#8217;[0-9].+s(?P&lt;name&gt;w+)&#8217;, line)</dd>
-</dl>
 </div>
 </div>
 <div class="section" id="functional-programming-examples">
@@ -574,23 +549,8 @@ which is reduce.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="fp-generator-expressions">
-<h2>FP: generator expressions<a class="headerlink" href="#fp-generator-expressions" title="Permalink to this headline">¶</a></h2>
-<p><em>print list of ingredients in a recipe</em></p>
-<p>XX</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="nb">map</span><span class="p">(</span><span class="n">ing_name</span><span class="p">,</span>
-    <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
-         <span class="nb">map</span><span class="p">(</span><span class="n">parse_ing</span><span class="p">,</span>
-             <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span>
-         <span class="p">)</span>
-     <span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="id5">
-<h2><a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2><a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <table class="hlist"><tr><td><ul class="simple">
 <li><strong>chain()</strong></li>
 <li>compress()</li>
@@ -651,29 +611,15 @@ lazy vs eager</p>
 <span class="go">&lt;itertools.islice object at 0x7f429d7de9f0&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
 <span class="go">[1, 2]</span>
+<span class="go">.. note::</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><a class="reference external" href="https://docs.python.org/dev/howto/functional.html">https://docs.python.org/dev/howto/functional.html</a></p>
-</div>
-</div>
-<div class="section" id="practical-advantages-to-fp">
-<h2>Practical Advantages to FP<a class="headerlink" href="#practical-advantages-to-fp" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><ul class="simple">
-<li>Modularity</li>
-<li><a class="reference external" href="http://en.wikipedia.org/wiki/Composability">Composability!</a></li>
-<li>Ease of debugging and testing</li>
-<li>Caching</li>
-<li>Parallelization</li>
-<li>Buzzwordy!</li>
-</ul>
-</div></blockquote>
+<div><a class="reference external" href="https://docs.python.org/dev/howto/functional.html">https://docs.python.org/dev/howto/functional.html</a></div></blockquote>
 </div>
 </div>
-<div class="section" id="id6">
-<h1>☃<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id7">
+<h1>☃<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="django-querysets">
 <h1>Django QuerySets<a class="headerlink" href="#django-querysets" title="Permalink to this headline">¶</a></h1>
@@ -897,8 +843,8 @@ list of results.</p>
 <p>By using techniques from Functional Programming, we can
 make modular, reliable and testable code, faster.</p>
 </div>
-<div class="section" id="id7">
-<h1>ME<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="me">
+<h1>ME<a class="headerlink" href="#me" title="Permalink to this headline">¶</a></h1>
 <blockquote>
 <div><ul class="simple">
 <li>Senior dev/server guy; Devops</li>
@@ -1556,6 +1502,57 @@ list of results.</p>
      <span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="imap-ifilter">
+<h2>imap-ifilter<a class="headerlink" href="#imap-ifilter" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="go">&lt;itertools.imap at 0x7fc004e6bb50&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>
+<span class="go">[1, 4]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ex2-print-list-of-ingredients-in-a-recipe">
+<h2>Ex2: print list of ingredients in a recipe<a class="headerlink" href="#ex2-print-list-of-ingredients-in-a-recipe" title="Permalink to this headline">¶</a></h2>
+<p><strong>oldfashioned.ini</strong>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># very tasty</span>
+<span class="p">[</span><span class="n">Old</span> <span class="n">Fashioned</span><span class="p">]</span>
+<span class="mi">1</span><span class="p">:</span><span class="mf">1.5</span> <span class="n">oz</span> <span class="n">whiskey</span>
+<span class="mi">2</span><span class="p">:</span><span class="mi">1</span> <span class="n">tsp</span> <span class="n">water</span>
+<span class="mi">3</span><span class="p">:</span><span class="mf">0.5</span> <span class="n">tsp</span> <span class="n">sugar</span>
+<span class="mi">4</span><span class="p">:</span><span class="mi">2</span> <span class="n">dash</span> <span class="n">bitters</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">whiskey</span>
+<span class="n">water</span>
+<span class="n">sugar</span>
+<span class="n">bitters</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ex2-procedural-style">
+<h2>Ex2: procedural style<a class="headerlink" href="#ex2-procedural-style" title="Permalink to this headline">¶</a></h2>
+<p><em>print list of ingredients in a recipe</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ingredients</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;oldfashioned.ini&#39;</span><span class="p">):</span>
+    <span class="n">ing</span> <span class="o">=</span> <span class="n">parse_ing</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ing</span><span class="p">:</span>
+        <span class="n">ingredients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ing</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="last docutils">
+<dt>def parse_ing(line):</dt>
+<dd>return re.match(r&#8217;[0-9].+s(?P&lt;name&gt;w+)&#8217;, line)</dd>
+</dl>
 </div>
 </div>
 </div>
