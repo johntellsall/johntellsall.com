@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Functional Programming and Django QuerySets 2016 &mdash; Functional Programming and Django QuerySets 2016 3 documentation</title>
+    <title>Functional Programming and Django QuerySets 7/2016 &mdash; Functional Programming and Django QuerySets 2016 3 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/styles.css" type="text/css" />
@@ -45,12 +45,69 @@
 
 
   
-<article class="slide level-1" id="functional-programming-and-django-querysets-2016">
+<article class="slide level-1" id="functional-programming-and-django-querysets-7-2016">
 
-<h1>Functional Programming and Django QuerySets 2016</h1>
+<h1>Functional Programming and Django QuerySets 7/2016</h1>
 
-<p>SoCal Python</p>
-<p>April 26, 2016</p>
+<p>LA Django Meetup</p>
+<p>July 5th, 2016</p>
+
+
+
+
+</article>
+<article class="slide level-1" id="inbox">
+
+<h1>INBOX</h1>
+
+<ul class="simple">
+<li>add TBT</li>
+<li>add &quot;there will be code&quot;</li>
+<li>queryset.exists() <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists">https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists</a></li>
+</ul>
+<p>In [26]: p=SourceLine.objects.filter(project='redis')</p>
+<p>In [27]: str(p.query)
+Out[27]: 'SELECT &quot;app_sourceline&quot;.&quot;id&quot;, &quot;app_sourceline&quot;.&quot;project&quot;, &quot;app_sourceline&quot;.&quot;name&quot;, &quot;app_sourceline&quot;.&quot;path&quot;, &quot;app_sourceline&quot;.&quot;line_number&quot;, &quot;app_sourceline&quot;.&quot;kind&quot;, &quot;app_sourceline&quot;.&quot;length&quot; FROM &quot;app_sourceline&quot; WHERE &quot;app_sourceline&quot;.&quot;project&quot; = redis-2.8.4'</p>
+<p>In [30]: p.exists()
+Out[30]: True
+from django.db import connection
+In [31]: connection.queries[-1]
+Out[31]: u'QUERY = u'SELECT (1) AS &quot;a&quot; FROM &quot;app_sourceline&quot; WHERE &quot;app_sourceline&quot;.&quot;project&quot; = %s LIMIT 1' - PARAMS = (u'redis-2.8.4',)'</p>
+<ul class="simple">
+<li>&quot;What is Functional Programming&quot;</li>
+</ul>
+<p>Functions are first class (objects). That is, everything you can do
+with “data” can be done with functions themselves (such as
+passing a function to another function).
+• There is a focus on list processing (for example, it is the source
+of the name Lisp). Lists are often used with recursion on sublists
+as a substitute for loops.
+• “Pure” functional languages eschew side effects. This excludes
+the almost ubiquitous pattern in imperative languages of assign‐
+ing first one, then another value to the same variable to track
+the program state.
+• Functional programming either discourages or outright disal‐
+lows statements, and instead works with the evaluation of
+expressions (in other words, functions plus arguments). In the
+pure case, one program is one expression (plus supporting defi‐
+nitions).
+• Functional programming worries about what is to be computed
+rather than how it is to be computed.
+• Much functional programming utilizes “higher order” functions
+(in other words, functions that operate on functions that oper‐
+ate on functions).</p>
+<ul class="simple">
+<li>(Esther) python3: xrange/range ; map-filter (imap-ifilter) / map-filter</li>
+<li>&quot;tools that use iterators are more memory efficient (and often faster) than their list based counterparts.&quot; <a class="reference external" href="https://docs.python.org/3.0/library/itertools.html">https://docs.python.org/3.0/library/itertools.html</a></li>
+<li>link twitter to website</li>
+<li>short functional library and related FP talk - <a class="reference external" href="https://github.com/kachayev/fn.py">https://github.com/kachayev/fn.py</a> <a class="reference external" href="http://kachayev.github.io/talks/uapycon2012/index.html#/27">http://kachayev.github.io/talks/uapycon2012/index.html#/27</a></li>
+<li>tons of &quot;awesome&quot; links, including to FP in JS <a class="reference external" href="https://github.com/xgrommx/awesome-functional-programming">https://github.com/xgrommx/awesome-functional-programming</a></li>
+<li>practical examples, more details <a class="reference external" href="https://newcircle.com/bookshelf/python_fundamentals_tutorial/functional_programming">https://newcircle.com/bookshelf/python_fundamentals_tutorial/functional_programming</a></li>
+<li>good intro <a class="reference external" href="https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming">https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming</a></li>
+<li>Toolz libraries <a class="reference external" href="https://github.com/pytoolz/toolz">https://github.com/pytoolz/toolz</a></li>
+<li>book <a class="reference external" href="https://www.packtpub.com/application-development/functional-python-programming">https://www.packtpub.com/application-development/functional-python-programming</a></li>
+<li>O'Reilly book <a class="reference external" href="http://www.oreilly.com/programming/free/functional-programming-python.csp">http://www.oreilly.com/programming/free/functional-programming-python.csp</a></li>
+</ul>
 
 
 
@@ -83,6 +140,16 @@ QA-DevOps</dd>
 
 
 </article>
+<article class="slide level-1" id="id1">
+
+<h1>.</h1>
+
+<img alt="_images/therewillbecodesuccesskid.jpg" src="_images/therewillbecodesuccesskid.jpg" />
+
+
+
+
+</article>
 <article class="slide level-1" id="contents">
 
 <h1>Contents</h1>
@@ -103,7 +170,7 @@ QA-DevOps</dd>
 
 
 </article>
-<article class="slide level-2" id="id1">
+<article class="slide level-2" id="id2">
 
 <h2>.</h2>
 
@@ -254,7 +321,7 @@ efficient list.</p>
 
 
 </article>
-<article class="slide level-2" id="id2">
+<article class="slide level-2" id="id3">
 
 <h2>What can you <em>not</em> do with an iterator?</h2>
 
@@ -292,23 +359,27 @@ efficient list.</p>
 <td>eager</td>
 <td>lazy</td>
 </tr>
-<tr class="row-odd"><td>len(x)</td>
+<tr class="row-odd"><td>memory</td>
+<td>high</td>
+<td>low</td>
+</tr>
+<tr class="row-even"><td>len(x)</td>
 <td>yes</td>
 <td>no</td>
 </tr>
-<tr class="row-even"><td>slice</td>
+<tr class="row-odd"><td>slice</td>
 <td>x[:3]</td>
 <td>islice(x, 3)</td>
 </tr>
-<tr class="row-odd"><td>addition</td>
+<tr class="row-even"><td>addition</td>
 <td>x + y</td>
 <td>chain(x, y)</td>
 </tr>
-<tr class="row-even"><td>has items</td>
+<tr class="row-odd"><td>has items</td>
 <td>if x</td>
 <td>no</td>
 </tr>
-<tr class="row-odd"><td>easy debug</td>
+<tr class="row-even"><td>easy debug</td>
 <td>yes</td>
 <td>no</td>
 </tr>
@@ -372,12 +443,13 @@ efficient list.</p>
 <p>and <em>itertools</em>, and <em>fileinput</em></p>
 </li>
 </ul>
+<p>INBOX: tradeoff readability vs conciseness</p>
 
 
 
 
 </article>
-<article class="slide level-1" id="id3">
+<article class="slide level-1" id="id4">
 
 <h1>☃</h1>
 
@@ -510,7 +582,7 @@ object-oriented features. [&quot;Object obsessive&quot;]</p>
 
 
 </article>
-<article class="slide level-2" id="id4">
+<article class="slide level-2" id="id5">
 
 <h2>Functional Programming</h2>
 
@@ -583,7 +655,7 @@ recombine elements, vs specialize</p>
 
 <h2>map-filter</h2>
 
-<p><strong>map(func, iter)</strong> -- transform items using a function</p>
+<p><strong>map(func, iter)</strong> -- <cite>transform</cite> items using a function</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span>
 </pre></div>
@@ -603,11 +675,11 @@ function call results.</p>
 
 
 </article>
-<article class="slide level-2" id="id5">
+<article class="slide level-2" id="id6">
 
 <h2>map-filter</h2>
 
-<p><strong>filter(func, iter)</strong> -- provide items matching a function</p>
+<p><strong>filter(func, iter)</strong> -- provide items <cite>matching</cite> a function</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span>
 </pre></div>
@@ -753,7 +825,7 @@ which is reduce.</p>
 
 
 </article>
-<article class="slide level-2" id="id6">
+<article class="slide level-2" id="id7">
 
 <h2><a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a></h2>
 
@@ -839,7 +911,7 @@ lazy vs eager</p>
 
 
 </article>
-<article class="slide level-1" id="id7">
+<article class="slide level-1" id="id8">
 
 <h1>☃</h1>
 
@@ -878,7 +950,7 @@ lazy vs eager</p>
 <span class="go">&lt;Meeting: Meeting object&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">__dict__</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span> <span class="p">)</span>
 <span class="go">{&#39;meet_date&#39;: datetime.datetime(2014, 5, 20, 7, 0, tzinfo=&lt;UTC&gt;),</span>
 <span class="go">&#39;_state&#39;: &lt;django.db.models.base.ModelState object at 0x2bd1050&gt;,</span>
 <span class="go">&#39;id&#39;: 3, &#39;name&#39;: u&#39;LA Django Monthly Meeting&#39;}</span>
@@ -1129,7 +1201,7 @@ list of results.</p>
 
 <h1>Questions?</h1>
 
-<div class="figure" id="id22">
+<div class="figure" id="id23">
 <img alt="_images/john-bold.jpg" class="fill" src="_images/john-bold.jpg" />
 <p class="caption"><span class="caption-text"><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></span></p>
 </div>
@@ -1265,7 +1337,7 @@ predict the behavior of a program</p>
 
 
 </article>
-<article class="slide level-2" id="id9">
+<article class="slide level-2" id="id10">
 
 <h2>Iterators</h2>
 
@@ -1474,7 +1546,7 @@ list.</p>
 
 <h2>Functional Prog for Better Booze!</h2>
 
-<div class="figure" id="id23">
+<div class="figure" id="id24">
 <img alt="_images/Oldfashioned-cocktail.png" src="_images/Oldfashioned-cocktail.png" />
 <p class="caption"><span class="caption-text">CC PD <a class="reference external" href="http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png">http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png</a></span></p>
 </div>
@@ -1740,7 +1812,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-1" id="id10">
+<article class="slide level-1" id="id11">
 
 <h1>Django QuerySets</h1>
 
@@ -1760,7 +1832,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id11">
+<article class="slide level-2" id="id12">
 
 <h2>QuerySet review</h2>
 
@@ -1784,7 +1856,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id12">
+<article class="slide level-2" id="id13">
 
 <h2>QuerySet and iterators</h2>
 
@@ -1800,7 +1872,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-1" id="id13">
+<article class="slide level-1" id="id14">
 
 <h1>Functional QuerySets</h1>
 
@@ -1812,7 +1884,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id14">
+<article class="slide level-2" id="id15">
 
 <h2>Empty List</h2>
 
@@ -1832,7 +1904,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id15">
+<article class="slide level-2" id="id16">
 
 <h2>Empty Iterator</h2>
 
@@ -1854,7 +1926,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-1" id="id16">
+<article class="slide level-1" id="id17">
 
 <h1>How can you tell if a QuerySet is empty or not?</h1>
 
@@ -1863,7 +1935,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id17">
+<article class="slide level-2" id="id18">
 
 <h2>QuerySet like Iterator</h2>
 
@@ -1888,7 +1960,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id18">
+<article class="slide level-2" id="id19">
 
 <h2>Because QuerySet <em>is</em> an iterator</h2>
 
@@ -1949,7 +2021,7 @@ bool(iter) vs qs.empty()</p>
 
 
 </article>
-<article class="slide level-2" id="id19">
+<article class="slide level-2" id="id20">
 
 <h2>But not always</h2>
 
@@ -1970,11 +2042,11 @@ list of results.</p>
 
 
 </article>
-<article class="slide level-1" id="id20">
+<article class="slide level-1" id="id21">
 
 <h1>Questions?</h1>
 
-<div class="figure" id="id24">
+<div class="figure" id="id25">
 <img alt="_images/john-bold.jpg" class="fill" src="_images/john-bold.jpg" />
 <p class="caption"><span class="caption-text"><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></span></p>
 </div>
@@ -1983,7 +2055,7 @@ list of results.</p>
 
 
 </article>
-<article class="slide level-2" id="id21">
+<article class="slide level-2" id="id22">
 
 <h2>References</h2>
 

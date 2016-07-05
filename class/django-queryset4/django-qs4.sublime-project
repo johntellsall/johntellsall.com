@@ -10,6 +10,12 @@
 			"name": "build",
 			"path": "/home/johnm/lilbub/bin/",
 			"shell_cmd": "make build"
+		},
+		{
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"name": "Anaconda Python Builder",
+			"selector": "source.python",
+			"shell_cmd": "\"python\" -u \"$file\""
 		}
 	],
 	"folders":
@@ -24,9 +30,9 @@
 			[
 				"_*",
 				".cache",
-				"backup",
+				"backup"
 			],
-			"path": "/home/johnm/src/johntellsall.com/class/django-queryset4",
+			"path": "/home/johnm/src/johntellsall.com/class/django-queryset4"
 		}
 	],
 	"settings":

@@ -113,12 +113,10 @@ QuerySet is a stream
 
 
 .
---------------
-
-.. figure:: _static/large_BaxterCutawayFF3.jpg
-   :class: fill
+==============================
 
 
+.. image:: _static/there will be code success kid.jpg
 
 
 Iterators
@@ -1430,6 +1428,14 @@ http://blog.etianen.com/blog/2013/06/08/django-querysets/
 
 HISTORICAL
 ---------
+
+
+.
+--------------
+
+.. figure:: _static/large_BaxterCutawayFF3.jpg
+   :class: fill
+
 
 ..
    What can you do with a iterator?
