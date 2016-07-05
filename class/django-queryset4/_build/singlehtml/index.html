@@ -44,9 +44,11 @@
 <div class="section" id="inbox">
 <h1>INBOX<a class="headerlink" href="#inbox" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
+<li>add TBT</li>
+<li>add &#8220;there will be code&#8221;</li>
 <li>queryset.exists() <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists">https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists</a></li>
 </ul>
-<p>In [26]: p=SourceLine.objects.filter(project=&#8217;redis-2.8.4&#8217;)</p>
+<p>In [26]: p=SourceLine.objects.filter(project=&#8217;redis&#8217;)</p>
 <p>In [27]: str(p.query)
 Out[27]: &#8216;SELECT &#8220;app_sourceline&#8221;.&#8221;id&#8221;, &#8220;app_sourceline&#8221;.&#8221;project&#8221;, &#8220;app_sourceline&#8221;.&#8221;name&#8221;, &#8220;app_sourceline&#8221;.&#8221;path&#8221;, &#8220;app_sourceline&#8221;.&#8221;line_number&#8221;, &#8220;app_sourceline&#8221;.&#8221;kind&#8221;, &#8220;app_sourceline&#8221;.&#8221;length&#8221; FROM &#8220;app_sourceline&#8221; WHERE &#8220;app_sourceline&#8221;.&#8221;project&#8221; = redis-2.8.4&#8217;</p>
 <p>In [30]: p.exists()
@@ -54,6 +56,29 @@ Out[30]: True
 from django.db import connection
 In [31]: connection.queries[-1]
 Out[31]: u&#8217;QUERY = u&#8217;SELECT (1) AS &#8220;a&#8221; FROM &#8220;app_sourceline&#8221; WHERE &#8220;app_sourceline&#8221;.&#8221;project&#8221; = %s LIMIT 1&#8217; - PARAMS = (u&#8217;redis-2.8.4&#8217;,)&#8217;</p>
+<ul class="simple">
+<li>&#8220;What is Functional Programming&#8221;</li>
+</ul>
+<p>Functions are first class (objects). That is, everything you can do
+with “data” can be done with functions themselves (such as
+passing a function to another function).
+• There is a focus on list processing (for example, it is the source
+of the name Lisp). Lists are often used with recursion on sublists
+as a substitute for loops.
+• “Pure” functional languages eschew side effects. This excludes
+the almost ubiquitous pattern in imperative languages of assign‐
+ing first one, then another value to the same variable to track
+the program state.
+• Functional programming either discourages or outright disal‐
+lows statements, and instead works with the evaluation of
+expressions (in other words, functions plus arguments). In the
+pure case, one program is one expression (plus supporting defi‐
+nitions).
+• Functional programming worries about what is to be computed
+rather than how it is to be computed.
+• Much functional programming utilizes “higher order” functions
+(in other words, functions that operate on functions that oper‐
+ate on functions).</p>
 <ul class="simple">
 <li>(Esther) python3: xrange/range ; map-filter (imap-ifilter) / map-filter</li>
 <li>&#8220;tools that use iterators are more memory efficient (and often faster) than their list based counterparts.&#8221; <a class="reference external" href="https://docs.python.org/3.0/library/itertools.html">https://docs.python.org/3.0/library/itertools.html</a></li>
@@ -450,7 +475,7 @@ recombine elements, vs specialize</p>
 </div>
 <div class="section" id="map-filter">
 <h2>map-filter<a class="headerlink" href="#map-filter" title="Permalink to this headline">¶</a></h2>
-<p><strong>map(func, iter)</strong> &#8211; transform items using a function</p>
+<p><strong>map(func, iter)</strong> &#8211; <cite>transform</cite> items using a function</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span>
 </pre></div>
@@ -468,7 +493,7 @@ function call results.</p>
 </div>
 <div class="section" id="id5">
 <h2>map-filter<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p><strong>filter(func, iter)</strong> &#8211; provide items matching a function</p>
+<p><strong>filter(func, iter)</strong> &#8211; provide items <cite>matching</cite> a function</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span>
 </pre></div>
@@ -673,7 +698,7 @@ lazy vs eager</p>
 <span class="go">&lt;Meeting: Meeting object&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">__dict__</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span> <span class="n">Meeting</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span> <span class="p">)</span>
 <span class="go">{&#39;meet_date&#39;: datetime.datetime(2014, 5, 20, 7, 0, tzinfo=&lt;UTC&gt;),</span>
 <span class="go">&#39;_state&#39;: &lt;django.db.models.base.ModelState object at 0x2bd1050&gt;,</span>
 <span class="go">&#39;id&#39;: 3, &#39;name&#39;: u&#39;LA Django Monthly Meeting&#39;}</span>

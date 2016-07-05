@@ -12,9 +12,13 @@ July 5th, 2016
 INBOX
 =====
 
+- add TBT
+
+- add "there will be code"
+
 - queryset.exists() https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists
 
-In [26]: p=SourceLine.objects.filter(project='redis-2.8.4')
+In [26]: p=SourceLine.objects.filter(project='redis')
 
 In [27]: str(p.query)
 Out[27]: 'SELECT "app_sourceline"."id", "app_sourceline"."project", "app_sourceline"."name", "app_sourceline"."path", "app_sourceline"."line_number", "app_sourceline"."kind", "app_sourceline"."length" FROM "app_sourceline" WHERE "app_sourceline"."project" = redis-2.8.4'
@@ -26,8 +30,28 @@ In [31]: connection.queries[-1]
 Out[31]: u'QUERY = u\'SELECT (1) AS "a" FROM "app_sourceline" WHERE "app_sourceline"."project" = %s LIMIT 1\' - PARAMS = (u\'redis-2.8.4\',)'
 
 
+- "What is Functional Programming"
 
-
+Functions are first class (objects). That is, everything you can do
+with “data” can be done with functions themselves (such as
+passing a function to another function).
+• There is a focus on list processing (for example, it is the source
+of the name Lisp). Lists are often used with recursion on sublists
+as a substitute for loops.
+• “Pure” functional languages eschew side effects. This excludes
+the almost ubiquitous pattern in imperative languages of assign‐
+ing first one, then another value to the same variable to track
+the program state.
+• Functional programming either discourages or outright disal‐
+lows statements, and instead works with the evaluation of
+expressions (in other words, functions plus arguments). In the
+pure case, one program is one expression (plus supporting defi‐
+nitions).
+• Functional programming worries about what is to be computed
+rather than how it is to be computed.
+• Much functional programming utilizes “higher order” functions
+(in other words, functions that operate on functions that oper‐
+ate on functions).
 
 - (Esther) python3: xrange/range ; map-filter (imap-ifilter) / map-filter
 
@@ -421,7 +445,7 @@ specialize with named function and *map*
 map-filter
 ----------
 
-**map(func, iter)** -- transform items using a function
+**map(func, iter)** -- `transform` items using a function
 
 .. code-block:: python
 
@@ -441,7 +465,7 @@ map-filter
 map-filter
 ----------
 
-**filter(func, iter)** -- provide items matching a function
+**filter(func, iter)** -- provide items `matching` a function
 
 .. code-block:: python
 
@@ -578,7 +602,7 @@ QuerySet review
 >>> m = Meeting.objects.get(id=12)
 <Meeting: Meeting object>
 
->>> Meeting.objects.get(id=12).__dict__
+>>> vars( Meeting.objects.get(id=12) )
 {'meet_date': datetime.datetime(2014, 5, 20, 7, 0, tzinfo=<UTC>),
 '_state': <django.db.models.base.ModelState object at 0x2bd1050>,
 'id': 3, 'name': u'LA Django Monthly Meeting'}
