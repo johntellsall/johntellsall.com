@@ -40,23 +40,13 @@
 <h1>Functional Programming and Django QuerySets 7/2016<a class="headerlink" href="#functional-programming-and-django-querysets-7-2016" title="Permalink to this headline">¶</a></h1>
 <p>LA Django Meetup</p>
 <p>July 5th, 2016</p>
+<p><code class="docutils literal"><span class="pre">tiny.cc/jtaqs4</span></code></p>
 </div>
 <div class="section" id="inbox">
 <h1>INBOX<a class="headerlink" href="#inbox" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>add TBT</li>
-<li>add &#8220;there will be code&#8221;</li>
 <li>queryset.exists() <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists">https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists</a></li>
-</ul>
-<p>In [26]: p=SourceLine.objects.filter(project=&#8217;redis&#8217;)</p>
-<p>In [27]: str(p.query)
-Out[27]: &#8216;SELECT &#8220;app_sourceline&#8221;.&#8221;id&#8221;, &#8220;app_sourceline&#8221;.&#8221;project&#8221;, &#8220;app_sourceline&#8221;.&#8221;name&#8221;, &#8220;app_sourceline&#8221;.&#8221;path&#8221;, &#8220;app_sourceline&#8221;.&#8221;line_number&#8221;, &#8220;app_sourceline&#8221;.&#8221;kind&#8221;, &#8220;app_sourceline&#8221;.&#8221;length&#8221; FROM &#8220;app_sourceline&#8221; WHERE &#8220;app_sourceline&#8221;.&#8221;project&#8221; = redis-2.8.4&#8217;</p>
-<p>In [30]: p.exists()
-Out[30]: True
-from django.db import connection
-In [31]: connection.queries[-1]
-Out[31]: u&#8217;QUERY = u&#8217;SELECT (1) AS &#8220;a&#8221; FROM &#8220;app_sourceline&#8221; WHERE &#8220;app_sourceline&#8221;.&#8221;project&#8221; = %s LIMIT 1&#8217; - PARAMS = (u&#8217;redis-2.8.4&#8217;,)&#8217;</p>
-<ul class="simple">
 <li>&#8220;What is Functional Programming&#8221;</li>
 </ul>
 <p>Functions are first class (objects). That is, everything you can do
@@ -80,16 +70,26 @@ rather than how it is to be computed.
 (in other words, functions that operate on functions that oper‐
 ate on functions).</p>
 <ul class="simple">
-<li>(Esther) python3: xrange/range ; map-filter (imap-ifilter) / map-filter</li>
-<li>&#8220;tools that use iterators are more memory efficient (and often faster) than their list based counterparts.&#8221; <a class="reference external" href="https://docs.python.org/3.0/library/itertools.html">https://docs.python.org/3.0/library/itertools.html</a></li>
 <li>link twitter to website</li>
+</ul>
+</div>
+<div class="section" id="why-are-iterators-efficient">
+<h1>Why are Iterators Efficient<a class="headerlink" href="#why-are-iterators-efficient" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>&#8220;tools that use iterators are more memory efficient (and often faster) than their list based counterparts.&#8221;</li>
+</ul>
+<p><a href="#id27"><span class="problematic" id="id28">`itertools`_</span></a></p>
+</div>
+<div class="section" id="functional-programming-python-resources">
+<h1>Functional Programming &amp; Python resources<a class="headerlink" href="#functional-programming-python-resources" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
 <li>short functional library and related FP talk - <a class="reference external" href="https://github.com/kachayev/fn.py">https://github.com/kachayev/fn.py</a> <a class="reference external" href="http://kachayev.github.io/talks/uapycon2012/index.html#/27">http://kachayev.github.io/talks/uapycon2012/index.html#/27</a></li>
 <li>tons of &#8220;awesome&#8221; links, including to FP in JS <a class="reference external" href="https://github.com/xgrommx/awesome-functional-programming">https://github.com/xgrommx/awesome-functional-programming</a></li>
 <li>practical examples, more details <a class="reference external" href="https://newcircle.com/bookshelf/python_fundamentals_tutorial/functional_programming">https://newcircle.com/bookshelf/python_fundamentals_tutorial/functional_programming</a></li>
 <li>good intro <a class="reference external" href="https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming">https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming</a></li>
 <li>Toolz libraries <a class="reference external" href="https://github.com/pytoolz/toolz">https://github.com/pytoolz/toolz</a></li>
-<li>book <a class="reference external" href="https://www.packtpub.com/application-development/functional-python-programming">https://www.packtpub.com/application-development/functional-python-programming</a></li>
-<li>O&#8217;Reilly book <a class="reference external" href="http://www.oreilly.com/programming/free/functional-programming-python.csp">http://www.oreilly.com/programming/free/functional-programming-python.csp</a></li>
+<li>Packt book (free!) <a class="reference external" href="https://www.packtpub.com/application-development/functional-python-programming">https://www.packtpub.com/application-development/functional-python-programming</a></li>
+<li>O&#8217;Reilly book (free!) <a class="reference external" href="http://www.oreilly.com/programming/free/functional-programming-python.csp">http://www.oreilly.com/programming/free/functional-programming-python.csp</a></li>
 </ul>
 </div>
 <div class="section" id="johntellsall">
@@ -113,10 +113,6 @@ QA-DevOps</dd>
 </ul>
 </div>
 </div>
-<div class="section" id="id1">
-<h1>.<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<img alt="_images/therewillbecodesuccesskid.jpg" src="_images/therewillbecodesuccesskid.jpg" />
-</div>
 <div class="section" id="contents">
 <h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
 <p>iterator/generator = &#8220;stream&#8221;</p>
@@ -128,12 +124,10 @@ QA-DevOps</dd>
 <div>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Function_composition_%28computer_science%29">https://en.wikipedia.org/wiki/Function_composition_%28computer_science%29</a>&gt;`</div></blockquote>
 <p class="last">combine simple functions to build more complicated ones</p>
 </div>
-<div class="section" id="id2">
-<h2>.<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="figure">
-<img alt="_images/large_BaxterCutawayFF3.jpg" class="fill" src="_images/large_BaxterCutawayFF3.jpg" />
 </div>
-</div>
+<div class="section" id="id1">
+<h1>.<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<img alt="_images/therewillbecodesuccesskid.jpg" src="_images/therewillbecodesuccesskid.jpg" />
 </div>
 <div class="section" id="iterators">
 <h1>Iterators<a class="headerlink" href="#iterators" title="Permalink to this headline">¶</a></h1>
@@ -231,8 +225,8 @@ efficient list.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><strong>no length</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ing.txt&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -342,8 +336,8 @@ efficient list.</p>
 <p>INBOX: tradeoff readability vs conciseness</p>
 </div>
 </div>
-<div class="section" id="id4">
-<h1>☃<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id3">
+<h1>☃<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="functional-programming">
 <h1>Functional Programming<a class="headerlink" href="#functional-programming" title="Permalink to this headline">¶</a></h1>
@@ -432,8 +426,8 @@ object-oriented programming, but don’t force the use of
 object-oriented features. [&#8220;Object obsessive&#8221;]</p>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>Functional Programming<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>Functional Programming<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>procedural</dt>
 <dd>list of instructions</dd>
@@ -495,8 +489,8 @@ each item in an iterable object and returns a list containing all the
 function call results.</p>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>map-filter<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>map-filter<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p><strong>filter(func, iter)</strong> &#8211; provide items <cite>matching</cite> a function</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span>
@@ -863,6 +857,38 @@ little work, then process a batch, without waiting for the entire
 list of results.</p>
 </div>
 </div>
+<div class="section" id="str-queryset-query-sql">
+<h2>str(queryset.query) = SQL<a class="headerlink" href="#str-queryset-query-sql" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">=</span><span class="n">SourceLine</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s1">&#39;redis&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+
+<span class="go">&#39;SELECT &quot;app_sourceline&quot;.&quot;id&quot;, ... FROM &quot;app_sourceline&quot;</span>
+<span class="go">WHERE &quot;app_sourceline&quot;.&quot;project&quot; = redis&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="doesn-t-work-for-exists">
+<h2>doesn&#8217;t work for exists()!<a class="headerlink" href="#doesn-t-work-for-exists" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+<span class="go">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+<span class="go">AttributeError: &#39;bool&#39; object has no attribute &#39;query&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="django-sql-history">
+<h2>Django SQL history<a class="headerlink" href="#django-sql-history" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">connection</span>
+<span class="go">connection.queries[-1]</span>
+
+<span class="go">u&#39;QUERY = u\&#39;SELECT (1) AS &quot;a&quot; FROM &quot;app_sourceline&quot;</span>
+<span class="go">WHERE &quot;app_sourceline&quot;.&quot;project&quot; = %s LIMIT 1\&#39;</span>
+<span class="go">- PARAMS = (u\&#39;redis&#39;,)&#39;</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="ideas">
 <h1>IDEAS<a class="headerlink" href="#ideas" title="Permalink to this headline">¶</a></h1>
@@ -876,7 +902,7 @@ list of results.</p>
 </div>
 <div class="questions section" id="questions">
 <h1>Questions?<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h1>
-<div class="figure" id="id23">
+<div class="figure" id="id24">
 <img alt="_images/john-bold.jpg" class="fill" src="_images/john-bold.jpg" />
 <p class="caption"><span class="caption-text"><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></span></p>
 </div>
@@ -1130,7 +1156,7 @@ list.</p>
 </div>
 <div class="section" id="functional-prog-for-better-booze">
 <h2>Functional Prog for Better Booze!<a class="headerlink" href="#functional-prog-for-better-booze" title="Permalink to this headline">¶</a></h2>
-<div class="figure" id="id24">
+<div class="figure" id="id25">
 <img alt="_images/Oldfashioned-cocktail.png" src="_images/Oldfashioned-cocktail.png" />
 <p class="caption"><span class="caption-text">CC PD <a class="reference external" href="http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png">http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png</a></span></p>
 </div>
@@ -1499,23 +1525,23 @@ list of results.</p>
 </div>
 <div class="section" id="id21">
 <h1>Questions?<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h1>
-<div class="figure" id="id25">
+<div class="figure" id="id26">
 <img alt="_images/john-bold.jpg" class="fill" src="_images/john-bold.jpg" />
 <p class="caption"><span class="caption-text"><a class="reference external" href="mailto:john&#37;&#52;&#48;johntellsall&#46;com">john<span>&#64;</span>johntellsall<span>&#46;</span>com</a></span></p>
 </div>
 <div class="section" id="id22">
 <h2>References<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
-<p>Can Your Programming Language Do This? by Joel Spolsky</p>
-<p><a class="reference external" href="http://www.joelonsoftware.com/items/2006/08/01.html">http://www.joelonsoftware.com/items/2006/08/01.html</a></p>
-<p>Wikipedia: Functional Programming</p>
-<p><a class="reference external" href="http://en.wikipedia.org/wiki/Functional_programming">http://en.wikipedia.org/wiki/Functional_programming</a></p>
-<p>Functional Programming HOWTO by Andy Kuchling</p>
-<p><a class="reference external" href="https://docs.python.org/2/howto/functional.html">https://docs.python.org/2/howto/functional.html</a></p>
 <p>Using Django querysets effectively by Dave Hall</p>
 <p><a class="reference external" href="http://blog.etianen.com/blog/2013/06/08/django-querysets/">http://blog.etianen.com/blog/2013/06/08/django-querysets/</a></p>
 </div>
 <div class="section" id="historical">
 <h2>HISTORICAL<a class="headerlink" href="#historical" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id23">
+<h2>.<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="_images/large_BaxterCutawayFF3.jpg" class="fill" src="_images/large_BaxterCutawayFF3.jpg" />
+</div>
 </div>
 <div class="section" id="database-iterator">
 <h2>Database iterator<a class="headerlink" href="#database-iterator" title="Permalink to this headline">¶</a></h2>
@@ -1614,6 +1640,9 @@ list of results.</p>
 <dd>return re.match(r&#8217;[0-9].+s(?P&lt;name&gt;w+)&#8217;, line)</dd>
 </dl>
 </div>
+<ul class="simple">
+<li>(Esther) python3: xrange/range ; map-filter (imap-ifilter) / map-filter</li>
+</ul>
 </div>
 </div>
 

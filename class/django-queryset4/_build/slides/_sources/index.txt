@@ -3,7 +3,7 @@
 
 
 Functional Programming and Django QuerySets 7/2016
-================================================
+==================================================
 
 LA Django Meetup
 
@@ -12,23 +12,36 @@ July 5th, 2016
 INBOX
 =====
 
-- add TBT
 
-- add "there will be code"
+
+- add TBT
 
 - queryset.exists() https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists
 
-In [26]: p=SourceLine.objects.filter(project='redis')
+str(queryset.query) = SQL
+-------------------------
 
-In [27]: str(p.query)
-Out[27]: 'SELECT "app_sourceline"."id", "app_sourceline"."project", "app_sourceline"."name", "app_sourceline"."path", "app_sourceline"."line_number", "app_sourceline"."kind", "app_sourceline"."length" FROM "app_sourceline" WHERE "app_sourceline"."project" = redis-2.8.4'
+.. code-block:: python
 
-In [30]: p.exists()
+    In [26]: p=SourceLine.objects.filter(project='redis')
+
+    In [27]: str(p.query)
+
+    Out[27]: 'SELECT "app_sourceline"."id", ... FROM "app_sourceline"
+    WHERE "app_sourceline"."project" = redis'
+
+
+Django SQL history
+------------------
+
+.. code-block:: python
+In [30]: *p.exists()*
 Out[30]: True
-from django.db import connection
-In [31]: connection.queries[-1]
-Out[31]: u'QUERY = u\'SELECT (1) AS "a" FROM "app_sourceline" WHERE "app_sourceline"."project" = %s LIMIT 1\' - PARAMS = (u\'redis-2.8.4\',)'
+AttributeError: 'bool' object has no attribute 'query'
 
+*from django.db import connection*
+In [31]: *connection.queries[-1]*
+Out[31]: u'QUERY = u\'SELECT (1) AS "a" FROM "app_sourceline" WHERE "app_sourceline"."project" = %s LIMIT 1\' - PARAMS = (u\'redis',)'
 
 - "What is Functional Programming"
 
@@ -94,11 +107,6 @@ later:
 
    - first PyCon I went to had 40 people!
 
-.
-==============================
-
-
-.. image:: _static/there will be code success kid.jpg
 
 
 Contents
@@ -118,12 +126,10 @@ QuerySet is a stream
 
 
 .
---------------
-
-.. figure:: _static/large_BaxterCutawayFF3.jpg
-   :class: fill
+==============================
 
 
+.. image:: _static/there will be code success kid.jpg
 
 
 Iterators
@@ -305,7 +311,7 @@ what?
 
 
 Practical Advantages to FP
--------------------------
+--------------------------
 
    * Modularity
    * `Composability!`_
@@ -647,7 +653,7 @@ Empty List?
    *How can you tell if a list is empty or not?*
 
 A: Empty List
-------------
+-------------
 
 >>> bool([])
 False
@@ -666,7 +672,7 @@ Empty Iterator?
 
 
 A: Empty Iterator
-----------------
+-----------------
 
 >>> x=iter([1,2])
 >>> bool(x)
@@ -753,7 +759,7 @@ Can mix/match QS/iterators...
 
 
 ...but not always
-----------------
+-----------------
 
 
 *How can you tell if a QuerySet is empty or not?*
@@ -1434,7 +1440,15 @@ http://blog.etianen.com/blog/2013/06/08/django-querysets/
 
 
 HISTORICAL
----------
+----------
+
+
+.
+--------------
+
+.. figure:: _static/large_BaxterCutawayFF3.jpg
+   :class: fill
+
 
 ..
    What can you do with a iterator?
@@ -1519,7 +1533,7 @@ XX
    )
 
 imap-ifilter
------------
+------------
 
 >>> import itertools
 

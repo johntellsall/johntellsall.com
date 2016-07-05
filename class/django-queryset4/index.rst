@@ -3,31 +3,22 @@
 
 
 Functional Programming and Django QuerySets 7/2016
-================================================
+==================================================
 
 LA Django Meetup
 
 July 5th, 2016
 
+``tiny.cc/jtaqs4``
+
 INBOX
 =====
 
+
+
 - add TBT
 
-- add "there will be code"
-
 - queryset.exists() https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists
-
-In [26]: p=SourceLine.objects.filter(project='redis')
-
-In [27]: str(p.query)
-Out[27]: 'SELECT "app_sourceline"."id", "app_sourceline"."project", "app_sourceline"."name", "app_sourceline"."path", "app_sourceline"."line_number", "app_sourceline"."kind", "app_sourceline"."length" FROM "app_sourceline" WHERE "app_sourceline"."project" = redis-2.8.4'
-
-In [30]: p.exists()
-Out[30]: True
-from django.db import connection
-In [31]: connection.queries[-1]
-Out[31]: u'QUERY = u\'SELECT (1) AS "a" FROM "app_sourceline" WHERE "app_sourceline"."project" = %s LIMIT 1\' - PARAMS = (u\'redis-2.8.4\',)'
 
 
 - "What is Functional Programming"
@@ -53,11 +44,21 @@ rather than how it is to be computed.
 (in other words, functions that operate on functions that oper‐
 ate on functions).
 
-- (Esther) python3: xrange/range ; map-filter (imap-ifilter) / map-filter
-
-- "tools that use iterators are more memory efficient (and often faster) than their list based counterparts." https://docs.python.org/3.0/library/itertools.html
 
 - link twitter to website
+
+Why are Iterators Efficient
+===========================
+
+- "tools that use iterators are more memory efficient (and often faster) than their list based counterparts."
+
+`itertools`_
+
+.. _itertools: https://docs.python.org/3.0/library/itertools.html
+
+
+Functional Programming & Python resources
+=========================================
 
 - short functional library and related FP talk - https://github.com/kachayev/fn.py http://kachayev.github.io/talks/uapycon2012/index.html#/27
 
@@ -69,9 +70,9 @@ ate on functions).
 
 - Toolz libraries https://github.com/pytoolz/toolz
 
-- book https://www.packtpub.com/application-development/functional-python-programming
+- Packt book (free!) https://www.packtpub.com/application-development/functional-python-programming
 
-- O'Reilly book http://www.oreilly.com/programming/free/functional-programming-python.csp
+- O'Reilly book (free!) http://www.oreilly.com/programming/free/functional-programming-python.csp
 
 @johntellsall
 =============
@@ -298,7 +299,7 @@ what?
 
 
 Practical Advantages to FP
--------------------------
+--------------------------
 
    * Modularity
    * `Composability!`_
@@ -640,7 +641,7 @@ Empty List?
    *How can you tell if a list is empty or not?*
 
 A: Empty List
-------------
+-------------
 
 >>> bool([])
 False
@@ -659,7 +660,7 @@ Empty Iterator?
 
 
 A: Empty Iterator
-----------------
+-----------------
 
 >>> x=iter([1,2])
 >>> bool(x)
@@ -746,7 +747,7 @@ Can mix/match QS/iterators...
 
 
 ...but not always
-----------------
+-----------------
 
 
 *How can you tell if a QuerySet is empty or not?*
@@ -766,6 +767,44 @@ Use x.exists(), not bool(x) -- `more efficient <https://docs.djangoproject.com/e
    This means that for both iterators and query sets, we can do a
    little work, then process a batch, without waiting for the entire
    list of results.
+
+
+str(queryset.query) = SQL
+-------------------------
+
+.. code-block:: python
+
+    >>> p=SourceLine.objects.filter(project='redis')
+
+    >>> str(p.query)
+
+    'SELECT "app_sourceline"."id", ... FROM "app_sourceline"
+    WHERE "app_sourceline"."project" = redis'
+
+
+doesn't work for exists()!
+--------------------------
+
+.. code-block:: python
+
+  >>> p.exists()
+  True
+
+  >>> str(p.exists().query)
+  AttributeError: 'bool' object has no attribute 'query'
+
+
+Django SQL history
+------------------
+
+.. code-block:: python
+
+  >>> from django.db import connection
+  connection.queries[-1]
+
+  u'QUERY = u\'SELECT (1) AS "a" FROM "app_sourceline"
+  WHERE "app_sourceline"."project" = %s LIMIT 1\'
+  - PARAMS = (u\'redis',)'
 
 
 IDEAS
@@ -1406,17 +1445,6 @@ Questions?
 References
 ---------------
 
-Can Your Programming Language Do This? by Joel Spolsky
-
-http://www.joelonsoftware.com/items/2006/08/01.html
-
-Wikipedia: Functional Programming
-
-http://en.wikipedia.org/wiki/Functional_programming
-
-Functional Programming HOWTO by Andy Kuchling
-
-https://docs.python.org/2/howto/functional.html
 
 Using Django querysets effectively by Dave Hall
 
@@ -1427,7 +1455,7 @@ http://blog.etianen.com/blog/2013/06/08/django-querysets/
 
 
 HISTORICAL
----------
+----------
 
 
 .
@@ -1520,7 +1548,7 @@ XX
    )
 
 imap-ifilter
------------
+------------
 
 >>> import itertools
 
@@ -1567,3 +1595,6 @@ Ex2: procedural style
 .. note::
     def parse_ing(line):
         return re.match(r'[0-9].+\s(?P<name>\w+)', line)
+
+- (Esther) python3: xrange/range ; map-filter (imap-ifilter) / map-filter
+

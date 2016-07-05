@@ -62,17 +62,43 @@
 
 <ul class="simple">
 <li>add TBT</li>
-<li>add &quot;there will be code&quot;</li>
 <li>queryset.exists() <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists">https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists</a></li>
 </ul>
-<p>In [26]: p=SourceLine.objects.filter(project='redis')</p>
-<p>In [27]: str(p.query)
-Out[27]: 'SELECT &quot;app_sourceline&quot;.&quot;id&quot;, &quot;app_sourceline&quot;.&quot;project&quot;, &quot;app_sourceline&quot;.&quot;name&quot;, &quot;app_sourceline&quot;.&quot;path&quot;, &quot;app_sourceline&quot;.&quot;line_number&quot;, &quot;app_sourceline&quot;.&quot;kind&quot;, &quot;app_sourceline&quot;.&quot;length&quot; FROM &quot;app_sourceline&quot; WHERE &quot;app_sourceline&quot;.&quot;project&quot; = redis-2.8.4'</p>
-<p>In [30]: p.exists()
+
+
+
+
+</article>
+<article class="slide level-2" id="str-queryset-query-sql">
+
+<h2>str(queryset.query) = SQL</h2>
+
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">26</span><span class="p">]:</span> <span class="n">p</span><span class="o">=</span><span class="n">SourceLine</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s1">&#39;redis&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">27</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+
+<span class="n">Out</span><span class="p">[</span><span class="mi">27</span><span class="p">]:</span> <span class="s1">&#39;SELECT &quot;app_sourceline&quot;.&quot;id&quot;, ... FROM &quot;app_sourceline&quot;</span>
+<span class="n">WHERE</span> <span class="s2">&quot;app_sourceline&quot;</span><span class="o">.</span><span class="s2">&quot;project&quot;</span> <span class="o">=</span> <span class="n">redis</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="django-sql-history">
+
+<h2>Django SQL history</h2>
+
+<div class="highlight-python"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>In [30]: <em>p.exists()</em>
 Out[30]: True
-from django.db import connection
-In [31]: connection.queries[-1]
-Out[31]: u'QUERY = u'SELECT (1) AS &quot;a&quot; FROM &quot;app_sourceline&quot; WHERE &quot;app_sourceline&quot;.&quot;project&quot; = %s LIMIT 1' - PARAMS = (u'redis-2.8.4',)'</p>
+AttributeError: 'bool' object has no attribute 'query'</p>
+<p><em>from django.db import connection</em>
+In [31]: <em>connection.queries[-1]</em>
+Out[31]: u'QUERY = u'SELECT (1) AS &quot;a&quot; FROM &quot;app_sourceline&quot; WHERE &quot;app_sourceline&quot;.&quot;project&quot; = %s LIMIT 1' - PARAMS = (u'redis',)'</p>
 <ul class="simple">
 <li>&quot;What is Functional Programming&quot;</li>
 </ul>
@@ -140,16 +166,6 @@ QA-DevOps</dd>
 
 
 </article>
-<article class="slide level-1" id="id1">
-
-<h1>.</h1>
-
-<img alt="_images/therewillbecodesuccesskid.jpg" src="_images/therewillbecodesuccesskid.jpg" />
-
-
-
-
-</article>
 <article class="slide level-1" id="contents">
 
 <h1>Contents</h1>
@@ -170,13 +186,11 @@ QA-DevOps</dd>
 
 
 </article>
-<article class="slide level-2" id="id2">
+<article class="slide level-1" id="id1">
 
-<h2>.</h2>
+<h1>.</h1>
 
-<div class="figure">
-<img alt="_images/large_BaxterCutawayFF3.jpg" class="fill" src="_images/large_BaxterCutawayFF3.jpg" />
-</div>
+<img alt="_images/therewillbecodesuccesskid.jpg" src="_images/therewillbecodesuccesskid.jpg" />
 
 
 
@@ -321,7 +335,7 @@ efficient list.</p>
 
 
 </article>
-<article class="slide level-2" id="id3">
+<article class="slide level-2" id="id2">
 
 <h2>What can you <em>not</em> do with an iterator?</h2>
 
@@ -449,7 +463,7 @@ efficient list.</p>
 
 
 </article>
-<article class="slide level-1" id="id4">
+<article class="slide level-1" id="id3">
 
 <h1>☃</h1>
 
@@ -582,7 +596,7 @@ object-oriented features. [&quot;Object obsessive&quot;]</p>
 
 
 </article>
-<article class="slide level-2" id="id5">
+<article class="slide level-2" id="id4">
 
 <h2>Functional Programming</h2>
 
@@ -675,7 +689,7 @@ function call results.</p>
 
 
 </article>
-<article class="slide level-2" id="id6">
+<article class="slide level-2" id="id5">
 
 <h2>map-filter</h2>
 
@@ -825,7 +839,7 @@ which is reduce.</p>
 
 
 </article>
-<article class="slide level-2" id="id7">
+<article class="slide level-2" id="id6">
 
 <h2><a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a></h2>
 
@@ -911,7 +925,7 @@ lazy vs eager</p>
 
 
 </article>
-<article class="slide level-1" id="id8">
+<article class="slide level-1" id="id7">
 
 <h1>☃</h1>
 
@@ -1337,7 +1351,7 @@ predict the behavior of a program</p>
 
 
 </article>
-<article class="slide level-2" id="id10">
+<article class="slide level-2" id="id9">
 
 <h2>Iterators</h2>
 
@@ -1812,7 +1826,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-1" id="id11">
+<article class="slide level-1" id="id10">
 
 <h1>Django QuerySets</h1>
 
@@ -1832,7 +1846,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id12">
+<article class="slide level-2" id="id11">
 
 <h2>QuerySet review</h2>
 
@@ -1856,7 +1870,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id13">
+<article class="slide level-2" id="id12">
 
 <h2>QuerySet and iterators</h2>
 
@@ -1872,7 +1886,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-1" id="id14">
+<article class="slide level-1" id="id13">
 
 <h1>Functional QuerySets</h1>
 
@@ -1884,7 +1898,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id15">
+<article class="slide level-2" id="id14">
 
 <h2>Empty List</h2>
 
@@ -1904,7 +1918,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id16">
+<article class="slide level-2" id="id15">
 
 <h2>Empty Iterator</h2>
 
@@ -1926,7 +1940,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-1" id="id17">
+<article class="slide level-1" id="id16">
 
 <h1>How can you tell if a QuerySet is empty or not?</h1>
 
@@ -1935,7 +1949,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id18">
+<article class="slide level-2" id="id17">
 
 <h2>QuerySet like Iterator</h2>
 
@@ -1960,7 +1974,7 @@ Equivalent to slice operator for lists.</p>
 
 
 </article>
-<article class="slide level-2" id="id19">
+<article class="slide level-2" id="id18">
 
 <h2>Because QuerySet <em>is</em> an iterator</h2>
 
@@ -2021,7 +2035,7 @@ bool(iter) vs qs.empty()</p>
 
 
 </article>
-<article class="slide level-2" id="id20">
+<article class="slide level-2" id="id19">
 
 <h2>But not always</h2>
 
@@ -2042,7 +2056,7 @@ list of results.</p>
 
 
 </article>
-<article class="slide level-1" id="id21">
+<article class="slide level-1" id="id20">
 
 <h1>Questions?</h1>
 
@@ -2055,7 +2069,7 @@ list of results.</p>
 
 
 </article>
-<article class="slide level-2" id="id22">
+<article class="slide level-2" id="id21">
 
 <h2>References</h2>
 
@@ -2076,6 +2090,18 @@ list of results.</p>
 
 <h2>HISTORICAL</h2>
 
+
+
+
+
+</article>
+<article class="slide level-2" id="id22">
+
+<h2>.</h2>
+
+<div class="figure">
+<img alt="_images/large_BaxterCutawayFF3.jpg" class="fill" src="_images/large_BaxterCutawayFF3.jpg" />
+</div>
 
 
 
