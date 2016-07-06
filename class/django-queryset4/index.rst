@@ -844,6 +844,8 @@ Elie Ceberio @eceberiotalener
 Marcel Chastain
 @MarcelChastain @LADjango
 
+Brian Wherry @bwherry
+
 Goz Inyama @notwitter
 
 
