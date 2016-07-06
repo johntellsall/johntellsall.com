@@ -1,8 +1,5 @@
-.. Django QuerySets and Functional Programming #2 slides file, created by
-   hieroglyph-quickstart on Sat Jul 19 13:59:19 2014.
 
-
-Functional Programming and Django QuerySets 7/2016
+Functional Programming and Django QuerySets
 ==================================================
 
 LA Django Meetup
@@ -11,81 +8,9 @@ July 5th, 2016
 
 ``tiny.cc/jtaqs4``
 
-INBOX
-=====
-
-
-
-- add TBT
-
-- queryset.exists() https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists
-
-
-- "What is Functional Programming"
-
-Functions are first class (objects). That is, everything you can do
-with “data” can be done with functions themselves (such as
-passing a function to another function).
-• There is a focus on list processing (for example, it is the source
-of the name Lisp). Lists are often used with recursion on sublists
-as a substitute for loops.
-• “Pure” functional languages eschew side effects. This excludes
-the almost ubiquitous pattern in imperative languages of assign‐
-ing first one, then another value to the same variable to track
-the program state.
-• Functional programming either discourages or outright disal‐
-lows statements, and instead works with the evaluation of
-expressions (in other words, functions plus arguments). In the
-pure case, one program is one expression (plus supporting defi‐
-nitions).
-• Functional programming worries about what is to be computed
-rather than how it is to be computed.
-• Much functional programming utilizes “higher order” functions
-(in other words, functions that operate on functions that oper‐
-ate on functions).
-
-
-- link twitter to website
-
-Why are Iterators Efficient
-===========================
-
-- "tools that use iterators are more memory efficient (and often faster) than their list based counterparts."
-
-`itertools`_
-
-.. _itertools: https://docs.python.org/3.0/library/itertools.html
-
-
-Functional Programming & Python resources
-=========================================
-
-- short functional library and related FP talk - https://github.com/kachayev/fn.py http://kachayev.github.io/talks/uapycon2012/index.html#/27
-
-- tons of "awesome" links, including to FP in JS https://github.com/xgrommx/awesome-functional-programming
-
-- practical examples, more details https://newcircle.com/bookshelf/python_fundamentals_tutorial/functional_programming
-
-- good intro https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming
-
-- Toolz libraries https://github.com/pytoolz/toolz
-
-- Packt book (free!) https://www.packtpub.com/application-development/functional-python-programming
-
-- O'Reilly book (free!) http://www.oreilly.com/programming/free/functional-programming-python.csp
 
 @johntellsall
 =============
-
-talks:
-    **Practical Python Testing**
-
-upcoming:
-    **Container Deep Dive**
-
-later:
-    Networking
-    QA-DevOps
 
 .. note::
 
@@ -97,7 +22,15 @@ later:
 
 
 
-Contents
+yes we're hiring
+================
+
+.. figure:: /_static/theblacktux-site.png
+   :class: fill
+
+
+
+Ideas
 ========
 
 iterator/generator = "stream"
@@ -114,10 +47,11 @@ QuerySet is a stream
 
 
 .
-==============================
+------------------
 
+.. figure::  _static/there will be code success kid.jpg
+   :class: fill
 
-.. image:: _static/there will be code success kid.jpg
 
 
 Iterators
@@ -128,8 +62,7 @@ Iterator review
 -----------------
 
 
-An iterator is a *stream* of data |---| sort of a restricted, very
-efficient list.
+An iterator is a *stream* of data |---| sort of a restricted, compact list or **cursor**.
 
 >>> list([1,2])
 [1, 2]
@@ -174,6 +107,7 @@ iterate across a *stream* of strings
    Ex: Database iterator
 
 
+
 Lists/Iterators are very similar
 ----------------------------------------------------------------
 
@@ -190,6 +124,18 @@ Lists/Iterators are very similar
 
    for name in glob.iglob('*.txt'):
        print name
+
+
+Why use Iterators over Lists?
+=============================
+
+- "tools that use iterators are more memory efficient (and often faster) than their list based counterparts."
+
+
+.. note:
+  `itertools`_
+
+  .. _itertools: https://docs.python.org/3.0/library/itertools.html
 
 
 What can you do with a iterator?
@@ -256,6 +202,8 @@ has items    if x     no
 easy debug   yes      no
 ===========  =======  ==========
 
+*Note:* Python 2/3 are quite different
+
 .. note::
 
    List are "eager" -- know everything about them all the time
@@ -280,7 +228,9 @@ very important:
 
   and *itertools*, and *fileinput*
 
-INBOX: tradeoff readability vs conciseness
+.. note::
+
+  tradeoff readability vs conciseness
 
 
 ☃
@@ -291,10 +241,11 @@ Functional Programming
 ==============================
 
 
-what?
+que?
 -----
 
-.. image:: _static/jimmy-2.jpg
+.. figure:: _static/jimmy-2.jpg
+  :class: fill
 
 
 
@@ -304,11 +255,27 @@ Practical Advantages to FP
    * Modularity
    * `Composability!`_
    * Ease of debugging and testing
-   * Caching
    * Parallelization
    * Buzzwordy!
 
 .. _`Composability!`: http://en.wikipedia.org/wiki/Composability
+
+What is Functional Programming
+------------------------------
+
+- functions are first class (objects)
+- focus on list processing
+- no side effects
+- expressions over statements
+- “higher order” functions
+*functions that operate on functions*
+
+>>> def is_odd(num):
+    return num % 2
+
+>>> filter(is_odd, [1, 2, 3])
+[1, 3]
+
 
 
 programming paradigms
@@ -563,15 +530,45 @@ TypeError: 'listiterator' object has no attribute '__getitem__'
 <itertools.islice object at 0x7f429d7de9f0>
 >>> list(_)
 [1, 2]
+
 .. note::
 
    https://docs.python.org/dev/howto/functional.html
 
 
+Toolz example
+-------------
+
+>>> def stem(word):
+...     """ Stem word to primitive form """
+...     return word.lower().rstrip(",.!:;'-\"").lstrip("'\"")
+
+>>> from toolz import compose, frequencies, partial
+>>> from toolz.curried import map
+>>> wordcount = compose(frequencies, map(stem), str.split)
+
+>>> sentence = "This cat jumped over this other cat!"
+>>> wordcount(sentence)
+{'this': 2, 'cat': 2, 'jumped': 1, 'over': 1, 'other': 1}
 
 
 
+Functional Programming & Python resources
+-----------------------------------------
 
+- short functional library and related FP talk - https://github.com/kachayev/fn.py http://kachayev.github.io/talks/uapycon2012/index.html#/27
+
+- tons of "awesome" links, including to FP in JS https://github.com/xgrommx/awesome-functional-programming
+
+- practical examples, more details https://newcircle.com/bookshelf/python_fundamentals_tutorial/functional_programming
+
+- good intro https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming
+
+- Toolz libraries https://github.com/pytoolz/toolz
+
+- Packt book (free!) https://www.packtpub.com/application-development/functional-python-programming
+
+- O'Reilly book (free!) http://www.oreilly.com/programming/free/functional-programming-python.csp
 
 
 ☃
@@ -602,7 +599,7 @@ QuerySet review
 <Meeting: Meeting object>
 
 >>> vars( Meeting.objects.get(id=12) )
-{'meet_date': datetime.datetime(2014, 5, 20, 7, 0, tzinfo=<UTC>),
+{'meet_date': datetime.datetime(2016, 7, 5, 7, 0, tzinfo=<UTC>),
 '_state': <django.db.models.base.ModelState object at 0x2bd1050>,
 'id': 3, 'name': u'LA Django Monthly Meeting'}
 
@@ -742,6 +739,7 @@ Can mix/match QS/iterators...
 >>> from itertools import *
 >>> islice( Meeting.objects.all(), 1)
 <itertools.islice object at 0x2bb9ec0>
+
 >>> list(islice( Meeting.objects.all(), 1))
 [<Meeting: Meeting object>]
 
@@ -752,9 +750,14 @@ Can mix/match QS/iterators...
 
 *How can you tell if a QuerySet is empty or not?*
 
+Answer
+------
+
 Use x.exists(), not bool(x) -- `more efficient <https://docs.djangoproject.com/en/dev/ref/models/querysets/>`_
 
 .. note::
+
+  https://docs.djangoproject.com/en/1.9/ref/models/querysets/#exists
 
    Both iterators and QuerySets are *lazy*
 
@@ -769,7 +772,7 @@ Use x.exists(), not bool(x) -- `more efficient <https://docs.djangoproject.com/e
    list of results.
 
 
-str(queryset.query) = SQL
+Proof: str(queryset.query) = SQL
 -------------------------
 
 .. code-block:: python
@@ -799,15 +802,17 @@ Django SQL history
 
 .. code-block:: python
 
-  >>> from django.db import connection
-  connection.queries[-1]
+  >>> p=SourceLine.objects.filter(project='redis').exists()
+  123
+
+  >>> from django.db import connection ; connection.queries[-1]
 
   u'QUERY = u\'SELECT (1) AS "a" FROM "app_sourceline"
   WHERE "app_sourceline"."project" = %s LIMIT 1\'
   - PARAMS = (u\'redis',)'
 
 
-IDEAS
+Ideas
 =====
 
 iterator/generator = "stream"
@@ -831,6 +836,16 @@ Questions?
    john@johntellsall.com
 
 
+Thanks
+======
+
+Elie Ceberio @eceberiotalener
+
+Marcel Chastain
+@MarcelChastain @LADjango
+
+Goz Inyama @notwitter
+
 
 References
 ---------------
@@ -852,749 +867,4 @@ Using Django querysets effectively by Dave Hall
 (best blog title ever)
 
 http://blog.etianen.com/blog/2013/06/08/django-querysets/
-
-.. Django QuerySets and Functional Programming slides file, created by
-   hieroglyph-quickstart on Mon May 12 14:08:05 2014.
-
-Django QuerySets and Functional Programming
-===================================================
-
-john@johntellsall.com
-
-v2
-
-THEME
-================
-
-By using techniques from Functional Programming, we can
-make modular, reliable and testable code, faster.
-
-ME
-====
-
-   - Senior dev/server guy; Devops
-   - 15 years experience with Python
-   - first PyCon I went to had 40 people!
-
-.. note::
-      Functional Programming <funcprog>
-      FP in Python <fp_python>
-      querysets
-      Patterns and Consequences <pat_conseq>
-      summary
-
-.. note::
-   stream of objects with state
-   lazy vs eager
-   Heisenberg
-   ****************************************************************
-
-
-.. note::   figure:: /_static/3-hoodlums-nancy.png
-  slide:: Three Programming Paradigms
-
-
-Why Functional Programming
-================================================================
-
-Practical Advantages to Functional Programming
----------------------------------------------------------------
-
-   * Modularity
-   * `Composability!`_
-   * Ease of debugging and testing
-   * Caching
-   * Parallelization
-
-.. rst-class:: build
-
-   - Buzzwordy!
-
-   - Chicks dig it!
-
-.. _`Composability!`: http://en.wikipedia.org/wiki/Composability
-
-
-
-
-
-.. note:: add "happy girl with beads" image
-
-
-.. note::
-
-   Data streams from function to function -- no side effects.
-
-   read Andy Kuchling's `Functional Programming HOWTO`_
-
-.. _`Functional Programming HOWTO`: https://docs.python.org/2.7/howto/functional.html
-
-.. note::
-   Functional programming decomposes a problem into a set of
-   functions. Ideally, functions only take inputs and produce outputs,
-   and don’t have any internal state that affects the output produced
-   for a given input.
-
-   Eliminating side effects, i.e. changes in state that do not depend
-   on the function inputs, can make it much easier to understand and
-   predict the behavior of a program
-
-   http://en.wikipedia.org/wiki/Functional_programming
-
-
-Iterators
----------------
-
-An iterator is a *stream* of data -- sort of a restricted, very
-efficient list
-
->>> list([1,2])
-[1, 2]
-
->>> iter([1,2])
-<listiterator object at 0x7f429d83c750>
-
-.. note::
-
-   iterators have a item and next and that's it
-   - Preferred, because they take almost no space
-
-
-File iterator
----------------
-
-iterate across a *stream* of strings
-
-.. code-block:: python
-
-    f = open('beer.txt')
-    for line in f:
-        print line
-
-.. note::
-
-   you already use iterators
-
-List very similar to Iterator
----------------------------------------------------------------
-
-.. code-block:: python
-
-   for line in open('ing.txt'):
-       print line
-
-   for num in iter([2,4,6,8]):
-       print num
-
-   for num in [2,4,6,8]:
-       print num
-
-   for name in glob.glob('*.txt'):
-       print name
-
-Work with a *stream* of objects
-
-
-
-FP: upcase
----------------------------------------------------------------
-
-functional: functions operate on streams of objects
-
-.. code-block:: python
-
-    def upcase(lines):
-        for line in lines:
-            yield line.upper()
-
-    def writelines(outpath, lines):
-        with open(outpath, 'w') as outf:
-            for line in lines:
-                outf.write( line )
-
-    writelines( '/dev/stdout',
-                upcase( open('ing.txt') )
-                )
-
-FP: upcase 2
----------------------------------------------------------------
-
-.. code-block:: python
-
-    def upcase(lines):
-        # IN: stream of lines; OUT: stream of lines
-        for line in lines:
-            yield line.upper()
-
-    def writelines(outpath, lines):
-        # IN: stream of lines; OUT: nothing
-        with open(outpath, 'w') as outf:
-            for line in lines:
-                outf.write( line )
-
-    # open() is OUT: stream of lines
-    writelines( '/dev/stdout',
-                upcase( open('ing.txt') )
-                )
-
-
-
-.. note::
-   Generally you'll mix these styles. IE: function that returns
-   a stream of objects.
-   ****************************************************************
-
-
-Functional Programming in Python
-================================================================
-
-Old Primary Functions
----------------------------------------------------------------
-
-.. py:function:: filter(function, iterable)
-
-   Construct a **list** from those elements of iterable for which function returns true.
-
-.. py:function:: map(function, iterable, ...)
-
-   Apply function to every item of iterable and return a **list** of the results.
-
->>> map(None, (1,2))
-[1, 2]
-
-.. note:: If additional iterable arguments are passed, function must
-   take that many arguments and is applied to the items from
-   all iterables in parallel. If one iterable is shorter than
-   another it is assumed to be extended with None items. If
-   function is None, the identity function is assumed; if there
-   are multiple arguments, map() returns a list consisting of
-   tuples containing the corresponding items from all iterables
-   (a kind of transpose operation). The iterable arguments may
-   be a sequence or any iterable object; the result is always a
-   list.
-
-.. note:: .. py:function:: reduce(function, iterable[, initializer])
-
-   Apply function of two arguments cumulatively to the items of iterable, from left to right, so as to reduce the iterable to a single value.
-
-
-.. note:: .. py:function:: enumerate(sequence[, start=0])
-
-   Return an iterator that yields tuples of an index and an item of the
-   *sequence*. (And so on.)
-
-
-FP: important dataset
----------------------------------------------------------------
-
->>> print open('ing.txt')
-# Old Fashioned
-1.5 oz whiskey
-1 tsp water
-0.5 tsp sugar
-2 dash bitters
-
-Functional Prog for Better Booze!
----------------------------------------------------------------
-
-.. figure:: /_static/Oldfashioned-cocktail.png
-
-   CC PD http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png
-
-FP: filter
----------------
-
->>> def isdata(line):
-    return not line.startswith('#')
-
->>> print ''.join( filter(isdata, open('ing.txt')) )
-1.5 oz whiskey
-1 tsp water
-0.5 tsp sugar
-2 dash bitters
-
-.. py:function:: filter(function, iterable)
-
-   Construct a **list** from those elements of iterable for which function returns true.
-
-
-FP: map, filter
----------------
-
->>> def amount(line):
-    return str(line.split()[:2])
->>> def isdata(line):
-    return not line.startswith('#')
-
->>> print '\n'.join( map(amount, filter(isdata, open('ing.txt'))) )
-['1.5', 'oz']
-['1', 'tsp']
-['0.5', 'tsp']
-['2', 'dash']
-
-.. py:function:: map(function, iterable, ...)
-
-   Apply function to every item of iterable and return a **list** of the results.
-
-
-Preferred: generator expressions
----------------------------------------------------------------
-
-**filter replacement**
-
->>> print (line for line in open('ing.txt') if 'whiskey' in line)
-
-**compare with**
-
-*filter(function, iterable)*
-
-.. note::
-   high performance, memory efficient generalization of list comprehensions [1] and generators [2].
-   http://legacy.python.org/dev/peps/pep-0289/
-
-
-Preferred: filter replacement
----------------------------------------------------------------
-
->>> print (line for line in open('ing.txt') if 'whiskey' in line)
-<generator object <genexpr> at 0x7f429d7c8eb0>
-
-convert to list so we can see
----------------------------------------------------------------
-
->>> print list((line for line in open('ing.txt') if 'whiskey' in line)**)
-['1.5 oz whiskey\n']
-
-original FP #1
----------------------------------------------------------------
->>> def isdata(line):
-    return not line.startswith('#')
-
->>> def amount(line):
-    return str(line.split()[:2])
-
->>> print '\n'.join( map(amount, filter(isdata, open('ing.txt'))) )
-['1.5', 'oz']
-['1', 'tsp']
-['0.5', 'tsp']
-['2', 'dash']
-
-
-updated FP #1
----------------------------------------------------------------
->>> def isdata(line):
-    return not line.startswith('#')
-
->>> def amount(line):
-    return str(line.split()[:2])
-
->>> print '\n'.join( (
-    amount(hasdata)
-    for hasdata in (
-        line for line in open('ing.txt')
-            if isdata(line)
-    )
-) )
-['1.5', 'oz']
-['1', 'tsp']
-['0.5', 'tsp']
-['2', 'dash']
-
-
-
-
-Iterator Functions
----------------------------------------------------------------
-
-.. py:function:: xrange(stop) -> counter (xrange object)
-
-.. py:function:: xrange(start, stop[, step]) -> counter
-
-.. py:function:: chain(*iterables) -> each item in order
-
-.. py:function:: ifilter(f, iter) -> substream of iter. Like filter, for iterators.
-
-.. py:function:: islice(iter, num) -> counted items of iter
-
-
-.. note::
-   .. py:function:: imap(func, p, q) -> f(p), f(q), ...
-
-                    .. py:function:: izip()	p, q, ...	(p[0], q[0]), (p[1], q[1]), ...	izip('ABCD', 'xy') --> Ax By
-                                     .. py:function:: izip_longest()	p, q, ...	(p[0], q[0]), (p[1], q[1]), ...	izip_longest('ABCD', 'xy', fillvalue='-') --> Ax By C- D-
-
-
-
-iter: chain
----------------------------------------------------------------
-
-**chain(streams)** gives elements of each stream in order
-Equivalent to **+** for lists.
-
->>> [1,2]+[3]
-[1, 2, 3]
-
->>> from itertools import *
->>> chain(iter([1,2]), iter([3]))
-<itertools.chain object at 0x7f429d848510>
->>> list( chain(iter([1,2]), iter([3])) )
-[1, 2, 3]
-
-
-.. note::
-
-   stream of objects with state
-   lazy vs eager
-   ****************************************************************
-
-iter: islice
----------------------------------------------------------------
-
-**islice(stream, num)** -- get counted elements of stream
-Equivalent to slice operator for lists.
-
->>> list([1,2,3])[:1]
-[2]
-
->>> from itertools import *
->>> iter([1,2,3])[:1]
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: 'listiterator' object has no attribute '__getitem__'
->>> islice(iter([1,2,3]), 2)
-<itertools.islice object at 0x7f429d7de9f0>
->>> list(islice(iter([1,2,3]), 2))
-[1, 2]
-
-
-Django QuerySets
-================================================================
-
-QuerySets are Django's way of getting and updating data
-
-.. note:: models.py
-
-          >>> from django.db import models
-          class Meeting(models.Model):
-          name = models.CharField(max_length=100)
-          meet_date = models.DateTimeField()
-
-QuerySet review
----------------------------------------------------------------
->>> m = Meeting.objects.get(id=12)
-<Meeting: Meeting object>
-
->>> Meeting.objects.get(id=12).__dict__
-{'meet_date': datetime.datetime(2014, 5, 20, 7, 0, tzinfo=<UTC>),
-'_state': <django.db.models.base.ModelState object at 0x2bd1050>,
-'id': 3, 'name': u'LA Django Monthly Meeting'}
-
->>> x = Meeting.objects.filter(name__icontains='go')
->>> for a in x: print a.name
-LA Django Monthly Meeting
-
-
-QuerySet and iterators
----------------------------------------------------------------
-
->>> x=Meeting.objects.filter(name='java')
->>> x
-[]
->>> type(x)
-<class 'django.db.models.query.QuerySet'>
-
-Functional QuerySets
-================================================================
-
-.. rst-class:: build
-
-   How can you tell if a list is empty or not?
-
-   . an iterator?
-
-   . a QuerySet?
-
-Empty List
----------------------------------------------------------------
-*How can you tell if a list is empty or not?*
-
->>> bool([])
-False
->>> bool(['beer'])
-True
-
-.. note::
-   Lists are *eager* -- always know everything
-
-Empty Iterator
----------------------------------------------------------------
-*How can you tell if an iterator is empty or not?*
-
->>> x=iter([1,2])
->>> bool(x)
-True
->>> x=iter([])
->>> bool(x)
-True
-
-.. note::
-   Iterators are *lazy* -- don't know what they contain!
-
-How can you tell if a QuerySet is empty or not?
-================================================================
-
-
-QuerySet like Iterator
----------------------------------------------------------------
-
-filter with QuerySet:
-
->>> from meetup.models import *
->>> Meeting.objects.filter(id=1)
-[<Meeting: Meeting object>]
-
-filter with list:
-
->>> filter(lambda d: d['id']==1, [{'id':1}, {'id':2}])
-[{'id': 1}]
-
-filter with iterator:
-
->>> list(ifilter(lambda d: d['id']==1, iter([{'id':1}, {'id':2}])))
-[{'id': 1}]
-
-Because QuerySet *is* an iterator
----------------------------------------------------------------
-
->>> from meetup.models import *
->>> Meeting.objects.filter(id=1)
-[<Meeting: Meeting object>]
-
->>> type(Meeting.objects.filter(id=1))
-<class 'django.db.models.query.QuerySet'>
-
-
-.. note::
-
-   similar to iter: dynamic/lazy; list(qs)
-
-   diff: stream of objs, same class
-   qs[:3] <=> islice(it, 3)
-   bool(iter) vs qs.empty()
-
-   >>> a=iter([])
-   >>> bool(a)
-   True
-
-   >>> a=[] ; bool(a)
-   False
-
-   qs.count()
-
-   laziness is explicit: prefetch_related
-
-   qs.values(); qs.values_list(); qs.values-list(flat=True)
-
-Can mix and match
----------------------------------------------------------------
-
->>> Meeting.objects.all()[0].id
-1
-
->>> islice( Meeting.objects.all(), 1).next().id
-1
-
->>> from itertools import *
->>> islice( Meeting.objects.all(), 1)
-<itertools.islice object at 0x2bb9ec0>
->>> list(islice( Meeting.objects.all(), 1))
-[<Meeting: Meeting object>]
-
-But not always
----------------------------------------------------------------
-
-
-*How can you tell if a QuerySet is empty or not?*
-
-Use x.exists(), not bool(x) -- more efficient
-
-.. note::
-
-   Both iterators and QuerySets are *lazy*
-
-   In functional programming, we have functions which operate on infinite-length streams.
-
-   With QuerySets, it's assumed we have many thousands of results, but we don't want to fetch all of them at once before returning to caller.
-
-   Database (and Django) does a query, then gives us a few items.  Once that batch is done, QuerySet will ask the database for another batch of results.
-
-   This means that for both iterators and query sets, we can do a
-   little work, then process a batch, without waiting for the entire
-   list of results.
-
-
-Questions?
-================
-
-.. figure:: /_static/john-bold.jpg
-   :class: fill
-
-   john@johntellsall.com
-
-
-References
----------------
-
-
-Using Django querysets effectively by Dave Hall
-
-http://blog.etianen.com/blog/2013/06/08/django-querysets/
-
-
-
-
-
-HISTORICAL
-----------
-
-
-.
---------------
-
-.. figure:: _static/large_BaxterCutawayFF3.jpg
-   :class: fill
-
-
-..
-   What can you do with a iterator?
-   ----------------------------------------------------------------
-
-   >>> f = open('ing.txt')
-   >>> f.next()
-   '# Old Fashioned\n'
-   >>> f.next()
-   '1.5 oz whiskey\n'
-
-
-   What happens at the end?
-   ----------------------------------------------------------------
-
-   >>> f = open('/dev/null')
-   >>> f.next()
-   Traceback (most recent call last):
-     File "<stdin>", line 1, in <module>
-   StopIteration
-
-   >>> iter([]).next()
-   Traceback (most recent call last):
-     File "<stdin>", line 1, in <module>
-   StopIteration
-
-
-Database iterator
--------------------
-
-iterate with a *stream* of rows
-
-.. code-block:: python
-
-    import os, sqlite3
-    conn = sqlite3.connect('recipe')
-    cursor = conn.cursor()
-
-    cursor.execute("""select name from ingredient""")
-
-    for row in cursor.fetchall():
-        print(row)
-
-    cursor.close()
-    conn.close()
-
-
-FP: Lisp style with generator expressions
----------------------------------------------------------------
-
-XX
-
-*print list of ingredients in a recipe*
-
-.. code-block:: python
-
-    print '\n'.join(
-        map(ing_name,
-            filter(None,
-                   map(parse_ing,
-                       open('oldfashioned.ini')
-                   )
-            )
-        ))
-
-FP: Lisp style with map-filter
----------------------------------------------------------------
-
-*print list of ingredients in a recipe*
-
-XX
-
-.. code-block:: python
-
-   print '\n'.join(
-       map(ing_name,
-       filter(None,
-            map(parse_ing,
-                open('ing.txt')
-            )
-        )
-   )
-
-imap-ifilter
-------------
-
->>> import itertools
-
->>> itertools.imap(square, [1,2])
-<itertools.imap at 0x7fc004e6bb50>
-
->>> list(itertools.imap(square, [1,2]))
-[1, 4]
-
-
-Ex2: print list of ingredients in a recipe
-------------------------------------------
-
-**oldfashioned.ini**::
-
-     # very tasty
-     [Old Fashioned]
-     1:1.5 oz whiskey
-     2:1 tsp water
-     3:0.5 tsp sugar
-     4:2 dash bitters
-
-::
-
-   whiskey
-   water
-   sugar
-   bitters
-
-Ex2: procedural style
----------------------
-
-*print list of ingredients in a recipe*
-
-.. code-block:: python
-
-    ingredients = []
-    for line in open('oldfashioned.ini'):
-        ing = parse_ing(line)
-        if ing:
-            ingredients.append(ing.name)
-    print '\n'.join(ingredients)
-
-.. note::
-    def parse_ing(line):
-        return re.match(r'[0-9].+\s(?P<name>\w+)', line)
-
-- (Esther) python3: xrange/range ; map-filter (imap-ifilter) / map-filter
 
