@@ -4,6 +4,7 @@
 checkusage.py -- show biggest processes on system
 '''
 
+import argparse
 import operator
 import subprocess
 
@@ -24,7 +25,7 @@ def test_parse():
         {'command': 'chrome', 'usage': 15240},
         {'command': 'Web Content', 'usage': 12983}]
 
-def main():
+def run(args):
     ps_bytes = subprocess.check_output(
         'ps -e -o pcpu,rss,comm --no-headers --sort=-pcpu | head',
         shell=True)
@@ -33,6 +34,10 @@ def main():
     ps_lines = sorted(ps_lines, key=operator.itemgetter('usage'),
         reverse=True)
     print(ps_lines)
+
+def main():
+    parser = argparse.ArgumentParser()
+    run(parser.parse_args())
 
 if __name__=='__main__':
     main()
