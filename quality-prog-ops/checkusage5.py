@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+'''
+checkusage.py -- show biggest processes on system
+'''
+
 import operator
 import subprocess
 
