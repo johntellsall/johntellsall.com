@@ -8,6 +8,7 @@ import argparse
 import operator
 import subprocess
 
+
 def parse(ps):
     lines = ps.split('\n')
     for line in lines:
@@ -17,6 +18,7 @@ def parse(ps):
         usage = int(float(pcpu) * int(rss) / 100.)
         yield {'usage': usage, 'command': command}
 
+
 def test_parse():
     ps_text = ''' 7.0 217720 chrome
  1.8 721324 Web Content
@@ -25,6 +27,7 @@ def test_parse():
         {'command': 'chrome', 'usage': 15240},
         {'command': 'Web Content', 'usage': 12983}]
 
+
 def run(args):
     ps_bytes = subprocess.check_output(
         'ps -e -o pcpu,rss,comm --no-headers --sort=-pcpu | head',
@@ -32,12 +35,13 @@ def run(args):
     ps_lines = list(parse(ps_bytes.decode()))
 
     ps_lines = sorted(ps_lines, key=operator.itemgetter('usage'),
-        reverse=True)
+        reverse=True)  # noqa
     print(ps_lines)
+
 
 def main():
     parser = argparse.ArgumentParser()
     run(parser.parse_args())
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
