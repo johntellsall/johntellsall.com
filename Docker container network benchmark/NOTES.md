@@ -10,12 +10,22 @@ docker run --rm --net=vagrant_back russmckendrick/ab ab -k -n 100 -c 10 http://$
 
 
 
-# Nginx
+## install in host
 
-FROM nginx
+`sudo apt install -y apache2-utils`
 
-# File Author / Maintainer
-MAINTAINER Anand Mani Sankar
 
-# Copy custom configuration file from the current directory
-COPY nginx.conf /etc/nginx/nginx.conf
+
+# TESTING
+
+## guest-guest
+## host bench, guest web
+
+`ab -t 30 -c 10 localhost:8888/`
+
+
+sudo apt install -y lynx
+
+# host-bench to host-web
+
+ab -t 30 -c 10 localhost/ 

@@ -3,9 +3,11 @@ version: '2'
 services:
   bench:
     image: russmckendrick/ab
-    command: ab -k -n 100 -c 10 web/
+    command: ab -t 30 -c 10 web/
     links:
       - web
 
   web:
     image: nginx
+    logging:
+      driver: none
