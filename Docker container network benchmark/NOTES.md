@@ -29,3 +29,14 @@ sudo apt install -y lynx
 # host-bench to host-web
 
 ab -t 30 -c 10 localhost/ 
+
+
+sudo service nginx stop
+docker run --rm -d --network=host  nginx
+
+
+
+# B3: host-web to guest-bench
+sudo service nginx start
+docker run --rm --network=host russmckendrick/ab ab -t 30 -c 10 localhost/
+
