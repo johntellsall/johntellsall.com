@@ -18,3 +18,6 @@ Cars.com, Santa Monica -- exact address TBD -- near the library
 
 * laptop with Python (installed) or [Cloud9](http://cloud9.io) account -- [Getting Started](https://www.youtube.com/watch?v=olUjFDKRDYo)
 
+* Python 3 is preferred, but 2.7 is fine
+
+* local install: consider the "Python for humans" distribution [Anaconda](https://www.continuum.io/downloads).
