@@ -16,5 +16,5 @@ Cars.com, Santa Monica -- exact address TBD -- near the library
 
 ## Prerequisites:
 
-* laptop with Python (installed) or Cloud9.io account
+* laptop with Python (installed) or [Cloud9](cloud9.io) account -- [Getting Started](https://www.youtube.com/watch?v=olUjFDKRDYo)
 
