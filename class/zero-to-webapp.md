@@ -1,6 +1,6 @@
 # Zero to Webapp in Python
 
-Web development is amazingly complicated. Can we get away with not learning that much?  John will do an interactive workshop on how to start with nothing and wind up with working web app!
+Web development is amazingly complicated. Can we get away with not learning that much?  John will do an interactive workshop on how to start with nothing and wind up with a working web app!
 
 Technologies:
 * Python
