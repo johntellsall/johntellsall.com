@@ -13,12 +13,17 @@ Students will learn how to write a tiny webapp without their brains exploding. N
 
 The goal is to deliver a simple working webapp, then refine it with small changes, each time understanding _why_. Students  become much more comfortable and confident with Python, the console, and web technologies in general.
 
-## Date, Location, Fee, Amenities
+## Date, Location, Fee, Amenities, Parking
 
 Saturday, July 1, 10am - 1pm
 Cars.com, Santa Monica -- 701 Santa Monica Blvd Suite 310 -- near the library
 
-This is a free workshop. There will be munchies (brain food) and hopefully coffee.
+This is a free workshop. There will be munchies (brain food), but NO COFFEE. Please bring your own.
+
+Three parking options:
+- park on the street
+- park in the nearby Santa Monica Library lot
+- park in the Cars.com lot -- Michael will have to let you in
 
 ## Prerequisites:
 
