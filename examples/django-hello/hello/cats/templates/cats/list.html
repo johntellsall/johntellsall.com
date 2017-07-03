@@ -1,0 +1,11 @@
+<H1>List of Internet Cats</H1>
+
+{% if cats %}
+    <ul>
+    {% for cat in cats %}
+        <li>{{ cat.name }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No cats are available. Is the internet on?</p>
+{% endif %}

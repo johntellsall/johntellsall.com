@@ -6,5 +6,5 @@ from .models import Cat
 
 def index(request):
     cats = Cat.objects.all()
-    output = ', '.join([cat.name for cat in cats])
-    return HttpResponse(output)
+    context = {'cats': cats}
+    return render(request, 'cats/list.html', context)
