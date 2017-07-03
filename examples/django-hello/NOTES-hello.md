@@ -1,3 +1,5 @@
+https://docs.djangoproject.com/en/1.11/intro/tutorial01/
+
 python3 -m venv env
 . env/bin/activate
 pip install --upgrade pip
@@ -12,3 +14,8 @@ python manage.py runserver
 curl -i localhost:8000
 
 python manage.py startapp cats
+
+# XX more here
+
+
+clear ; curl -i localhost:8000/cats/
