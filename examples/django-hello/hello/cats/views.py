@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from .models import Cat
+
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    cats = Cat.objects.all()
+    output = ', '.join([cat.name for cat in cats])
+    return HttpResponse(output)
