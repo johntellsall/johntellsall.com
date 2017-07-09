@@ -49,3 +49,14 @@ python manage.py shell_plus
 >>> Cat.objects.count()
 1
 
+
+
+
+>>> u.username='johnm'
+>>> u.set_
+u.set_password(           u.set_unusable_password(  
+>>> u.set_
+u.set_password(           u.set_unusable_password(  
+>>> u.set_password('beer')
+>>> u.save()
+

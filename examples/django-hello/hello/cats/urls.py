@@ -16,12 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from . import views
+from . import views as cats_views
 
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^hello$', views.hidden),
+    url(r'^$', cats_views.index, name='index'),
+    url(r'^hello$', cats_views.hidden),
 
 # login-logout pages
 # https://docs.djangoproject.com/en/1.8/topics/auth/default/#module-django.contrib.auth.views
