@@ -58,5 +58,9 @@ u.set_password(           u.set_unusable_password(
 >>> u.set_
 u.set_password(           u.set_unusable_password(  
 >>> u.set_password('beer')
->>> u.save()
+>>> u.save
 
+
+# Login-Registration
+
+https://simpleisbetterthancomplex.com/tutorial/2016/06/27/how-to-use-djangos-built-in-login-system.html
