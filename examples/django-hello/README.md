@@ -1,2 +1,2 @@
-![alt text](file://django-hello.png "Logo Title Text 1")
+![alt text](file:///django-hello.png "Logo Title Text 1")
 
