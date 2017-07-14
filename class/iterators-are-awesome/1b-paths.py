@@ -17,19 +17,23 @@ def get_paths(topdir):
             paths.append(os.path.join(dirpath, name))
     return paths
 
-cat_paths = get_paths('cats-master')
-cat_images = filter(is_image, cat_paths)
-for cat_image in cat_images:
-    make_thumbnail(cat_images)
+
+def main():
+    cat_paths = get_paths('cats-master')
+    cat_images = filter(is_image, cat_paths)
+    for cat_image in cat_images:
+        make_thumbnail(cat_images)
+
+if __name__ == '__main__':
+    main()
 
 
 def test_get_paths():
     paths = ['cats-master/README.md', 'cats-master/index.html',
-        'cats-master/cat_photos/kublai32.jpg']
+             'cats-master/cat_photos/kublai32.jpg']
     assert list(get_paths('cats-master'))[:3] == paths
 
 
 def test_is_image():
     assert is_image('cat.jpg')
     assert not is_image('oldfashioned.ini')
-
