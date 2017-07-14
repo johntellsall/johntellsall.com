@@ -12,10 +12,17 @@ def main():
     # if we're continuing, then skip up to the most recent processed image
     try:
         last_started = cat_state.fetch()
+        # consume images until XX
+        print('STATE: starting from {}'.format(last_started))
+        for cat_image in cat_images:
+            if cat_image == last_started:
+                break
+        sys.exit('{}: state file corrupt'.format(last_started))
     except FileNotFoundError:
-        pass
+        print('STATE: starting anew')
+
     for cat_image in cat_images:
-        make_thumbnail(cat_images)
+        make_thumbnail(cat_image)
 
 if __name__ == '__main__':
     main()
