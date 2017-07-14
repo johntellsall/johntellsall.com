@@ -29,6 +29,7 @@ if __name__ == '__main__':
 
 
 def test_get_paths():
+    # warning: depends on data directory
     paths = ['cats-master/README.md', 'cats-master/index.html',
              'cats-master/cat_photos/kublai32.jpg']
     assert list(get_paths('cats-master'))[:3] == paths

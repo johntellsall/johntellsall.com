@@ -1,5 +1,6 @@
 import glob
 
+
 def make_thumbnail(path):
     print(path)
 
