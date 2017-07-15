@@ -1,0 +1,711 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0096)file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Iterators are Awesome 3 documentation</title>
+    <link rel="stylesheet" href="./Iterators are Awesome onepage_files/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="./Iterators are Awesome onepage_files/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="./Iterators are Awesome onepage_files/jquery.js"></script>
+    <script type="text/javascript" src="./Iterators are Awesome onepage_files/underscore.js"></script>
+    <script type="text/javascript" src="./Iterators are Awesome onepage_files/doctools.js"></script>
+    <link rel="index" title="Index" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/genindex.html">
+    <link rel="search" title="Search" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/search.html">
+   
+  <link rel="stylesheet" href="./Iterators are Awesome onepage_files/custom.css" type="text/css">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="iterators-are-awesome">
+<h1>Iterators are Awesome<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#iterators-are-awesome" title="Permalink to this headline">¶</a></h1>
+<p>John Tells All Hack Day</p>
+<p>July 15, 2017</p>
+</div>
+<div class="section" id="me">
+<h1>ME<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#me" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ul class="simple">
+<li>Senior dev/server guy; DevOps</li>
+<li>20 years experience with Python</li>
+<li>@johntellsall.com</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>first PyCon I went to had 40 people!</li>
+</ul>
+</div>
+</div>
+<div class="section" id="contents">
+<h1>Contents<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#contents" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>iterator basics</li>
+<li>comparison with lists</li>
+<li>important differences</li>
+<li>useful functions in <cite>itertools</cite></li>
+</ul>
+<div class="section" id="iterators">
+<h2>Iterators<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#iterators" title="Permalink to this headline">¶</a></h2>
+<p>An iterator is a <em>stream</em> of data – sort of a restricted, very
+efficient list</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="go">[1, 2]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="go">&lt;listiterator object at 0x7f429d83c750&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">iterators have a item and next and that’s it
+- Preferred, because they take almost no space</p>
+</div>
+</div>
+<div class="section" id="file-iterator">
+<h2>File iterator<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#file-iterator" title="Permalink to this headline">¶</a></h2>
+<p>iterate across a <em>stream</em> of strings</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'beer.txt'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">you already use iterators</p>
+</div>
+</div>
+<div class="section" id="database-iterator">
+<h2>Database iterator<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#database-iterator" title="Permalink to this headline">¶</a></h2>
+<p>iterate with a <em>stream</em> of rows</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sqlite3</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'recipe'</span><span class="p">)</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"""select name from ingredient"""</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+<span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="list-very-similar-to-iterator">
+<h2>List very similar to Iterator<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#list-very-similar-to-iterator" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">line</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]):</span>
+    <span class="k">print</span> <span class="n">num</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="n">num</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*.txt'</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>Work with a <em>stream</em> of objects</p>
+</div>
+<div class="section" id="what-can-you-do-with-a-iterator">
+<h2>What can you do with a iterator?<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#what-can-you-do-with-a-iterator" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">'# Old Fashioned\n'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">'1.5 oz whiskey\n'</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-happens-at-the-end">
+<h2>What happens at the end?<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#what-happens-at-the-end" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/dev/null'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">StopIteration</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([])</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">StopIteration</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lists-iterators-are-very-similar">
+<h2>Lists/Iterators are very similar<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#lists-iterators-are-very-similar" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">line</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]):</span>
+    <span class="k">print</span> <span class="n">num</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="n">num</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="s1">'*.txt'</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">name</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-can-you-not-do-with-an-iterator">
+<h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#what-can-you-not-do-with-an-iterator" title="Permalink to this headline">¶</a></h2>
+<p><strong>no slicing</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">'file' object has no attribute '__getitem__'</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>What can you <em>not</em> do with an iterator?<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#id1" title="Permalink to this headline">¶</a></h2>
+<p><strong>no length</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">object of type 'file' has no len()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="you-already-use-common-iterator-functions">
+<h2>You already use common iterator functions<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#you-already-use-common-iterator-functions" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="function">
+<dt id="enumerate">
+<code class="descname">enumerate</code><span class="sig-paren">(</span><em>iter</em><span class="sig-paren">)</span><a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#enumerate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="function">
+<dt id="sorted">
+<code class="descname">sorted</code><span class="sig-paren">(</span><em>iter</em><span class="sig-paren">)</span><a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#sorted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="function">
+<dt id="range">
+<code class="descname">range</code><span class="sig-paren">(</span><em>stop</em><span class="sig-paren">)</span><a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>very important:</p>
+<ul>
+<li><dl class="function">
+<dt id="filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>func/None</em>, <em>iter</em><span class="sig-paren">)</span><a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="function">
+<dt id="map">
+<code class="descname">map</code><span class="sig-paren">(</span><em>func</em>, <em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>and _itertools_</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a><a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#id2" title="Permalink to this headline">¶</a></h2>
+<table class="hlist"><tbody><tr><td><ul class="simple">
+<li><strong>chain()</strong></li>
+<li>count()</li>
+<li>cycle()</li>
+<li>repeat()</li>
+<li><strong>chain()</strong></li>
+<li>compress()</li>
+<li>dropwhile()</li>
+<li>groupby()</li>
+<li><strong>ifilter()</strong></li>
+</ul>
+</td><td><ul class="simple">
+<li>ifilterfalse()</li>
+<li><strong>islice()</strong></li>
+<li>imap()</li>
+<li>starmap()</li>
+<li>tee()</li>
+<li>takewhile()</li>
+<li><strong>izip()</strong></li>
+<li>izip_longest()</li>
+</ul>
+</td></tr></tbody></table>
+</div>
+<div class="section" id="islice-similar-to-list">
+<h2>islice – similar to list<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#islice-similar-to-list" title="Permalink to this headline">¶</a></h2>
+<p><strong>islice(iter, num)</strong> – return first few items</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">[1,2]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">'listiterator' object has no attribute '__getitem__'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">&lt;itertools.islice object at 0x7f429d7de9f0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">[1, 2]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="chain-only-for-iterators">
+<h2>chain – only for iterators<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#chain-only-for-iterators" title="Permalink to this headline">¶</a></h2>
+<p><strong>chain(iter*)</strong> gives elements of each stream in order
+Equivalent to <strong>+</strong> for lists.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chain</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span>
+<span class="go">&lt;itertools.chain object at 0x7f429d848510&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">stream of objects with state
+lazy vs eager
+<strong>************************************************************</strong></p>
+</div>
+</div>
+<div class="section" id="list-vs-iterator">
+<h2>List vs Iterator<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#list-vs-iterator" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%">
+<col width="23%">
+<col width="40%">
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">feature</th>
+<th class="head">list</th>
+<th class="head">iterator</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>overall</td>
+<td>eager</td>
+<td>lazy</td>
+</tr>
+<tr class="row-odd"><td>len(x)</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr class="row-even"><td>slice</td>
+<td>x[:3]</td>
+<td>islice(x, 3)</td>
+</tr>
+<tr class="row-odd"><td>addition</td>
+<td>x + y</td>
+<td>chain(x, y)</td>
+</tr>
+<tr class="row-even"><td>has items</td>
+<td>if x</td>
+<td>no</td>
+</tr>
+<tr class="row-odd"><td>easy debug</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>List are “eager” – know everything about them all the time</p>
+<p>Million item list can be rough, because they hold all million
+- have to deal with all items</p>
+<p class="last">Million item iter is no biggie, can proc a few</p>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h1>☃<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#id3" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="fp-upcase">
+<h2>FP: upcase<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#fp-upcase" title="Permalink to this headline">¶</a></h2>
+<p>functional: functions operate on streams of objects</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
+
+<span class="n">writelines</span><span class="p">(</span> <span class="s1">'/dev/stdout'</span><span class="p">,</span>
+            <span class="n">upcase</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)</span> <span class="p">)</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fp-upcase-2">
+<h2>FP: upcase 2<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#fp-upcase-2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upcase</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="c1"># IN: stream of lines; OUT: stream of lines</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="c1"># IN: stream of lines; OUT: nothing</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">outf</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">outf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
+
+<span class="c1"># open() is OUT: stream of lines</span>
+<span class="n">writelines</span><span class="p">(</span> <span class="s1">'/dev/stdout'</span><span class="p">,</span>
+            <span class="n">upcase</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)</span> <span class="p">)</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h1>Iterators<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#id4" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="ideas">
+<h1>IDEAS<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#ideas" title="Permalink to this headline">¶</a></h1>
+<p>iterator/generator = “stream”</p>
+<p>FP: functions operate on streams of immutable objects</p>
+<p>QuerySet is a stream</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">programming with composition</p>
+</div>
+</div>
+<div class="questions section" id="questions">
+<h1>Questions?<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#questions" title="Permalink to this headline">¶</a></h1>
+<div class="figure" id="id5">
+<img alt="_images/john-bold.jpg" class="fill" src="./Iterators are Awesome onepage_files/john-bold.jpg">
+<p class="caption"><span class="caption-text"><a class="reference external" href="mailto:john%40johntellsall.com">john<span>@</span>johntellsall<span>.</span>com</a></span></p>
+</div>
+</div>
+<div class="section" id="functional-programming-in-python">
+<h1>Functional Programming in Python<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#functional-programming-in-python" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="primary-functions">
+<h2>Primary Functions<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#primary-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt>
+<code class="descname">filter</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="sig-paren">)</span></dt>
+<dd><p>Construct a <strong>list</strong> from those elements of iterable for which function returns true.</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descname">map</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em>, <em>...</em><span class="sig-paren">)</span></dt>
+<dd><p>Apply function to every item of iterable and return a <strong>list</strong> of the results.</p>
+</dd></dl>
+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="go">[1, 2]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If additional iterable arguments are passed, function must
+take that many arguments and is applied to the items from
+all iterables in parallel. If one iterable is shorter than
+another it is assumed to be extended with None items. If
+function is None, the identity function is assumed; if there
+are multiple arguments, map() returns a list consisting of
+tuples containing the corresponding items from all iterables
+(a kind of transpose operation). The iterable arguments may
+be a sequence or any iterable object; the result is always a
+list.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="function">
+<dt id="reduce">
+<code class="descname">reduce</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="optional">[</span>, <em>initializer</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#reduce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="last">Apply function of two arguments cumulatively to the items of iterable, from left to right, so as to reduce the iterable to a single value.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="function">
+<dt>
+<code class="descname">enumerate</code><span class="sig-paren">(</span><em>sequence</em><span class="optional">[</span>, <em>start=0</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p class="last">Return an iterator that yields tuples of an index and an item of the
+<em>sequence</em>. (And so on.)</p>
+</div>
+</div>
+<div class="section" id="fp-important-dataset">
+<h2>FP: important dataset<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#fp-important-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)</span>
+<span class="go"># Old Fashioned</span>
+<span class="go">1.5 oz whiskey</span>
+<span class="go">1 tsp water</span>
+<span class="go">0.5 tsp sugar</span>
+<span class="go">2 dash bitters</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functional-prog-for-better-booze">
+<h2>Functional Prog for Better Booze!<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#functional-prog-for-better-booze" title="Permalink to this headline">¶</a></h2>
+<div class="figure" id="id6">
+<img alt="_static/Oldfashioned-cocktail.png" src="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/_static/Oldfashioned-cocktail.png">
+<p class="caption"><span class="caption-text">CC PD <a class="reference external" href="http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png">http://en.wikipedia.org/wiki/File:Oldfashioned-cocktail.png</a></span></p>
+</div>
+</div>
+<div class="section" id="fp-filter">
+<h2>FP: filter<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#fp-filter" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return not line.startswith('#')</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">))</span> <span class="p">)</span>
+<span class="go">1.5 oz whiskey</span>
+<span class="go">1 tsp water</span>
+<span class="go">0.5 tsp sugar</span>
+<span class="go">2 dash bitters</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt>
+<code class="descname">filter</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em><span class="sig-paren">)</span></dt>
+<dd><p>Construct a <strong>list</strong> from those elements of iterable for which function returns true.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="fp-map-filter">
+<h2>FP: map, filter<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#fp-map-filter" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return str(line.split()[:2])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return not line.startswith('#')</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)))</span> <span class="p">)</span>
+<span class="go">['1.5', 'oz']</span>
+<span class="go">['1', 'tsp']</span>
+<span class="go">['0.5', 'tsp']</span>
+<span class="go">['2', 'dash']</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt>
+<code class="descname">map</code><span class="sig-paren">(</span><em>function</em>, <em>iterable</em>, <em>...</em><span class="sig-paren">)</span></dt>
+<dd><p>Apply function to every item of iterable and return a <strong>list</strong> of the results.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="preferred-generator-expressions">
+<h2>Preferred: generator expressions<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#preferred-generator-expressions" title="Permalink to this headline">¶</a></h2>
+<p><strong>filter replacement</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'whiskey'</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>compare with</strong></p>
+<p><em>filter(function, iterable)</em></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">high performance, memory efficient generalization of list comprehensions [1] and generators [2].
+<a class="reference external" href="http://legacy.python.org/dev/peps/pep-0289/">http://legacy.python.org/dev/peps/pep-0289/</a></p>
+</div>
+</div>
+<div class="section" id="preferred-filter-replacement">
+<h2>Preferred: filter replacement<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#preferred-filter-replacement" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'whiskey'</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+<span class="go">&lt;generator object &lt;genexpr&gt; at 0x7f429d7c8eb0&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="convert-to-list-so-we-can-see">
+<h2>convert to list so we can see<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#convert-to-list-so-we-can-see" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">list</span><span class="p">((</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'whiskey'</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span><span class="o">**</span><span class="p">)</span>
+<span class="go">['1.5 oz whiskey\n']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="original-fp-1">
+<h2>original FP #1<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#original-fp-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return not line.startswith('#')</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return str(line.split()[:2])</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="n">isdata</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'ing.txt'</span><span class="p">)))</span> <span class="p">)</span>
+<span class="go">['1.5', 'oz']</span>
+<span class="go">['1', 'tsp']</span>
+<span class="go">['0.5', 'tsp']</span>
+<span class="go">['2', 'dash']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="updated-fp-1">
+<h2>updated FP #1<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#updated-fp-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">isdata</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return not line.startswith('#')</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">amount</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="go">    return str(line.split()[:2])</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="p">(</span>
+<span class="go">    amount(hasdata)</span>
+<span class="go">    for hasdata in (</span>
+<span class="go">        line for line in open('ing.txt')</span>
+<span class="go">            if isdata(line)</span>
+<span class="go">    )</span>
+<span class="go">) )</span>
+<span class="go">['1.5', 'oz']</span>
+<span class="go">['1', 'tsp']</span>
+<span class="go">['0.5', 'tsp']</span>
+<span class="go">['2', 'dash']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iterator-functions">
+<h2>Iterator Functions<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#iterator-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="xrange">
+<code class="descname">xrange</code><span class="sig-paren">(</span><em>stop) -&gt; counter (xrange object</em><span class="sig-paren">)</span><a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#xrange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descname">xrange</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em><span class="optional">[</span>, <em>step</em><span class="optional">]</span><span class="sig-paren">)</span> → counter</dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="chain">
+<code class="descname">chain</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span> → each item in order<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#chain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ifilter">
+<code class="descname">ifilter</code><span class="sig-paren">(</span><em>f</em>, <em>iter</em><span class="sig-paren">)</span> → substream of iter. Like filter, for iterators.<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#ifilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="islice">
+<code class="descname">islice</code><span class="sig-paren">(</span><em>iter</em>, <em>num</em><span class="sig-paren">)</span> → counted items of iter<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#islice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="last function">
+<dt id="imap">
+<code class="descname">imap</code><span class="sig-paren">(</span><em>func</em>, <em>p</em>, <em>q</em><span class="sig-paren">)</span> → f(p), f(q), ...<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#imap" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="function">
+<dt>
+<code class="descname">izip()     p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip('ABCD', 'xy') --&gt; Ax By</code></dt>
+<dt>
+<code class="descname">.. py:function:: izip_longest()    p, q, ...       (p[0], q[0]), (p[1], q[1]), ... izip_longest('ABCD', 'xy', fillvalue='-') --&gt; Ax By C- D-</code></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="iter-chain">
+<h2>iter: chain<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#iter-chain" title="Permalink to this headline">¶</a></h2>
+<p><strong>chain(streams)</strong> gives elements of each stream in order
+Equivalent to <strong>+</strong> for lists.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chain</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span>
+<span class="go">&lt;itertools.chain object at 0x7f429d848510&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span> <span class="n">chain</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span> <span class="p">)</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">stream of objects with state
+lazy vs eager
+<strong>************************************************************</strong></p>
+</div>
+</div>
+<div class="section" id="iter-islice">
+<h2>iter: islice<a class="headerlink" href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#iter-islice" title="Permalink to this headline">¶</a></h2>
+<p><strong>islice(stream, num)</strong> – get counted elements of stream
+Equivalent to slice operator for lists.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[:</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">[2]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[:</span><span class="mi">1</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">"&lt;stdin&gt;"</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">'listiterator' object has no attribute '__getitem__'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">islice</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">&lt;itertools.islice object at 0x7f429d7de9f0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">[1, 2]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="file:///home/johnm/src/johntellsall.com/class/iterators-are-awesome/_build/singlehtml/index.html#document-index">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      ©2017, John Mitchell.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  
+</body></html>
