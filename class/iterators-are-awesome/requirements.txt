@@ -1,7 +1,7 @@
 ipdb
 pytest
 alabaster==0.7.10
-Babel==2.4.0
+Babel==2.9.1
 certifi==2017.4.17
 chardet==3.0.4
 decorator==4.0.11
